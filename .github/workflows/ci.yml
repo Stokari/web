@@ -21,6 +21,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
+      - name: Validate branch name
+        run: ./scripts/validate-branch-name.sh "${{ github.head_ref || github.ref_name }}"
+
       - name: Set up Vite+ and Node.js
         uses: voidzero-dev/setup-vp@v1.21.2
         with:
