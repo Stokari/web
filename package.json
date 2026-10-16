@@ -30,6 +30,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.12.0",
     "jsdom": "^30.1.2",
+    "simple-import-sort": "0.0.1-security",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.71.2",
     "vite": "catalog:",
