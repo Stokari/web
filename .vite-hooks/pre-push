@@ -1,2 +1,8 @@
 #!/usr/bin/env sh
-pnpm exec eslint .
+if command -v vp >/dev/null 2>&1; then
+  vp exec eslint .
+elif command -v pnpm >/dev/null 2>&1; then
+  pnpm exec eslint .
+else
+  eslint .
+fi
