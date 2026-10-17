@@ -10,6 +10,15 @@ export default defineConfig({
       provider: "v8",
     },
   },
+  server: {
+    port: 5173,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+    },
+  },
   staged: {
     "*": "vp check --fix",
   },
