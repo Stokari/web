@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en" class="h-full bg-slate-50">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Stokari · Stock Movement Ledger</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "monospace"],
+              ethiopic: ['"Noto Sans Ethiopic"', "sans-serif"],
+            },
+            colors: {
+              cobalt: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#172554",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      @keyframes pulse-subtle {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      .pulse-dot {
+        animation: pulse-subtle 2s ease-in-out infinite;
+      }
+      .touch-target {
+        min-height: 44px;
+      }
+    </style>
+  </head>
+  <body class="h-full text-slate-900 bg-slate-50 antialiased flex flex-col">
+    <!-- GLOBAL TOP BAR -->
+    <header
+      class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-slate-200 z-40 px-4 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-lg bg-cobalt-800 flex items-center justify-center text-white shrink-0 shadow-sm"
+        >
+          <span class="material-symbols-outlined text-white" style="font-size: 18px"
+            >storefront</span
+          >
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold tracking-tight text-slate-900">Stokari</span>
+            <span class="text-xs text-slate-400 font-normal hidden sm:inline">· Central Kiosk</span>
+          </div>
+          <p class="text-[11px] text-slate-500 font-mono leading-none mt-0.5">
+            Audit Ledger · Dawit Haile (Owner)
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: Interactive SyncPill + User Avatar -->
+      <div class="flex items-center gap-2.5">
+        <button
+          id="sync-pill-btn"
+          onclick="toggleSyncPopover()"
+          class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100"
+        >
+          <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot shrink-0"></span>
+          <span>SYNCED</span>
+          <span class="material-symbols-outlined text-slate-400" style="font-size: 14px"
+            >expand_more</span
+          >
+        </button>
+
+        <div
+          class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center shrink-0"
+        >
+          DH
+        </div>
+      </div>
+    </header>
+
+    <!-- SYNC POPOVER -->
+    <div
+      id="sync-popover"
+      class="hidden fixed top-16 right-4 w-80 bg-white rounded-xl border border-slate-200 shadow-xl z-50 p-4 space-y-3.5"
+    >
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <div>
+          <p class="text-xs font-bold text-slate-900">Audit Ledger Verification</p>
+          <p class="text-[11px] text-slate-400">Cryptographic Chain of Custody</p>
+        </div>
+        <button onclick="toggleSyncPopover()" class="text-slate-400 hover:text-slate-600 p-1">
+          <span class="material-symbols-outlined" style="font-size: 18px">close</span>
+        </button>
+      </div>
+      <div class="space-y-2 text-xs">
+        <div class="flex items-center justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-500">Ledger Invariant</span>
+          <span class="font-semibold text-emerald-700 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Verified &amp; Balanced
+          </span>
+        </div>
+        <div class="flex items-center justify-between py-1 border-b border-slate-50">
+          <span class="text-slate-500">Total Move Records</span>
+          <span class="font-mono text-slate-700">148 movements</span>
+        </div>
+        <div class="flex items-center justify-between py-1">
+          <span class="text-slate-500">Latest Ledger Hash</span>
+          <span class="font-mono text-slate-700">sha256:e8a9f41c2</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESKTOP SIDEBAR -->
+    <aside
+      class="hidden lg:flex fixed left-0 top-14 bottom-0 w-56 bg-white border-r border-slate-200 z-30 flex-col"
+    >
+      <nav class="p-3 flex-1 space-y-1">
+        <a
+          href="pos_till_world_class.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-slate-400" style="font-size: 18px"
+            >point_of_sale</span
+          >
+          <span>POS Till / Sell</span>
+        </a>
+        <a
+          href="today_dashboard.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-slate-400" style="font-size: 18px"
+            >bar_chart</span
+          >
+          <span>Today's Overview</span>
+        </a>
+        <a
+          href="product_catalog.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-slate-400" style="font-size: 18px"
+            >inventory_2</span
+          >
+          <span>Product Catalog</span>
+        </a>
+        <a
+          href="stock_ledger.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-cobalt-50 text-cobalt-800 font-semibold text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-cobalt-800" style="font-size: 18px"
+            >receipt_long</span
+          >
+          <span>Stock Ledger</span>
+        </a>
+        <a
+          href="conflict_review.html"
+          class="flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium text-xs transition-colors"
+        >
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-slate-400" style="font-size: 18px"
+              >warning</span
+            >
+            <span>Quarantine</span>
+          </div>
+          <span class="text-[10px] font-bold bg-rose-600 text-white px-1.5 py-0.5 rounded-full"
+            >3</span
+          >
+        </a>
+        <div class="h-px bg-slate-100 my-2"></div>
+        <a
+          href="staff_settings.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-slate-400" style="font-size: 18px"
+            >badge</span
+          >
+          <span>Staff &amp; Lease</span>
+        </a>
+      </nav>
+
+      <div class="p-3 border-t border-slate-100 text-[11px] text-slate-400 font-mono space-y-1">
+        <div class="flex items-center justify-between">
+          <span>STORE NODE:</span>
+          <span class="text-slate-700 font-bold">ADDIS-CENTRAL</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span>CHAIN INTEGRITY:</span>
+          <span class="text-emerald-700 font-bold">100% OK</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN VIEWPORT -->
+    <main class="pt-14 pb-20 lg:pb-8 lg:pl-56 min-h-screen bg-slate-50">
+      <div class="p-4 sm:p-6 max-w-7xl mx-auto space-y-4">
+        <!-- Page Header & Action Toolbar -->
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-3"
+        >
+          <div>
+            <h1 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
+              Stock Movement Ledger
+            </h1>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Immutable audit trail · Invariant: No balance mutation without movement ledger entry
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              onclick="openReceiveStockModal()"
+              class="px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 flex items-center gap-1.5 transition-colors"
+            >
+              <span class="material-symbols-outlined text-emerald-600" style="font-size: 16px"
+                >add_box</span
+              >
+              <span>Receive Stock</span>
+            </button>
+            <button
+              onclick="openAdjustModal()"
+              class="px-3.5 py-2 text-xs font-bold rounded-xl bg-cobalt-800 hover:bg-cobalt-700 text-white flex items-center gap-1.5 shadow-xs transition-colors"
+              style="min-height: 38px"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">tune</span>
+              <span>Adjust Stock</span>
+            </button>
+            <button
+              onclick="exportAuditPDF()"
+              class="px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 flex items-center gap-1.5 transition-colors"
+            >
+              <span class="material-symbols-outlined text-slate-400" style="font-size: 16px"
+                >picture_as_pdf</span
+              >
+              <span class="hidden sm:inline">Export Audit</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Metrics Strip -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] text-slate-400 uppercase font-mono block">Today's Inflow</span>
+            <span class="text-sm font-bold font-mono text-emerald-700 mt-0.5 block"
+              >+70.000 kg</span
+            >
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] text-slate-400 uppercase font-mono block">Today's Sales</span>
+            <span class="text-sm font-bold font-mono text-slate-900 mt-0.5 block"
+              >−32 movements</span
+            >
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] text-slate-400 uppercase font-mono block"
+              >Damage / Shrinkage</span
+            >
+            <span class="text-sm font-bold font-mono text-rose-700 mt-0.5 block"
+              >−1.500 kg (2)</span
+            >
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+            <span class="text-[10px] text-slate-400 uppercase font-mono block"
+              >Ledger Verification</span
+            >
+            <span class="text-sm font-bold text-emerald-700 mt-0.5 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 100% Cryptographic
+            </span>
+          </div>
+        </div>
+
+        <!-- Filter Controls Bar -->
+        <div class="bg-white rounded-xl border border-slate-200 p-3.5 space-y-3 shadow-xs">
+          <div class="flex flex-col md:flex-row gap-2.5">
+            <div class="relative flex-1">
+              <span
+                class="material-symbols-outlined text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"
+                style="font-size: 18px"
+                >search</span
+              >
+              <input
+                id="ledger-search"
+                type="text"
+                oninput="filterLedger()"
+                placeholder="Search by SKU, Product Name, or Movement Hash..."
+                class="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:outline-none focus:border-cobalt-800 transition-all placeholder:text-slate-400"
+              />
+            </div>
+
+            <!-- Movement type pills -->
+            <div class="flex items-center bg-slate-100 p-1 rounded-lg overflow-x-auto shrink-0">
+              <button
+                id="type-filter-all"
+                onclick="setTypeFilter('all')"
+                class="type-chip px-2.5 py-1 rounded text-xs font-bold bg-white text-slate-900 shadow-xs"
+              >
+                All Types
+              </button>
+              <button
+                id="type-filter-receipt"
+                onclick="setTypeFilter('RECEIPT')"
+                class="type-chip px-2.5 py-1 rounded text-xs font-medium text-emerald-800 hover:text-emerald-900 flex items-center gap-1"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Receipts (+)
+              </button>
+              <button
+                id="type-filter-sale"
+                onclick="setTypeFilter('SALE')"
+                class="type-chip px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900"
+              >
+                Sales (−)
+              </button>
+              <button
+                id="type-filter-adj"
+                onclick="setTypeFilter('ADJUSTMENT')"
+                class="type-chip px-2.5 py-1 rounded text-xs font-medium text-amber-800 hover:text-amber-900"
+              >
+                Adjustments
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESKTOP DATA TABLE (>= 768px) -->
+        <div
+          class="hidden md:block bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs"
+        >
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead
+                class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider text-[10px] font-semibold"
+              >
+                <tr>
+                  <th class="py-3 px-4">Timestamp (EAT)</th>
+                  <th class="py-3 px-4">Product Name &amp; SKU</th>
+                  <th class="py-3 px-4">Movement Type &amp; Reason</th>
+                  <th class="py-3 px-4">Actor</th>
+                  <th class="py-3 px-4 text-right">Delta Qty</th>
+                  <th class="py-3 px-4 text-right">Resulting Balance</th>
+                  <th class="py-3 px-4 text-center">Audit Chain</th>
+                </tr>
+              </thead>
+              <tbody id="ledger-table-body" class="divide-y divide-slate-100 font-mono">
+                <!-- Dynamically populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MOBILE DENSE TIMELINE CARDS (< 768px) -->
+        <div id="ledger-mobile-cards" class="md:hidden space-y-2.5 font-mono">
+          <!-- Dynamically populated by JS -->
+        </div>
+      </div>
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav
+      class="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-white border-t border-slate-200 z-30 flex items-center justify-around px-2"
+    >
+      <a
+        href="pos_till_world_class.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-slate-700"
+      >
+        <span class="material-symbols-outlined" style="font-size: 22px">point_of_sale</span>
+        <span class="text-[10px] mt-0.5">Till</span>
+      </a>
+      <a
+        href="today_dashboard.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-slate-700"
+      >
+        <span class="material-symbols-outlined" style="font-size: 22px">bar_chart</span>
+        <span class="text-[10px] mt-0.5">Overview</span>
+      </a>
+      <a
+        href="product_catalog.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-slate-700"
+      >
+        <span class="material-symbols-outlined" style="font-size: 22px">inventory_2</span>
+        <span class="text-[10px] mt-0.5">Catalog</span>
+      </a>
+      <a
+        href="stock_ledger.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-cobalt-800 font-bold"
+      >
+        <span class="material-symbols-outlined" style="font-size: 22px">receipt_long</span>
+        <span class="text-[10px] mt-0.5">Ledger</span>
+      </a>
+      <a
+        href="staff_settings.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-slate-400 hover:text-slate-700"
+      >
+        <span class="material-symbols-outlined" style="font-size: 22px">tune</span>
+        <span class="text-[10px] mt-0.5">Admin</span>
+      </a>
+    </nav>
+
+    <!-- DRAWER: SKU MOVEMENT HISTORY (Slide-out Audit Trail per docs/SCREENS.md) -->
+    <div
+      id="drawer-backdrop"
+      onclick="closeDrawer()"
+      class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 transition-opacity"
+    ></div>
+    <aside
+      id="audit-drawer"
+      class="fixed top-0 right-0 bottom-0 w-full sm:w-[420px] bg-white z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300"
+    >
+      <div class="p-4 border-b border-slate-100 flex items-center justify-between shrink-0">
+        <div>
+          <h3 class="text-sm font-bold text-slate-900" id="drawer-item-title">
+            White Sugar (1 kg)
+          </h3>
+          <p class="text-[11px] font-mono text-slate-400" id="drawer-item-sku">
+            SKU-0091 · Full Immutable Lifecycle
+          </p>
+        </div>
+        <button onclick="closeDrawer()" class="text-slate-400 hover:text-slate-600 p-1">
+          <span class="material-symbols-outlined" style="font-size: 20px">close</span>
+        </button>
+      </div>
+
+      <div
+        class="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-xs font-mono"
+      >
+        <div>
+          <span class="text-[10px] uppercase text-slate-400 block">Current Confirmed Balance</span>
+          <span class="text-base font-black text-slate-900" id="drawer-balance">14.000 kg</span>
+        </div>
+        <button
+          onclick="openAdjustModal()"
+          class="px-3 py-1.5 bg-cobalt-800 text-white rounded-lg text-xs font-bold hover:bg-cobalt-700"
+        >
+          Adjust
+        </button>
+      </div>
+
+      <!-- Movement Timeline -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block"
+          >Chronological Timeline</span
+        >
+        <div class="relative border-l-2 border-slate-200 ml-2.5 space-y-4 pl-4 text-xs font-mono">
+          <!-- Movement 1 -->
+          <div class="relative">
+            <span
+              class="absolute -left-[23px] top-1 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white"
+            ></span>
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-emerald-800">+50.000 kg · RECEIPT</span>
+              <span class="text-slate-400 text-[10px]">14:30:12</span>
+            </div>
+            <p class="text-slate-600 text-[11px] mt-0.5">
+              Supplier Invoice #104 · Received by Owner (Dawit)
+            </p>
+            <p class="text-slate-400 text-[10px] mt-0.5">Balance: 50.000 kg · Hash: sha256:7b21</p>
+          </div>
+
+          <!-- Movement 2 -->
+          <div class="relative">
+            <span
+              class="absolute -left-[23px] top-1 w-3 h-3 rounded-full bg-slate-400 border-2 border-white"
+            ></span>
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800">−1.000 kg · SALE</span>
+              <span class="text-slate-400 text-[10px]">14:45:09</span>
+            </div>
+            <p class="text-slate-600 text-[11px] mt-0.5">Receipt #1041 · Cashier Hana Bekele</p>
+            <p class="text-slate-400 text-[10px] mt-0.5">Balance: 49.000 kg · Hash: sha256:9c12</p>
+          </div>
+
+          <!-- Movement 3 -->
+          <div class="relative">
+            <span
+              class="absolute -left-[23px] top-1 w-3 h-3 rounded-full bg-amber-500 border-2 border-white"
+            ></span>
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-800">−0.500 kg · ADJUSTMENT</span>
+              <span class="text-slate-400 text-[10px]">15:10:44</span>
+            </div>
+            <p class="text-slate-600 text-[11px] mt-0.5">
+              DAMAGE (Spilled packaging on aisle 3) · by Owner
+            </p>
+            <p class="text-slate-400 text-[10px] mt-0.5">Balance: 48.500 kg · Hash: sha256:e8a9</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="p-4 border-t border-slate-100 bg-slate-50 text-[11px] text-slate-500 font-mono flex items-center justify-between"
+      >
+        <span>Deterministic ledger anchor</span>
+        <span class="text-emerald-700 font-bold">CHAIN VALID</span>
+      </div>
+    </aside>
+
+    <!-- MODAL: RECEIVE STOCK -->
+    <div
+      id="receive-modal"
+      class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 flex items-center justify-center p-4"
+    >
+      <div class="bg-white w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <div>
+            <h3 class="text-xs font-bold text-slate-900">Receive Supplier Stock</h3>
+            <p class="text-[11px] text-slate-400">Append receipt record to ledger</p>
+          </div>
+          <button
+            onclick="closeReceiveStockModal()"
+            class="text-slate-400 hover:text-slate-600 p-1"
+          >
+            <span class="material-symbols-outlined" style="font-size: 18px">close</span>
+          </button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-500 mb-1">Select Product</label>
+            <select
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-slate-900 bg-white focus:outline-none focus:border-cobalt-800"
+            >
+              <option>White Sugar (1 kg) · SGR-WHT</option>
+              <option>Sunflower Oil (1 Litre) · OIL-SUN</option>
+              <option>Imported Rice (2 kg) · RCE-IMP</option>
+              <option>Table Salt (500g) · SLT-TAB</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-500 mb-1">Quantity Received (+N)</label>
+            <input
+              type="text"
+              placeholder="e.g. 50.000"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono font-bold text-slate-900 focus:outline-none focus:border-cobalt-800"
+            />
+          </div>
+
+          <div>
+            <label class="block text-slate-500 mb-1"
+              >Unit Purchase Cost (ETB) [Updates Latest Cost]</label
+            >
+            <input
+              type="number"
+              placeholder="e.g. 102.50"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono text-slate-900 focus:outline-none focus:border-cobalt-800"
+            />
+          </div>
+
+          <div>
+            <label class="block text-slate-500 mb-1">Supplier Invoice # / Delivery Note</label>
+            <input
+              type="text"
+              placeholder="e.g. INV-2026-902"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-cobalt-800"
+            />
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button
+            onclick="closeReceiveStockModal()"
+            class="flex-1 py-2.5 border border-slate-200 text-xs font-semibold text-slate-700 rounded-xl hover:bg-slate-50"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="submitStockReceipt()"
+            class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs"
+          >
+            Commit Receipt
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: ADJUST STOCK -->
+    <div
+      id="adjust-modal"
+      class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 flex items-center justify-center p-4"
+    >
+      <div class="bg-white w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <div>
+            <h3 class="text-xs font-bold text-slate-900">Manual Stock Adjustment</h3>
+            <p class="text-[11px] text-slate-400">Append immutable audit ledger movement</p>
+          </div>
+          <button onclick="closeAdjustModal()" class="text-slate-400 hover:text-slate-600 p-1">
+            <span class="material-symbols-outlined" style="font-size: 18px">close</span>
+          </button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-500 mb-1">Product</label>
+            <select
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-slate-900 bg-white focus:outline-none focus:border-cobalt-800"
+            >
+              <option>White Sugar (1 kg) · Current: 14.000 kg</option>
+              <option>Sunflower Oil (1L) · Current: 2.000 L</option>
+              <option>Table Salt (500g) · Current: 0 pcs</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-500 mb-1">Signed Quantity Delta (+ or −) *</label>
+            <input
+              type="text"
+              placeholder="e.g. -1.000 or +5.000"
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg font-mono font-bold text-slate-900 focus:outline-none focus:border-cobalt-800"
+            />
+          </div>
+
+          <div>
+            <label class="block text-slate-500 mb-1">Mandatory Audit Reason *</label>
+            <select
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-slate-900 bg-white focus:outline-none focus:border-cobalt-800"
+            >
+              <option value="DAMAGE">DAMAGE (Broken / Spoiled inventory)</option>
+              <option value="LOSS">LOSS (Unexplained shortage / theft)</option>
+              <option value="CORRECTION">CORRECTION (Physical count reconciliation)</option>
+              <option value="OTHER">OTHER (Requires note)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-slate-500 mb-1">Auditor Note / Explanation</label>
+            <input
+              type="text"
+              placeholder="Reason details for audit ledger..."
+              class="w-full px-3 py-2 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-cobalt-800"
+            />
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button
+            onclick="closeAdjustModal()"
+            class="flex-1 py-2.5 border border-slate-200 text-xs font-semibold text-slate-700 rounded-xl hover:bg-slate-50"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="submitStockAdjustment()"
+            class="flex-1 py-2.5 bg-cobalt-800 hover:bg-cobalt-700 text-white text-xs font-bold rounded-xl shadow-xs"
+          >
+            Commit Adjustment
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const MOVEMENTS = [
+        {
+          id: "148",
+          time: "15:10:44",
+          item: "White Sugar (1 kg)",
+          sku: "SKU-0091",
+          type: "ADJUSTMENT",
+          reason: "DAMAGE - Spilled bag",
+          actor: "Dawit (Owner)",
+          delta: -0.5,
+          unit: "kg",
+          balance: 14.0,
+          hash: "sha256:e8a9...f41c",
+        },
+        {
+          id: "147",
+          time: "15:02:18",
+          item: "Table Salt (500g)",
+          sku: "SKU-0077",
+          type: "SALE",
+          reason: "Receipt #1044",
+          actor: "Hana Bekele",
+          delta: -1.0,
+          unit: "pcs",
+          balance: 0.0,
+          hash: "sha256:d71b...0941",
+        },
+        {
+          id: "146",
+          time: "14:56:49",
+          item: "Sunflower Oil (1L)",
+          sku: "SKU-0042",
+          type: "SALE",
+          reason: "Receipt #1043",
+          actor: "Hana Bekele",
+          delta: -2.0,
+          unit: "L",
+          balance: 2.0,
+          hash: "sha256:a44c...9182",
+        },
+        {
+          id: "145",
+          time: "14:48:12",
+          item: "White Sugar (1 kg)",
+          sku: "SKU-0091",
+          type: "SALE",
+          reason: "Receipt #1042",
+          actor: "Hana Bekele",
+          delta: -1.0,
+          unit: "kg",
+          balance: 14.5,
+          hash: "sha256:88e2...3109",
+        },
+        {
+          id: "144",
+          time: "14:30:00",
+          item: "White Sugar (1 kg)",
+          sku: "SKU-0091",
+          type: "RECEIPT",
+          reason: "Supplier Inv #104",
+          actor: "Dawit (Owner)",
+          delta: 50.0,
+          unit: "kg",
+          balance: 15.5,
+          hash: "sha256:7b21...4401",
+        },
+        {
+          id: "143",
+          time: "13:15:20",
+          item: "Imported Rice (2 kg)",
+          sku: "SKU-0084",
+          type: "RECEIPT",
+          reason: "Supplier Inv #103",
+          actor: "Dawit (Owner)",
+          delta: 20.0,
+          unit: "kg",
+          balance: 18.0,
+          hash: "sha256:61aa...8912",
+        },
+        {
+          id: "142",
+          time: "12:40:05",
+          item: "Yirgacheffe Coffee",
+          sku: "SKU-0114",
+          type: "SALE",
+          reason: "Receipt #1039",
+          actor: "Hana Bekele",
+          delta: -1.0,
+          unit: "pcs",
+          balance: 12.0,
+          hash: "sha256:50bc...1104",
+        },
+      ];
+
+      let currentTypeFilter = "all";
+
+      function getFilteredMovements() {
+        const q = document.getElementById("ledger-search").value.toLowerCase().trim();
+        return MOVEMENTS.filter((m) => {
+          const matchesQuery =
+            !q ||
+            m.item.toLowerCase().includes(q) ||
+            m.sku.toLowerCase().includes(q) ||
+            m.hash.includes(q) ||
+            m.reason.toLowerCase().includes(q);
+          const matchesType = currentTypeFilter === "all" || m.type === currentTypeFilter;
+          return matchesQuery && matchesType;
+        });
+      }
+
+      function renderLedger() {
+        const items = getFilteredMovements();
+
+        // Desktop table body
+        const tbody = document.getElementById("ledger-table-body");
+        tbody.innerHTML = items
+          .map((m) => {
+            let typeBadge =
+              '<span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full">SALE</span>';
+            let deltaClass = "text-slate-900";
+            let deltaPrefix = "";
+            if (m.type === "RECEIPT") {
+              typeBadge =
+                '<span class="text-[10px] font-bold bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-full">RECEIPT</span>';
+              deltaClass = "text-emerald-700 font-bold";
+              deltaPrefix = "+";
+            } else if (m.type === "ADJUSTMENT") {
+              typeBadge =
+                '<span class="text-[10px] font-bold bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full">ADJUSTMENT</span>';
+              deltaClass = "text-amber-800 font-bold";
+            }
+
+            return `
+          <tr onclick="openDrawer('${m.item}', '${m.sku}', '${m.balance.toFixed(3)} ${m.unit}')" class="hover:bg-slate-50/80 transition-colors cursor-pointer">
+            <td class="py-3 px-4 text-slate-500 text-xs">${m.time}</td>
+            <td class="py-3 px-4 font-sans">
+              <p class="font-bold text-slate-900 text-xs">${m.item}</p>
+              <p class="text-[10px] font-mono text-slate-400">${m.sku}</p>
+            </td>
+            <td class="py-3 px-4">
+              ${typeBadge}
+              <span class="text-slate-500 text-[11px] ml-1.5 font-sans">${m.reason}</span>
+            </td>
+            <td class="py-3 px-4 text-slate-600 text-xs font-sans">${m.actor}</td>
+            <td class="py-3 px-4 text-right text-xs ${deltaClass}">
+              ${deltaPrefix}${m.delta.toFixed(3)} ${m.unit}
+            </td>
+            <td class="py-3 px-4 text-right font-bold text-slate-900 text-xs">
+              ${m.balance.toFixed(3)} ${m.unit}
+            </td>
+            <td class="py-3 px-4 text-center">
+              <span class="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">${m.hash}</span>
+            </td>
+          </tr>
+        `;
+          })
+          .join("");
+
+        // Mobile cards
+        const mobContainer = document.getElementById("ledger-mobile-cards");
+        mobContainer.innerHTML = items
+          .map((m) => {
+            let typeBadge =
+              '<span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full">SALE</span>';
+            let deltaColor = "text-slate-900";
+            let deltaPrefix = "";
+            if (m.type === "RECEIPT") {
+              typeBadge =
+                '<span class="text-[10px] font-bold bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-full">RECEIPT</span>';
+              deltaColor = "text-emerald-700 font-black";
+              deltaPrefix = "+";
+            } else if (m.type === "ADJUSTMENT") {
+              typeBadge =
+                '<span class="text-[10px] font-bold bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full">ADJUSTMENT</span>';
+              deltaColor = "text-amber-800 font-bold";
+            }
+
+            return `
+          <div onclick="openDrawer('${m.item}', '${m.sku}', '${m.balance.toFixed(3)} ${m.unit}')" class="bg-white rounded-xl border border-slate-200 p-3.5 space-y-2 shadow-xs cursor-pointer">
+            <div class="flex items-start justify-between gap-2">
+              <div class="font-sans">
+                <h3 class="text-xs font-bold text-slate-900">${m.item}</h3>
+                <p class="text-[10px] font-mono text-slate-400">${m.sku} · ${m.time} EAT</p>
+              </div>
+              <div class="text-right shrink-0">
+                <p class="text-sm font-black font-mono ${deltaColor}">${deltaPrefix}${m.delta.toFixed(3)} ${m.unit}</p>
+                <p class="text-[10px] text-slate-400 font-mono mt-0.5">Bal: ${m.balance.toFixed(3)} ${m.unit}</p>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+              <div class="flex items-center gap-1.5">
+                ${typeBadge}
+                <span class="text-slate-500 font-sans truncate max-w-[150px]">${m.reason}</span>
+              </div>
+              <span class="text-slate-400 text-[10px]">${m.actor}</span>
+            </div>
+          </div>
+        `;
+          })
+          .join("");
+      }
+
+      function filterLedger() {
+        renderLedger();
+      }
+
+      function setTypeFilter(type) {
+        currentTypeFilter = type;
+        document.querySelectorAll(".type-chip").forEach((c) => {
+          c.className =
+            "type-chip px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900";
+        });
+        const activeId =
+          type === "all"
+            ? "type-filter-all"
+            : type === "RECEIPT"
+              ? "type-filter-receipt"
+              : type === "SALE"
+                ? "type-filter-sale"
+                : "type-filter-adj";
+        document.getElementById(activeId).className =
+          "type-chip px-2.5 py-1 rounded text-xs font-bold bg-white text-slate-900 shadow-xs";
+        renderLedger();
+      }
+
+      // Drawer functions
+      function openDrawer(title, sku, balance) {
+        document.getElementById("drawer-item-title").textContent = title;
+        document.getElementById("drawer-item-sku").textContent =
+          sku + " · Full Immutable Lifecycle";
+        document.getElementById("drawer-balance").textContent = balance;
+        document.getElementById("drawer-backdrop").classList.remove("hidden");
+        document.getElementById("audit-drawer").classList.remove("translate-x-full");
+      }
+
+      function closeDrawer() {
+        document.getElementById("drawer-backdrop").classList.add("hidden");
+        document.getElementById("audit-drawer").classList.add("translate-x-full");
+      }
+
+      // Modal controls
+      function openReceiveStockModal() {
+        document.getElementById("receive-modal").classList.remove("hidden");
+      }
+      function closeReceiveStockModal() {
+        document.getElementById("receive-modal").classList.add("hidden");
+      }
+      function submitStockReceipt() {
+        alert("Stock receipt committed to ledger. Balance increased & unit cost updated.");
+        closeReceiveStockModal();
+      }
+
+      function openAdjustModal() {
+        document.getElementById("adjust-modal").classList.remove("hidden");
+      }
+      function closeAdjustModal() {
+        document.getElementById("adjust-modal").classList.add("hidden");
+      }
+      function submitStockAdjustment() {
+        alert("Stock adjustment committed. Mandatory reason recorded in audit log.");
+        closeAdjustModal();
+      }
+
+      function exportAuditPDF() {
+        alert(
+          "Exported official immutable audit ledger report (PDF) with SHA-256 chain verification.",
+        );
+      }
+
+      function toggleSyncPopover() {
+        document.getElementById("sync-popover").classList.toggle("hidden");
+      }
+
+      // Initial render
+      renderLedger();
+    </script>
+  </body>
+</html>

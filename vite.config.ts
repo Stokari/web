@@ -20,13 +20,19 @@ export default defineConfig({
     },
   },
   staged: {
-    "*": "vp check --fix",
+    "{src/**/*.{ts,tsx,css},*.{ts,js}}": "vp check --fix",
   },
   fmt: {
     semi: true,
     singleQuote: false,
     trailingComma: "all",
-    ignorePatterns: ["coverage/**", "dist/**"],
+    ignorePatterns: [
+      "coverage/**",
+      "dist/**",
+      ".agents/**",
+      "docs/stitch-designs/**",
+      "documentation/**",
+    ],
   },
   lint: {
     plugins: ["oxc", "typescript", "unicorn"],
@@ -36,7 +42,13 @@ export default defineConfig({
     env: {
       builtin: true,
     },
-    ignorePatterns: ["dist"],
+    ignorePatterns: [
+      "dist/**",
+      ".agents/**",
+      "coverage/**",
+      "docs/stitch-designs/**",
+      "documentation/**",
+    ],
     overrides: [
       {
         files: ["**/*.{ts,tsx}"],
