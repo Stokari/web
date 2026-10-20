@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stokari · Today Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ["Inter", "system-ui", "sans-serif"], mono: ['"JetBrains Mono"', "monospace"], ethiopic: ['"Noto Sans Ethiopic"', "sans-serif"] },
+          colors: { primary: { 50: "#eff6ff", 100: "#dbeafe", 500: "#3b82f6", 600: "#2563eb", 700: "#1d4ed8", 800: "#1e40af", 900: "#172554" }, success: { 50: "#ecfdf5", 100: "#a7f3d0", 600: "#059669", 700: "#047857", 800: "#065f46", 900: "#022c22" }, warning: { 50: "#fffbeb", 100: "#fde68a", 600: "#d97706", 700: "#b45309", 800: "#92400e", 900: "#78350f" }, danger: { 50: "#fef2f2", 100: "#fecaca", 600: "#dc2626", 700: "#b91c1c", 800: "#991b1b", 900: "#7f1d1d" }, neutral: { 50: "#f8fafc", 100: "#f1f5f9", 200: "#e2e8f0", 300: "#cbd5e1", 400: "#94a3b8", 500: "#64748b", 600: "#475569", 700: "#334155", 800: "#1e293b", 900: "#0f172a" } },
+        },
+      },
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { margin: 0; font-family: "Inter", system-ui, sans-serif; }
+    .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; display: inline-flex; align-items: center; vertical-align: middle; line-height: 1; }
+    .tabular-nums { font-variant-numeric: tabular-nums; font-family: "JetBrains Mono", monospace; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; } ::-webkit-scrollbar-track { background: transparent; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .no-scrollbar::-webkit-scrollbar { display: none; }
+    .tap-active:active { transform: scale(0.98); }
+  </style>
+</head>
+<body class="min-h-screen bg-neutral-50 text-neutral-900 antialiased flex">
+  <!-- SIDEBAR -->
+  <aside class="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-neutral-200 z-30 flex-col">
+    <div class="h-14 border-b border-neutral-200 px-4 flex items-center gap-3"><div class="w-8 h-8 rounded-md bg-neutral-800 flex items-center justify-center text-white shrink-0"><span class="material-symbols-outlined" style="font-size: 18px">bar_chart</span></div><div><p class="text-sm font-bold tracking-tight text-neutral-900">Stokari</p><p class="text-[11px] text-neutral-500 font-mono">Central Kiosk</p></div></div>
+    <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+      <a href="pos_till_desktop.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">point_of_sale</span><span>POS Till</span></a>
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-neutral-800 text-white font-semibold text-xs" aria-current="page"><span class="material-symbols-outlined text-white" style="font-size: 18px">bar_chart</span><span>Today</span></a>
+      <a href="product_catalog.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">inventory_2</span><span>Products</span></a>
+      <a href="stock.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">warehouse</span><span>Stock</span></a>
+      <a href="conflict_review.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-danger-600" style="font-size: 18px">gavel</span><span>Review</span></div><span class="text-[10px] font-bold bg-danger-600 text-white px-1.5 py-0.5 rounded-full">3</span></a>
+      <div class="h-px bg-neutral-100 my-2"></div>
+      <a href="staff_settings.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">badge</span><span>Staff & Lease</span></a>
+    </nav>
+  </aside>
+
+  <!-- MOBILE TOP BAR -->
+  <header class="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-neutral-200 z-40 px-4 flex items-center justify-between">
+    <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-md bg-neutral-800 flex items-center justify-center text-white shrink-0"><span class="material-symbols-outlined" style="font-size: 18px">bar_chart</span></div><div><p class="text-sm font-bold tracking-tight text-neutral-900">Today</p><p class="text-[11px] text-neutral-500 font-mono">Central Kiosk</p></div></div>
+    <button onclick="toggleMobileMenu()" class="p-1 text-neutral-500 hover:text-neutral-700" aria-label="Open menu"><span class="material-symbols-outlined" style="font-size: 24px">menu</span></button>
+  </header>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 h-14 bg-white border-t border-neutral-200 z-30 flex items-center justify-around px-2">
+    <a href="pos_till.html" class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"><span class="material-symbols-outlined" style="font-size: 22px">point_of_sale</span><span class="text-[10px] mt-0.5">Sell</span></a>
+    <a href="#" class="flex flex-col items-center justify-center flex-1 py-1 text-primary-800 font-bold" aria-current="page"><span class="material-symbols-outlined" style="font-size: 22px">bar_chart</span><span class="text-[10px] mt-0.5">Today</span></a>
+    <a href="product_catalog.html" class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"><span class="material-symbols-outlined" style="font-size: 22px">inventory_2</span><span class="text-[10px] mt-0.5">Products</span></a>
+    <a href="stock.html" class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"><span class="material-symbols-outlined" style="font-size: 22px">warehouse</span><span class="text-[10px] mt-0.5">Stock</span></a>
+    <a href="staff_settings.html" class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"><span class="material-symbols-outlined" style="font-size: 22px">more_horiz</span><span class="text-[10px] mt-0.5">More</span></a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="lg:pl-64 pt-14 lg:pt-0 min-h-screen bg-neutral-50 flex flex-col">
+    <!-- HEADER -->
+    <header class="sticky top-0 lg:top-14 bg-white border-b border-neutral-200 z-30">
+      <div class="p-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <div>
+            <h1 class="text-lg font-bold text-neutral-900">Today's Activity</h1>
+            <p class="text-sm text-neutral-500">EAT: <span id="eat-date" class="font-mono tabular-nums"></span></p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button id="sync-pill-btn" onclick="toggleSyncPopover()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-success-50 text-success-800 border-success-200 hover:bg-success-100" style="min-height: 36px;"><span id="sync-pill-dot" class="w-2 h-2 rounded-full bg-success-500 pulse-dot shrink-0"></span><span id="sync-pill-label">Synced just now</span><span class="material-symbols-outlined text-neutral-400" style="font-size: 14px">expand_more</span></button>
+            <button onclick="exportCSV('sales')" class="px-3 py-1.5 border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs rounded-lg hover:bg-neutral-50 touch-target"><span class="material-symbols-outlined" style="font-size: 16px">download</span><span class="hidden sm:inline">Export CSV</span></button>
+          </div>
+        </div>
+
+        <!-- Date Selector -->
+        <div class="flex items-center gap-2">
+          <label for="date-select" class="text-xs font-medium text-neutral-600">Date (EAT)</label>
+          <input id="date-select" type="date" onchange="loadDashboard(this.value)" class="px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-sm text-neutral-700 focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800 shrink-0" />
+          <button onclick="setToday()" class="px-3 py-1.5 border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs rounded-lg hover:bg-neutral-50 touch-target">Today</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- SYNC POPOVER -->
+    <div id="sync-popover" class="hidden fixed top-16 right-4 w-80 bg-white rounded-lg border border-neutral-200 shadow-lg z-50 p-4 space-y-3" role="dialog" aria-label="Connection & Storage Details">
+      <div class="flex items-center justify-between border-b border-neutral-100 pb-2"><div><p class="text-xs font-bold text-neutral-900">Connection & Storage</p><p class="text-[11px] text-neutral-500">Offline-First Engine (Dexie)</p></div><button onclick="toggleSyncPopover()" class="text-neutral-400 hover:text-neutral-600 p-1"><span class="material-symbols-outlined" style="font-size: 18px">close</span></button></div>
+      <div class="space-y-2 text-xs"><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Cloud Status</span><span class="font-semibold text-success-700 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success-500"></span> Connected</span></div><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Last Synced</span><span class="font-mono text-neutral-700">Today at 14:32 EAT</span></div><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Local Outbox</span><span class="font-mono font-bold text-neutral-800">0 pending</span></div><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">IndexedDB Storage</span><span class="font-mono text-neutral-700">14.2 MB / 2.0 GB</span></div><div class="flex items-center justify-between py-1"><span class="text-neutral-500">Storage Eviction Safe</span><span class="text-success-700 font-semibold">Enabled</span></div></div>
+      <div class="pt-2"><button onclick="simulateSyncNow()" class="w-full py-2 text-xs font-bold rounded-lg bg-primary-800 text-white hover:bg-primary-700 transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined" style="font-size: 14px">sync</span><span>Sync Now</span></button></div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="flex-1 overflow-auto p-4">
+      <!-- 3-BUCKET REVENUE CARDS -->
+      <section aria-labelledby="revenue-heading" class="mb-6">
+        <h2 id="revenue-heading" class="sr-only">Revenue Summary</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+          <!-- Confirmed Bucket -->
+          <article class="RevenueBucket bg-success-50 border border-success-200 rounded-lg p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="material-symbols-outlined text-success-700" style="font-size: 20px">check_circle</span>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-success-800">Confirmed Revenue</h3>
+            </div>
+            <div class="tabular-nums font-mono text-2xl font-bold text-success-900" id="confirmed-amount">ETB 4,820.00</div>
+            <div class="text-sm text-success-700 mt-1" id="confirmed-count">32 sales completed</div>
+          </article>
+
+          <!-- Pending Bucket -->
+          <article class="RevenueBucket bg-warning-50 border border-warning-200 rounded-lg p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="material-symbols-outlined text-warning-700" style="font-size: 20px">schedule</span>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-warning-800">Pending on This Device</h3>
+            </div>
+            <div class="tabular-nums font-mono text-2xl font-bold text-warning-900" id="pending-amount">ETB 860.00</div>
+            <div class="text-sm text-warning-700 mt-1" id="pending-count">5 sales waiting to sync</div>
+          </article>
+
+          <!-- Review Bucket -->
+          <article class="RevenueBucket bg-danger-50 border border-danger-200 rounded-lg p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="material-symbols-outlined text-danger-700" style="font-size: 20px">gavel</span>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-danger-800">Needs Owner Review</h3>
+            </div>
+            <div class="tabular-nums font-mono text-2xl font-bold text-danger-900" id="review-amount">ETB 420.00</div>
+            <div class="text-sm text-danger-700 mt-1" id="review-count">2 transactions with stock conflict</div>
+          </article>
+        </div>
+
+        <!-- Owner Only: Valuation Card -->
+        <div id="owner-valuation" class="mb-6" style="display: none;">
+          <article class="bg-white border border-neutral-200 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-base font-bold text-neutral-900">Inventory Valuation</h3>
+              <span class="text-[11px] text-neutral-500" onclick="openValuationDetail()" style="cursor: pointer;">View Details →</span>
+            </div>
+            <div class="tabular-nums font-mono text-3xl font-bold text-neutral-900" id="valuation-total">ETB 84,320.00</div>
+            <div class="flex flex-wrap gap-3 mt-2 text-sm text-neutral-500">
+              <span id="valuation-uncosted">⚠️ 4 items have no cost recorded</span>
+              <span id="valuation-approx">ℹ️ 1 item approximate</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Low Stock Warnings -->
+        <section aria-labelledby="lowstock-heading" class="mb-6">
+          <div class="flex items-center justify-between mb-3">
+            <h2 id="lowstock-heading" class="text-base font-bold text-neutral-900">Low Stock Warnings</h2>
+            <button onclick="navigateToStock()" class="text-xs font-semibold text-primary-700 hover:text-primary-800 flex items-center gap-1"><span class="material-symbols-outlined" style="font-size: 14px">arrow_forward</span><span>View All</span></button>
+          </div>
+          <div class="space-y-2" id="low-stock-list">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- Quick Actions (Owner) -->
+        <div id="owner-actions" style="display: none;" class="flex flex-wrap gap-2">
+          <button onclick="navigateToReceive()" class="px-4 py-2 border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs rounded-lg flex items-center justify-center gap-1.5 hover:bg-neutral-50 touch-target"><span class="material-symbols-outlined" style="font-size: 16px">add_box</span><span>Receive Stock</span></button>
+          <button onclick="navigateToAdjust()" class="px-4 py-2 border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs rounded-lg flex items-center justify-center gap-1.5 hover:bg-neutral-50 touch-target"><span class="material-symbols-outlined" style="font-size: 16px">tune</span><span>Adjust Stock</span></button>
+          <button onclick="exportCSV('sales')" class="px-4 py-2 border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs rounded-lg flex items-center justify-center gap-1.5 hover:bg-neutral-50 touch-target"><span class="material-symbols-outlined" style="font-size: 16px">download</span><span>Export Sales CSV</span></button>
+          <button onclick="exportCSV('stock')" class="px-4 py-2 border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs rounded-lg flex items-center justify-center gap-1.5 hover:bg-neutral-50 touch-target"><span class="material-symbols-outlined" style="font-size: 16px">download</span><span>Export Stock CSV</span></button>
+        </div>
+      </div>
+    </header>
+
+    <!-- SYNC POPOVER -->
+    <div id="sync-popover" class="hidden fixed top-16 right-4 w-80 bg-white rounded-lg border border-neutral-200 shadow-lg z-50 p-4 space-y-3" role="dialog" aria-label="Connection & Storage Details">
+      <div class="flex items-center justify-between border-b border-neutral-100 pb-2"><div><p class="text-xs font-bold text-neutral-900">Connection & Storage</p><p class="text-[11px] text-neutral-500">Offline-First Engine (Dexie)</p></div><button onclick="toggleSyncPopover()" class="text-neutral-400 hover:text-neutral-600 p-1"><span class="material-symbols-outlined" style="font-size: 18px">close</span></button></div>
+      <div class="space-y-2 text-xs"><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Cloud Status</span><span class="font-semibold text-success-700 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success-500"></span> Connected</span></div><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Last Synced</span><span class="font-mono text-neutral-700">Today at 14:32 EAT</span></div><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Local Outbox</span><span class="font-mono font-bold text-neutral-800">0 pending</span></div><div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">IndexedDB Storage</span><span class="font-mono text-neutral-700">14.2 MB / 2.0 GB</span></div><div class="flex items-center justify-between py-1"><span class="text-neutral-500">Storage Eviction Safe</span><span class="text-success-700 font-semibold">Enabled</span></div></div>
+      <div class="pt-2"><button onclick="simulateSyncNow()" class="w-full py-2 text-xs font-bold rounded-lg bg-primary-800 text-white hover:bg-primary-700 transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined" style="font-size: 14px">sync</span><span>Sync Now</span></button></div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="lg:hidden fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-neutral-900/50" onclick="toggleMobileMenu()"></div>
+      <div class="fixed left-0 top-0 bottom-0 w-64 bg-white shadow-xl" style="max-width: 85vw;">
+        <div class="h-14 border-b border-neutral-200 px-4 flex items-center justify-between"><p class="font-semibold text-neutral-900">Navigation</p><button onclick="toggleMobileMenu()" class="text-neutral-400 hover:text-neutral-600 p-1"><span class="material-symbols-outlined" style="font-size: 24px">close</span></button></div>
+        <nav class="p-3 space-y-1">
+          <a href="pos_till.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs"><span class="material-symbols-outlined" style="font-size: 18px">point_of_sale</span><span>Sell</span></a>
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-primary-50 text-primary-800 font-semibold text-xs"><span class="material-symbols-outlined text-primary-800" style="font-size: 18px">bar_chart</span><span>Today</span></a>
+          <a href="product_catalog.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs"><span class="material-symbols-outlined" style="font-size: 18px">inventory_2</span><span>Products</span></a>
+          <a href="stock.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs"><span class="material-symbols-outlined" style="font-size: 18px">warehouse</span><span>Stock</span></a>
+          <a href="conflict_review.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-danger-600" style="font-size: 18px">gavel</span><span>Review</span></div><span class="text-[10px] font-bold bg-danger-600 text-white px-1.5 py-0.5 rounded-full">3</span></a>
+          <div class="h-px bg-neutral-100 my-2"></div>
+          <a href="staff_settings.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs"><span class="material-symbols-outlined" style="font-size: 18px">badge</span><span>Staff & Lease</span></a>
+        </nav>
+      </div>
+    </div>
+
+    <script>
+      // Data
+      const PRODUCTS = [
+        { id: "sugar", name: "White Sugar", nameAlt: "ነጭ ስኳር", unit: "PIECE", stock: 14000, threshold: 12000, status: "ACTIVE", cost: 9500 },
+        { id: "oil", name: "Sunflower Oil", nameAlt: "የሱፍ ዘይት", unit: "LITRE", stock: 2000, threshold: 5000, status: "ACTIVE", cost: 14500, low: true },
+        { id: "rice", name: "Imported Rice", nameAlt: "የውጭ ሩዝ", unit: "PIECE", stock: 18000, threshold: 10000, status: "ACTIVE", cost: 18000 },
+        { id: "coffee", name: "Yirgacheffe Coffee", nameAlt: "ይርጋጨፌ ቡና", unit: "PACK", stock: 12000, threshold: 6000, status: "ACTIVE", cost: 28000 },
+        { id: "salt", name: "Table Salt", nameAlt: "የገበታ ጨው", unit: "PACK", stock: 0, threshold: 20000, status: "INACTIVE", cost: 1800, out: true },
+        { id: "teff", name: "Mag Teff Flour", nameAlt: "የማግ ጤፍ", unit: "KG", stock: 24000, threshold: 10000, status: "ACTIVE", cost: 49000 },
+        { id: "tea", name: "Black Tea Bags", nameAlt: "ጥቁር ሻይ", unit: "PACK", stock: 9000, threshold: 5000, status: "ACTIVE", cost: 12000 },
+        { id: "soap", name: "Bar Soap", nameAlt: "የገላ ሳሙና", unit: "PACK", stock: 35000, threshold: 12000, status: "ACTIVE", cost: 4800 },
+      ];
+
+      const UNIT_LABELS = { PIECE: "Piece (pcs)", PACK: "Pack (pk)", KG: "Kilogram (kg)", GRAM: "Gram (g)", LITRE: "Litre (L)", MILLILITRE: "Millilitre (mL)" };
+      const UNIT_SYMBOLS = { PIECE: "pcs", PACK: "pk", KG: "kg", GRAM: "g", LITRE: "L", MILLILITRE: "mL" };
+      const UNIT_KINDS = { PIECE: "COUNT", PACK: "COUNT", KG: "MEASURE", GRAM: "MEASURE", LITRE: "MEASURE", MILLILITRE: "MEASURE" };
+
+      function formatCurrency(santim) { const sign = santim < 0 ? "−" : ""; const abs = Math.abs(santim); const birr = (abs / 100).toFixed(2); return sign + "ETB " + birr; }
+      function formatQty(qty, unit) { const kind = UNIT_KINDS[unit] || "MEASURE"; if (kind === "COUNT") return Math.round(qty) + " " + (UNIT_SYMBOLS[unit] || unit); return Number(qty).toFixed(3) + " " + (UNIT_SYMBOLS[unit] || unit); }
+
+      // Mock data for today
+      const TODAY_DATA = {
+        confirmed: { amount: 482000, count: 32 },
+        pending: { amount: 86000, count: 5 },
+        review: { amount: 42000, count: 2 },
+        valuation: { total: 8432000, uncosted: 4, approximate: 1 },
+        lowStock: [
+          { id: "oil", name: "Sunflower Oil", nameAlt: "የሱፍ ዘይት", stock: 2000, threshold: 5000, unit: "LITRE" },
+          { id: "salt", name: "Table Salt", nameAlt: "የገበታ ጨው", stock: 0, threshold: 20000, unit: "PACK" },
+          { id: "tea", name: "Black Tea Bags", nameAlt: "ጥቁር ሻይ", stock: 9000, threshold: 5000, unit: "PACK" },
+        ],
+        paymentBreakdown: [
+          { label: "Cash", count: 28, total: 420000 },
+          { label: "Telebirr", count: 4, total: 62000 },
+          { label: "Other", count: 0, total: 0 },
+        ],
+      };
+
+      // Owner mode detection
+      const IS_OWNER = true; // In real app, from session
+
+      function formatCurrency(santim) { const sign = santim < 0 ? "−" : ""; const abs = Math.abs(santim); const birr = (abs / 100).toFixed(2); return sign + "ETB " + birr; }
+      function formatQty(qty, unit) { const kind = UNIT_KINDS[unit] || "MEASURE"; if (kind === "COUNT") return Math.round(qty) + " " + (UNIT_SYMBOLS[unit] || unit); return Number(qty).toFixed(3) + " " + (UNIT_SYMBOLS[unit] || unit); }
+
+      // Load Dashboard
+      function loadDashboard(dateStr) {
+        const date = dateStr || new Date().toISOString().split("T")[0];
+        document.getElementById("date-select").value = date;
+        document.getElementById("eat-date").textContent = formatEATDate(date);
+
+        // Update buckets
+        document.getElementById("confirmed-amount").textContent = formatCurrency(TODAY_DATA.confirmed.amount);
+        document.getElementById("confirmed-count").textContent = `${TODAY_DATA.confirmed.count} sales completed`;
+        document.getElementById("pending-amount").textContent = formatCurrency(TODAY_DATA.pending.amount);
+        document.getElementById("pending-count").textContent = `${TODAY_DATA.pending.count} sales waiting to sync`;
+        document.getElementById("review-amount").textContent = formatCurrency(TODAY_DATA.review.amount);
+        document.getElementById("review-count").textContent = `${TODAY_DATA.review.count} transactions with stock conflict`;
+
+        // Owner valuation
+        if (IS_OWNER) {
+          document.getElementById("owner-valuation").style.display = "block";
+          document.getElementById("owner-actions").style.display = "flex";
+          document.getElementById("valuation-total").textContent = formatCurrency(TODAY_DATA.valuation.total);
+          document.getElementById("valuation-uncosted").textContent = `⚠️ ${TODAY_DATA.valuation.uncosted} items have no cost recorded`;
+          document.getElementById("valuation-approx").textContent = `ℹ️ ${TODAY_DATA.valuation.approximate} item${TODAY_DATA.valuation.approximate !== 1 ? "s" : ""} approximate`;
+        }
+
+        // Low stock
+        renderLowStock();
+        renderPaymentBreakdown();
+      }
+
+      function formatEATDate(dateStr) { const d = new Date(dateStr + "T00:00:00"); return d.toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric", timeZone: "Africa/Addis_Ababa" }); }
+      function setToday() { const today = new Date().toISOString().split("T")[0]; loadDashboard(today); }
+
+      function renderLowStock() {
+        const container = document.getElementById("low-stock-list");
+        container.innerHTML = TODAY_DATA.lowStock.map(item => {
+          const p = PRODUCTS.find(x => x.id === item.id);
+          const isOut = item.stock === 0;
+          return `
+          <article class="bg-white border border-neutral-200 rounded-lg p-3 flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <p class="text-xs font-bold text-neutral-900 truncate">${item.name}</p>
+              <p class="text-[11px] text-neutral-400 font-ethiopic">${item.nameAlt || ''}</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-right">
+                <span class="text-[10px] text-neutral-400 block leading-none">${isOut ? "OUT OF STOCK" : "Stock"}</span>
+                <span class="text-sm font-black font-mono text-neutral-900 tabular-nums">${isOut ? "0" : formatQty(item.stock, item.unit)}</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] text-neutral-400 block leading-none">Threshold</span>
+                <span class="text-xs font-mono text-neutral-500 tabular-nums">${formatQty(item.threshold, item.unit)}</span>
+              </div>
+              <button onclick="navigateToStock()" class="px-2 py-1.5 text-xs font-semibold text-primary-700 hover:text-primary-800 flex items-center gap-1"><span class="material-symbols-outlined" style="font-size: 14px">add_box</span>Restock</button>
+            </div>
+          </article>`;
+        }).join("");
+      }
+
+      function renderPaymentBreakdown() {
+        const container = document.getElementById("payment-breakdown");
+        if (!container) return;
+        container.innerHTML = TODAY_DATA.paymentBreakdown.map(p => `
+          <div class="flex items-center justify-between py-1 border-b border-neutral-50 last:border-0">
+            <span class="text-xs text-neutral-500 capitalize">${p.label.toLowerCase()}</span>
+            <div class="text-right"><span class="font-mono font-medium text-neutral-900 tabular-nums">${formatCurrency(p.total)}</span><br><span class="text-[10px] text-neutral-400">${p.count} sales</span></div>
+          </div>
+        `).join("");
+      }
+
+      function toggleSyncPopover() { const popover = document.getElementById("sync-popover"); const btn = document.getElementById("sync-pill-btn"); const isHidden = popover.classList.toggle("hidden"); btn.setAttribute("aria-expanded", !isHidden); }
+      function simulateSyncNow() { toggleOfflineModeDemo(); setTimeout(toggleOfflineModeDemo, 1500); }
+      function toggleOfflineModeDemo() { const isOffline = document.getElementById("sync-pill-label").textContent.includes("Offline"); const pill = document.getElementById("sync-pill-btn"); const label = document.getElementById("sync-pill-label"); const dot = document.getElementById("sync-pill-dot"); if (isOffline) { label.textContent = "Synced just now"; pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-success-50 text-success-800 border-success-200 hover:bg-success-100"; dot.className = "w-2 h-2 rounded-full bg-success-500 pulse-dot shrink-0"; } else { label.textContent = "Offline · 3 waiting"; pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-warning-50 text-warning-800 border-warning-200 hover:bg-warning-100"; dot.className = "w-2 h-2 rounded-full bg-warning-600 pulse-dot shrink-0"; } }
+      function exportCSV(type) { alert(`Exporting ${type}.csv...`); }
+      function navigateToStock() { window.open("stock.html", "_blank"); }
+      function navigateToReceive() { window.open("stock.html", "_blank"); }
+      function navigateToAdjust() { window.open("stock.html", "_blank"); }
+      function openValuationDetail() { alert("Open full valuation table"); }
+      function toggleMobileMenu() { document.getElementById("mobile-menu").classList.toggle("hidden"); }
+
+      // Init
+      document.getElementById("date-select").addEventListener("change", (e) => loadDashboard(e.target.value));
+      setToday();
+    </script>
+</body>
+</html>

@@ -28,15 +28,25 @@ release. Add a tool name to select part of the graph. For example, run
 
 # Engineering Standards
 
+## Precedence Rule
+
+When a general engineering skill, repository rule, domain skill, and existing code conflict:
+
+1. **Explicit SRS/Domain requirements and approved architecture decisions govern.**
+2. If an instruction conflicts with technical correctness, data integrity, or security, the agent must **stop and explain the conflict** rather than silently choosing whichever instruction was read last.
+3. Durable IndexedDB persistence and canonical sync contracts take precedence over temporary UI assumptions.
+
+## Core Guidelines
+
 - **Understand before changing:** Inspect relevant files, existing conventions, dependencies, and configuration before implementing. Prefer focused changes over unnecessary rewrites.
 - **Keep it simple:** Follow SOLID, DRY, and YAGNI pragmatically. Prefer clear, cohesive modules, low coupling, composition, and explicit data flow. Avoid speculative abstractions, unnecessary dependencies, and overengineering.
-- **Organize by feature:** Keep related components, hooks, types, business logic, and tests together. Put genuinely reusable code in shared modules. Introduce folders and abstractions when complexity justifies them, not by default.
-- **Prevent God components/modules:** Each component or module should have a clear primary responsibility. Extract UI sections, custom hooks, domain logic, or data-access modules when doing so improves cohesion, readability, reuse, or testability. Avoid both giant components and excessive fragmentation.
-- **Choose patterns deliberately:** Use composition, Strategy, Adapter, state machines, dependency inversion, or other patterns only when they solve a real problem. Prefer straightforward functions over unnecessary frameworks, inheritance, wrappers, and interfaces.
-- **React:** Follow the Rules of Hooks and preserve immutability. Derive values instead of duplicating state; use effects only for synchronization with external systems. Avoid unnecessary memoization, prop drilling, and global state. Keep rendering, business rules, and infrastructure separate where appropriate.
-- **TypeScript:** Preserve strict typing. Prefer precise types, narrowing, and runtime validation at trust boundaries. Avoid `any`, unsafe assertions, non-null assertions, and suppressed diagnostics unless justified.
-- **Testing:** Colocate unit/component tests with their implementation (`*.test.ts` / `*.test.tsx`). Use `tests/` for cross-feature integration, end-to-end tests, and shared test infrastructure. Test observable behavior, edge cases, failures, and regressions—not implementation details.
-- **Quality and security:** Preserve accessibility, handle loading/error/empty states, validate untrusted input, and never expose secrets. Follow existing styling and toolchain conventions.
-- **Validate changes:** Run relevant tests, `vp check`, and `vp build` as appropriate. Inspect the final diff. Report actual results honestly; never claim checks passed without running them.
+- **Organize by feature:** Keep related components, hooks, types, business logic, and tests together. Put genuinely reusable code in shared modules.
+- **State ownership:** Partition state according to source of truth: Server State, Persistent Offline Data (IndexedDB), URL Search Params, and Local UI State.
+- **React & TypeScript:** Follow the Rules of Hooks and preserve immutability. Strict typing with boundary validation for untrusted data. Never use `any` or loose `@ts-ignore` suppressions.
+- **Testing:** Colocate unit/component tests with their implementation (`*.test.ts` / `*.test.tsx`). Test observable behavior and failure edge cases.
+- **Validate changes:** Run `vp test`, `vp check`, and `vp build` before finalizing changes. Report actual results honestly.
 
-**Decision rule:** Choose the simplest maintainable design that meets the requirements. Do not introduce complexity merely to follow a principle, pattern, folder structure, or arbitrary size limit.
+## Custom Domain Skills
+
+- Consult [.agents/skills/react-typescript-application-engineering/SKILL.md](.agents/skills/react-typescript-application-engineering/SKILL.md) for React 19 architecture, TanStack Query, schema boundary validation, and context-sensitive UI states.
+- Consult [.agents/skills/stokari-offline-sync/SKILL.md](.agents/skills/stokari-offline-sync/SKILL.md) for Dexie/IndexedDB local storage, atomic outbox queue, client operation IDs, canonical sync contracts, and owner review status handling.
