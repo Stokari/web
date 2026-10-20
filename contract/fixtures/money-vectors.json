@@ -1,0 +1,80 @@
+[
+  {
+    "name": "zero_santim",
+    "input": 0,
+    "expected_santim": 0,
+    "expected_formatted": "0.00"
+  },
+  {
+    "name": "positive_santim",
+    "input": 10000,
+    "expected_santim": 10000,
+    "expected_formatted": "100.00"
+  },
+  {
+    "name": "large_santim",
+    "input": 99999999999,
+    "expected_santim": 99999999999,
+    "expected_formatted": "999999999.99"
+  },
+  {
+    "name": "parse_from_string",
+    "input": "12345",
+    "expected_santim": 12345,
+    "expected_formatted": "123.45"
+  },
+  {
+    "name": "parse_from_string_with_leading_zeros",
+    "input": "000123",
+    "expected_santim": 123,
+    "expected_formatted": "1.23"
+  },
+  {
+    "name": "round_half_up_0_005",
+    "input": "0.005",
+    "expected_santim": 1,
+    "expected_formatted": "0.01"
+  },
+  {
+    "name": "round_half_up_0_015",
+    "input": "0.015",
+    "expected_santim": 2,
+    "expected_formatted": "0.02"
+  },
+  {
+    "name": "round_half_down_0_004",
+    "input": "0.004",
+    "expected_santim": 0,
+    "expected_formatted": "0.00"
+  },
+  {
+    "name": "round_half_down_0_014",
+    "input": "0.014",
+    "expected_santim": 1,
+    "expected_formatted": "0.01"
+  },
+  {
+    "name": "negative_rejected",
+    "input": -1,
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  },
+  {
+    "name": "float_rejected",
+    "input": 100.5,
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  },
+  {
+    "name": "float_string_rejected",
+    "input": "100.50",
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  },
+  {
+    "name": "exceeds_max_rejected",
+    "input": 100000000000,
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  }
+]

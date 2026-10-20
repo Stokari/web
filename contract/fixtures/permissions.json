@@ -1,0 +1,17 @@
+{
+  "OWNER": [
+    "adjust_stock",
+    "close_shop",
+    "create_shop",
+    "deactivate_staff",
+    "invite_staff",
+    "manage_products",
+    "manage_settings",
+    "receive_stock",
+    "resolve_conflicts",
+    "sync_pull",
+    "sync_push",
+    "view_reports"
+  ],
+  "ATTENDANT": ["adjust_stock", "manage_products", "receive_stock", "sync_pull", "sync_push"]
+}
