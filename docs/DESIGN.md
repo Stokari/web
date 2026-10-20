@@ -121,17 +121,18 @@ Stokari has **fundamentally different interfaces** for the two user types. They 
 
 **Target:** Users accustomed to paper notebooks. Zero training tolerance.
 
-| Characteristic | Specification |
-|---|---|
-| **Navigation** | Bottom tab bar only (5 tabs: Sell, Products, Stock, Today, More). No sidebar. No drawer menus. |
-| **Information Density** | Single-column card flow. One task per screen. No tables. |
-| **Primary Action** | Giant thumb-zone button (54px tall) anchored at bottom. |
-| **Typography** | Larger base size (16px body). High contrast. Minimal metadata. |
-| **Color Usage** | Status colors ONLY for sync state and critical alerts. No decorative color. |
-| **Interaction** | Tap = immediate response. No drag, swipe, or multi-step wizards for core flow. |
-| **Error Handling** | Inline, contextual. Never modal dialogs for validation errors. |
+| Characteristic          | Specification                                                                                  |
+| ----------------------- | ---------------------------------------------------------------------------------------------- |
+| **Navigation**          | Bottom tab bar only (5 tabs: Sell, Products, Stock, Today, More). No sidebar. No drawer menus. |
+| **Information Density** | Single-column card flow. One task per screen. No tables.                                       |
+| **Primary Action**      | Giant thumb-zone button (54px tall) anchored at bottom.                                        |
+| **Typography**          | Larger base size (16px body). High contrast. Minimal metadata.                                 |
+| **Color Usage**         | Status colors ONLY for sync state and critical alerts. No decorative color.                    |
+| **Interaction**         | Tap = immediate response. No drag, swipe, or multi-step wizards for core flow.                 |
+| **Error Handling**      | Inline, contextual. Never modal dialogs for validation errors.                                 |
 
 **Sell Screen Layout (Mobile Only):**
+
 ```
 ┌─────────────────────────────────────────┐
 │ Stokari · Shop Name        [🟡 Off·3]  │ ← Sticky header (48px)
@@ -155,17 +156,18 @@ Stokari has **fundamentally different interfaces** for the two user types. They 
 
 **Target:** Business owners making financial decisions, resolving conflicts, managing staff.
 
-| Characteristic | Specification |
-|---|---|
-| **Navigation** | Fixed left sidebar (240px) + top header. Tabs become sidebar sections. |
-| **Information Density** | High-density tables with sorting, filtering, bulk actions. Multi-column layouts. |
-| **Primary Actions** | Toolbar buttons (not giant buttons). Keyboard shortcuts. |
-| **Typography** | Standard base size (14px). Monospace for all numbers. Compact rows (36px height). |
-| **Color Usage** | Semantic status colors for revenue buckets, stock levels, lease health. |
-| **Interaction** | Hover states, right-click context menus, keyboard navigation, column resize. |
-| **Error Handling** | Toast notifications + inline form validation. Modal for destructive actions. |
+| Characteristic          | Specification                                                                     |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| **Navigation**          | Fixed left sidebar (240px) + top header. Tabs become sidebar sections.            |
+| **Information Density** | High-density tables with sorting, filtering, bulk actions. Multi-column layouts.  |
+| **Primary Actions**     | Toolbar buttons (not giant buttons). Keyboard shortcuts.                          |
+| **Typography**          | Standard base size (14px). Monospace for all numbers. Compact rows (36px height). |
+| **Color Usage**         | Semantic status colors for revenue buckets, stock levels, lease health.           |
+| **Interaction**         | Hover states, right-click context menus, keyboard navigation, column resize.      |
+| **Error Handling**      | Toast notifications + inline form validation. Modal for destructive actions.      |
 
 **Owner Dashboard Layout (Desktop):**
+
 ```
 ┌──────────────────────┬──────────────────────────────────────┐
 │ Sidebar (240px)      │ Header + SyncPill + User Menu        │
@@ -196,6 +198,7 @@ Thumb-reach Save button  Compact modals           Split-pane conflict drawer
 ```
 
 ### 4.1 Mobile Viewports (< 640px) — Attendant Primary
+
 - Viewport width down to **320px** must render without horizontal scrolling.
 - Sticky top header with the `SyncPill` status indicator.
 - Sticky bottom tab bar (Sell, Products, Stock, Today, More).
@@ -204,12 +207,14 @@ Thumb-reach Save button  Compact modals           Split-pane conflict drawer
 - No horizontal scrolling tables — use card stacks.
 
 ### 4.2 Tablet Viewports (640px – 1023px) — Hybrid
+
 - **Sell Screen:** Split two-column layout (Product search/picker left, Cart + Checkout right).
 - **Owner Screens:** Condensed tables with secondary columns collapsed into subtitle text.
 - Modals are centered sheets with max-width 480px.
 - Sidebar collapses to icon-only rail (48px) with hover/tooltip expansion.
 
 ### 4.3 Desktop Viewports (≥ 1024px) — Owner Primary
+
 - Fixed left sidebar navigation (width `240px`, collapsible to 48px icon rail).
 - Full tabular views with sorting, filtering, and bulk action toolbars.
 - Split-pane conflict drawer (320px right panel) for review workflows.
@@ -225,15 +230,16 @@ Thumb-reach Save button  Compact modals           Split-pane conflict drawer
 
 **States (mutually exclusive):**
 
-| State | Background | Border | Text | Icon | Label Format |
-|---|---|---|---|---|---|
-| `synced` | `#ECFDF5` | `#A7F3D0` | `#065F46` | 🟢 | `Synced {relativeTime}` |
-| `offline_pending` | `#FFFBEB` | `#FDE68A` | `#92400E` | 🟡 | `Offline · {count} waiting` |
-| `syncing` | `#F1F5F9` | `#CBD5E1` | `#334155` | 🔄 | `Syncing…` |
-| `review_required` | `#FEF2F2` | `#FECACA` | `#991B1B` | 🔴 | `Review Required ({count})` |
-| `local_only` | `#F1F5F9` | `#CBD5E1` | `#334155` | 📴 | `Local Only` |
+| State             | Background | Border    | Text      | Icon | Label Format                |
+| ----------------- | ---------- | --------- | --------- | ---- | --------------------------- |
+| `synced`          | `#ECFDF5`  | `#A7F3D0` | `#065F46` | 🟢   | `Synced {relativeTime}`     |
+| `offline_pending` | `#FFFBEB`  | `#FDE68A` | `#92400E` | 🟡   | `Offline · {count} waiting` |
+| `syncing`         | `#F1F5F9`  | `#CBD5E1` | `#334155` | 🔄   | `Syncing…`                  |
+| `review_required` | `#FEF2F2`  | `#FECACA` | `#991B1B` | 🔴   | `Review Required ({count})` |
+| `local_only`      | `#F1F5F9`  | `#CBD5E1` | `#334155` | 📴   | `Local Only`                |
 
 **Popover (on tap/click):**
+
 - Fixed width 280px, anchored to pill.
 - Content: Connection status, last sync (EAT), outbox count, storage used/available, persistent storage status.
 - Primary button: "Sync Now" (disabled when syncing).
@@ -243,17 +249,17 @@ Thumb-reach Save button  Compact modals           Split-pane conflict drawer
 
 ```typescript
 // Currency (Ethiopian Birr) — ALWAYS
-formatCurrency(12500)  // "ETB 125.00" — exactly 2 decimals, tabular monospace
-formatCurrency(0)      // "ETB 0.00"
-formatCurrency(-500)   // "−ETB 5.00" (minus sign, not dash)
+formatCurrency(12500); // "ETB 125.00" — exactly 2 decimals, tabular monospace
+formatCurrency(0); // "ETB 0.00"
+formatCurrency(-500); // "−ETB 5.00" (minus sign, not dash)
 
 // Quantities — UNIT-AWARE
-formatQuantity(3000, 'PIECE')   // "3 pcs" (0 decimals)
-formatQuantity(12000, 'PACK')   // "12 pk" (0 decimals)
-formatQuantity(2500, 'KG')      // "2.500 kg" (exact 3 decimals)
-formatQuantity(750, 'LITRE')    // "0.750 L" (exact 3 decimals)
-formatQuantity(250, 'GRAM')     // "0.250 kg" (stored as KG milli-units)
-formatQuantity(-3000, 'KG')     // "−3.000 kg" (oversell)
+formatQuantity(3000, "PIECE"); // "3 pcs" (0 decimals)
+formatQuantity(12000, "PACK"); // "12 pk" (0 decimals)
+formatQuantity(2500, "KG"); // "2.500 kg" (exact 3 decimals)
+formatQuantity(750, "LITRE"); // "0.750 L" (exact 3 decimals)
+formatQuantity(250, "GRAM"); // "0.250 kg" (stored as KG milli-units)
+formatQuantity(-3000, "KG"); // "−3.000 kg" (oversell)
 
 // Confirmed vs Projected — ALWAYS SHOWN TOGETHER WHEN DIFFERENT
 // "14.000 kg confirmed" + secondary "(11.000 kg projected)"
@@ -268,25 +274,27 @@ formatQuantity(-3000, 'KG')     // "−3.000 kg" (oversell)
 .input {
   height: 42px;
   padding: 0 12px;
-  border: 1px solid #CBD5E1;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  background: #FFFFFF;
+  background: #ffffff;
   font-size: 14px;
-  color: #0F172A;
+  color: #0f172a;
   width: 100%;
-  transition: border-color 150ms, background-color 150ms;
+  transition:
+    border-color 150ms,
+    background-color 150ms;
 }
 
 /* Focus-Visible (keyboard) */
 .input:focus-visible {
   outline: none;
-  border: 2px solid #1E40AF;
+  border: 2px solid #1e40af;
 }
 
 /* Invalid / Error */
 .input[aria-invalid="true"] {
-  border: 2px solid #991B1B;
-  background: #FEF2F2;
+  border: 2px solid #991b1b;
+  background: #fef2f2;
 }
 
 /* Label (every input MUST have one) */
@@ -301,29 +309,32 @@ formatQuantity(-3000, 'KG')     // "−3.000 kg" (oversell)
 /* Error Message */
 .error-message {
   font-size: 12px;
-  color: #991B1B;
+  color: #991b1b;
   margin-top: 4px;
   display: flex;
   align-items: center;
   gap: 4px;
 }
-.error-message::before { content: "⚠"; }
+.error-message::before {
+  content: "⚠";
+}
 ```
 
 **Quantity Input Specialization:**
+
 - `inputmode="numeric"` for `PIECE`/`PACK` (no decimal key on mobile keypad).
 - `inputmode="decimal"` for `KG`/`LITRE`/`GRAM`/`MILLILITRE` (decimal key shown).
 - Stepper buttons `[-] [+]` always visible on desktop; on mobile, tap quantity opens bottom sheet keypad.
 
 ### 5.4 Buttons (Strict Variants)
 
-| Variant | Background | Hover | Active | Text | Border | Height | Radius | Weight |
-|---|---|---|---|---|---|---|---|---|
-| **Primary** | `#1E40AF` | `#1D4ED8` | `#172554` | `#FFFFFF` | none | 44px (54px mobile primary) | 8px | 600 |
-| **Secondary** | `#FFFFFF` | `#F8FAFC` | `#F1F5F9` | `#0F172A` | 1px `#CBD5E1` | 42px | 8px | 500 |
-| **Destructive** | `#FEF2F2` | `#FEE2E2` | `#FECACA` | `#991B1B` | 1px `#FECACA` | 42px | 8px | 500 |
-| **Ghost** | transparent | `#F1F5F9` | `#E2E8F0` | `#1E40AF` | none | 42px | 8px | 500 |
-| **Disabled** | `#F1F5F9` | — | — | `#94A3B8` | 1px `#E2E8F0` | — | 8px | 500 |
+| Variant         | Background  | Hover     | Active    | Text      | Border        | Height                     | Radius | Weight |
+| --------------- | ----------- | --------- | --------- | --------- | ------------- | -------------------------- | ------ | ------ |
+| **Primary**     | `#1E40AF`   | `#1D4ED8` | `#172554` | `#FFFFFF` | none          | 44px (54px mobile primary) | 8px    | 600    |
+| **Secondary**   | `#FFFFFF`   | `#F8FAFC` | `#F1F5F9` | `#0F172A` | 1px `#CBD5E1` | 42px                       | 8px    | 500    |
+| **Destructive** | `#FEF2F2`   | `#FEE2E2` | `#FECACA` | `#991B1B` | 1px `#FECACA` | 42px                       | 8px    | 500    |
+| **Ghost**       | transparent | `#F1F5F9` | `#E2E8F0` | `#1E40AF` | none          | 42px                       | 8px    | 500    |
+| **Disabled**    | `#F1F5F9`   | —         | —         | `#94A3B8` | 1px `#E2E8F0` | —                          | 8px    | 500    |
 
 **Icon Buttons:** 40×40px minimum. Icon 20×20px. `aria-label` required.
 
@@ -343,21 +354,42 @@ formatQuantity(-3000, 'KG')     // "−3.000 kg" (oversell)
 }
 
 /* Variants — ICON + TEXT MANDATORY */
-.badge-success    { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
-.badge-warning    { background: #FFFBEB; color: #92400E; border: 1px solid #FDE68A; }
-.badge-danger     { background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
-.badge-neutral    { background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1; }
-.badge-info       { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
+.badge-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+.badge-warning {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+.badge-danger {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+.badge-neutral {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+.badge-info {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
 ```
 
 **Sync State Badges (Record-Level):**
-| State | Badge Variant | Icon | Text |
-|---|---|---|---|
-| `WAITING_TO_SYNC` | warning | 🟡 | Waiting to sync |
-| `SYNCING` | info | 🔄 | Syncing… |
-| `SYNCED` | success | 🟢 | Synced |
-| `NEEDS_REVIEW` | danger | 🔴 | Needs review |
-| `REJECTED` | neutral | ⚪ | Rejected |
+
+| State             | Badge Variant | Icon | Text            |
+| ----------------- | ------------- | ---- | --------------- |
+| `WAITING_TO_SYNC` | warning       | 🟡   | Waiting to sync |
+| `SYNCING`         | info          | 🔄   | Syncing…        |
+| `SYNCED`          | success       | 🟢   | Synced          |
+| `NEEDS_REVIEW`    | danger        | 🔴   | Needs review    |
+| `REJECTED`        | neutral       | ⚪   | Rejected        |
 
 ### 5.6 Data Table (Owner/Desktop Only)
 
@@ -370,25 +402,33 @@ formatQuantity(-3000, 'KG')     // "−3.000 kg" (oversell)
 .table th {
   text-align: left;
   padding: 8px 12px;
-  border-bottom: 1px solid #CBD5E1;
+  border-bottom: 1px solid #cbd5e1;
   font-weight: 600;
   color: #475569;
-  background: #F8FAFC;
+  background: #f8fafc;
   position: sticky;
   top: 0;
   z-index: 1;
 }
 .table td {
   padding: 8px 12px;
-  border-bottom: 1px solid #E2E8F0;
-  color: #0F172A;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
   vertical-align: middle;
 }
 .table tbody tr:hover td {
-  background: #F8FAFC;
+  background: #f8fafc;
 }
-.table .numeric { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
-.table .truncated { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.table .numeric {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+.table .truncated {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 ```
 
 **Row Height:** 40px compact / 48px comfortable (user preference in settings).
@@ -397,18 +437,47 @@ formatQuantity(-3000, 'KG')     // "−3.000 kg" (oversell)
 ### 5.7 Mobile Card List (Attendant/Mobile)
 
 ```css
-.card-list { display: flex; flex-direction: column; gap: 8px; }
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 12px;
 }
-.card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
-.card-title { font-weight: 600; color: #0F172A; font-size: 14px; }
-.card-subtitle { font-size: 13px; color: #475569; }
-.card-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: #64748B; }
-.card-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #E2E8F0; }
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.card-title {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 14px;
+}
+.card-subtitle {
+  font-size: 13px;
+  color: #475569;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748b;
+}
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
 ```
 
 ### 5.8 Context-Sensitive Data View States (Every List)
@@ -429,14 +498,15 @@ Every data collection view MUST handle these four states explicitly:
 ```tsx
 // Three cards in a row (desktop) / stack (mobile)
 interface RevenueBucketProps {
-  label: 'Confirmed' | 'Pending' | 'Needs Review';
-  amount: number;        // santim
-  count: number;         // transaction count
-  variant: 'success' | 'warning' | 'danger';
+  label: "Confirmed" | "Pending" | "Needs Review";
+  amount: number; // santim
+  count: number; // transaction count
+  variant: "success" | "warning" | "danger";
 }
 ```
 
 **Visual:**
+
 - **Confirmed (Emerald):** `ETB 4,820.00` large / `32 sales` small
 - **Pending (Amber):** `ETB 860.00` / `5 sales waiting to sync`
 - **Review (Crimson):** `ETB 420.00` / `2 transactions with stock conflict`
@@ -447,7 +517,7 @@ interface RevenueBucketProps {
 
 ```tsx
 interface ValuationCardProps {
-  total: number;              // santim
+  total: number; // santim
   uncostedCount: number;
   approximateCount: number;
   negativeOrReviewCount: number;
@@ -455,6 +525,7 @@ interface ValuationCardProps {
 ```
 
 **Visual:**
+
 - Large: `ETB 84,320.00`
 - Helper line: `ℹ️ 4 items have no cost recorded; 1 item approximate.`
 - Click "View Details" → opens full valuation table (modal on mobile, drawer on desktop).
@@ -465,8 +536,8 @@ interface ValuationCardProps {
 interface LowStockCardProps {
   productName: string;
   productNameAm?: string;
-  currentQty: number;      // milli-units
-  threshold: number;       // milli-units
+  currentQty: number; // milli-units
+  threshold: number; // milli-units
   unit: Unit;
   onRestock: () => void;
 }
@@ -479,10 +550,15 @@ interface LowStockCardProps {
 ```tsx
 interface ConflictCaseCardProps {
   caseId: string;
-  type: 'OFFLINE_OVERSELL' | 'PRODUCT_INACTIVE' | 'AUTHORIZATION_REVIEW' | 'INVALID_STOCK_OPERATION' | 'CANCELLATION_CONFLICT';
+  type:
+    | "OFFLINE_OVERSELL"
+    | "PRODUCT_INACTIVE"
+    | "AUTHORIZATION_REVIEW"
+    | "INVALID_STOCK_OPERATION"
+    | "CANCELLATION_CONFLICT";
   productName: string;
   productNameAm?: string;
-  currentBalance: number;     // milli-units (can be negative)
+  currentBalance: number; // milli-units (can be negative)
   unit: Unit;
   timeline: ConflictEvent[];
   onResolve: (resolution: Resolution) => void;
@@ -492,6 +568,7 @@ interface ConflictCaseCardProps {
 **Timeline Row:** `14:02 · −7.000 kg · SALE · Hana (Register 1)` — monospace numbers, actor name, device.
 
 **Resolution Actions (always these three for OFFLINE_OVERSELL):**
+
 1. **Record Restock** — qty input + note → `RECEIPT` entry
 2. **Cancel Sale** — select sale from list → mandatory reason → `SALE_CANCELLATION`
 3. **Acknowledge Deficit** — confirmation checkbox → closes case, accepts negative balance
@@ -503,7 +580,7 @@ interface LeaseHealthRowProps {
   attendantName: string;
   email: string;
   deviceName: string;
-  leaseStatus: 'valid' | 'expiring' | 'expired' | 'revoked';
+  leaseStatus: "valid" | "expiring" | "expired" | "revoked";
   daysRemaining: number;
   onDeactivate: () => void;
 }
@@ -531,12 +608,13 @@ interface CartLineProps {
   unit: Unit;
   unitPriceSantim: number;
   lineTotalSantim: number;
-  onQtyChange: (delta: number) => void;  // -1, +1, or keypad result
+  onQtyChange: (delta: number) => void; // -1, +1, or keypad result
   onRemove: () => void;
 }
 ```
 
 **Visual:**
+
 - Left: Product name (bold) + unit badge (e.g., "1 kg" / "pcs")
 - Center: Stepper `[-] 2 [+]` with current qty
 - Right: `× ETB 125.00 = ETB 250.00` (monospace, right-aligned)
@@ -573,15 +651,16 @@ interface CartLineProps {
 
 **Bottom Tab Bar (Fixed, 56px tall):**
 
-| Tab | Icon | Label | Badge | Screen |
-|---|---|---|---|---|
-| Sell | 🛒 | Sell | — | POS till |
-| Products | 📦 | Products | — | Search/browse (read-only) |
-| Stock | 📊 | Stock | low-count | View stock levels (read-only) |
-| Today | 📈 | Today | — | Dashboard (read-only, no valuation) |
-| More | ⋮ | More | sync-state | Settings, Sync, Profile, Export |
+| Tab      | Icon | Label    | Badge      | Screen                              |
+| -------- | ---- | -------- | ---------- | ----------------------------------- |
+| Sell     | 🛒   | Sell     | —          | POS till                            |
+| Products | 📦   | Products | —          | Search/browse (read-only)           |
+| Stock    | 📊   | Stock    | low-count  | View stock levels (read-only)       |
+| Today    | 📈   | Today    | —          | Dashboard (read-only, no valuation) |
+| More     | ⋮    | More     | sync-state | Settings, Sync, Profile, Export     |
 
 **More Screen (Attendant):**
+
 - Sync status detail (same as SyncPill popover)
 - Device info, app version
 - Export pending records (JSON)
@@ -591,13 +670,14 @@ interface CartLineProps {
 
 **Left Sidebar (240px, collapsible to 48px icon rail):**
 
-| Section | Items | Badge Source |
-|---|---|---|
-| **Operations** | Sell, Products, Stock, Today | — |
+| Section        | Items                                                      | Badge Source     |
+| -------------- | ---------------------------------------------------------- | ---------------- |
+| **Operations** | Sell, Products, Stock, Today                               | —                |
 | **Management** | Review (conflict count), Staff (attendant count), Settings | Real-time counts |
-| **System** | Sync, Backup, About | — |
+| **System**     | Sync, Backup, About                                        | —                |
 
 **Responsive Behavior:**
+
 - `< 640px`: Bottom tab bar (same as attendant) + "Owner Tools" tab for Review/Staff/Settings.
 - `640–1023px`: Collapsible sidebar (icon rail default, expands on hover).
 - `≥ 1024px`: Full sidebar expanded by default.
@@ -606,13 +686,13 @@ interface CartLineProps {
 
 ## 9. Modals, Sheets & Drawers
 
-| Pattern | Mobile (< 640px) | Tablet (640–1023px) | Desktop (≥ 1024px) |
-|---|---|---|---|
-| **Confirmation / Simple Form** | Bottom sheet (90% height, drag handle) | Centered modal (max-w 480px) | Centered modal (max-w 480px) |
-| **Complex Form (Create Product)** | Full-screen sheet (swipe down to dismiss) | Large modal (max-w 640px) | Large modal (max-w 640px) |
-| **Conflict Review** | Full-screen sheet | Right drawer (320px) | Right drawer (320px) |
-| **Stock History / Audit** | Full-screen sheet | Right drawer (400px) | Right drawer (400px) |
-| **Settings Forms** | Full-screen sheet | Modal | Modal |
+| Pattern                           | Mobile (< 640px)                          | Tablet (640–1023px)          | Desktop (≥ 1024px)           |
+| --------------------------------- | ----------------------------------------- | ---------------------------- | ---------------------------- |
+| **Confirmation / Simple Form**    | Bottom sheet (90% height, drag handle)    | Centered modal (max-w 480px) | Centered modal (max-w 480px) |
+| **Complex Form (Create Product)** | Full-screen sheet (swipe down to dismiss) | Large modal (max-w 640px)    | Large modal (max-w 640px)    |
+| **Conflict Review**               | Full-screen sheet                         | Right drawer (320px)         | Right drawer (320px)         |
+| **Stock History / Audit**         | Full-screen sheet                         | Right drawer (400px)         | Right drawer (400px)         |
+| **Settings Forms**                | Full-screen sheet                         | Modal                        | Modal                        |
 
 **Sheet Handle:** Always visible drag indicator (24×4px, `#CBD5E1`).
 **Backdrop:** `rgba(15, 23, 42, 0.4)` — click to dismiss (except destructive actions).
@@ -735,10 +815,10 @@ interface CartLineProps {
 
 ```tsx
 interface SyncPillProps {
-  state: 'synced' | 'offline_pending' | 'syncing' | 'review_required' | 'local_only';
+  state: "synced" | "offline_pending" | "syncing" | "review_required" | "local_only";
   pendingCount?: number;
   reviewCount?: number;
-  lastSyncAt?: string;        // ISO timestamp
+  lastSyncAt?: string; // ISO timestamp
   onSyncNow: () => void;
   onDetailsClick: () => void;
 }
@@ -748,14 +828,14 @@ interface SyncPillProps {
 
 ```tsx
 interface QuantityInputProps {
-  value: number;              // milli-units
+  value: number; // milli-units
   unit: Unit;
   onChange: (value: number) => void;
-  min?: number;               // default 1
-  max?: number;               // default 999_999_999
+  min?: number; // default 1
+  max?: number; // default 999_999_999
   disabled?: boolean;
-  showStepper?: boolean;      // default true on desktop
-  showQuickChips?: boolean;   // default true
+  showStepper?: boolean; // default true on desktop
+  showQuickChips?: boolean; // default true
 }
 ```
 
@@ -765,14 +845,14 @@ interface QuantityInputProps {
 interface DataTableProps<T> {
   columns: ColumnDef<T>[];
   data: T[];
-  sortable?: boolean;         // default true
-  filterable?: boolean;       // default true
-  selectable?: boolean;       // default false
+  sortable?: boolean; // default true
+  filterable?: boolean; // default true
+  selectable?: boolean; // default false
   onRowClick?: (row: T) => void;
   onSelectionChange?: (selected: T[]) => void;
   emptyState?: ReactNode;
   loading?: boolean;
-  density?: 'compact' | 'comfortable';  // user preference
+  density?: "compact" | "comfortable"; // user preference
 }
 ```
 
@@ -780,8 +860,8 @@ interface DataTableProps<T> {
 
 ```tsx
 interface RevenueBucketProps {
-  variant: 'confirmed' | 'pending' | 'review';
-  amount: number;      // santim
+  variant: "confirmed" | "pending" | "review";
+  amount: number; // santim
   count: number;
   label: string;
 }
@@ -804,35 +884,36 @@ interface ConflictCaseCardProps {
 ```css
 :root {
   /* Colors */
-  --color-primary: #1E40AF;
-  --color-primary-hover: #1D4ED8;
+  --color-primary: #1e40af;
+  --color-primary-hover: #1d4ed8;
   --color-primary-active: #172554;
-  --color-primary-contrast: #FFFFFF;
-  --color-background: #F8FAFC;
-  --color-surface: #FFFFFF;
-  --color-surface-subtle: #F1F5F9;
-  --color-border: #E2E8F0;
-  --color-border-strong: #CBD5E1;
-  --color-text: #0F172A;
+  --color-primary-contrast: #ffffff;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-text: #0f172a;
   --color-text-secondary: #475569;
-  --color-text-muted: #64748B;
-  --color-success: #065F46;
-  --color-success-bg: #ECFDF5;
-  --color-success-border: #A7F3D0;
-  --color-warning: #92400E;
-  --color-warning-bg: #FFFBEB;
-  --color-warning-border: #FDE68A;
-  --color-danger: #991B1B;
-  --color-danger-bg: #FEF2F2;
-  --color-danger-border: #FECACA;
+  --color-text-muted: #64748b;
+  --color-success: #065f46;
+  --color-success-bg: #ecfdf5;
+  --color-success-border: #a7f3d0;
+  --color-warning: #92400e;
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #fde68a;
+  --color-danger: #991b1b;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
   --color-neutral: #334155;
-  --color-neutral-bg: #F1F5F9;
-  --color-neutral-border: #CBD5E1;
+  --color-neutral-bg: #f1f5f9;
+  --color-neutral-border: #cbd5e1;
 
   /* Typography */
-  --font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
-  --font-family-ethiopic: 'Noto Sans Ethiopic', 'Abyssinica SIL', sans-serif;
+  --font-family:
+    Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --font-family-ethiopic: "Noto Sans Ethiopic", "Abyssinica SIL", sans-serif;
 
   /* Spacing */
   --space-xs: 4px;

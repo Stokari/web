@@ -1,462 +1,1480 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stokari · POS Till (Owner Desktop)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ["Inter", "system-ui", "sans-serif"],
-            mono: ['"JetBrains Mono"', "monospace"],
-            ethiopic: ['"Noto Sans Ethiopic"', "sans-serif"],
-          },
-          colors: {
-            primary: { 50: "#eff6ff", 100: "#dbeafe", 500: "#3b82f6", 600: "#2563eb", 700: "#1d4ed8", 800: "#1e40af", 900: "#172554" },
-            success: { 50: "#ecfdf5", 100: "#a7f3d0", 600: "#059669", 700: "#047857", 800: "#065f46", 900: "#022c22" },
-            warning: { 50: "#fffbeb", 100: "#fde68a", 600: "#d97706", 700: "#b45309", 800: "#92400e", 900: "#78350f" },
-            danger: { 50: "#fef2f2", 100: "#fecaca", 600: "#dc2626", 700: "#b91c1c", 800: "#991b1b", 900: "#7f1d1d" },
-            neutral: { 50: "#f8fafc", 100: "#f1f5f9", 200: "#e2e8f0", 300: "#cbd5e1", 400: "#94a3b8", 500: "#64748b", 600: "#475569", 700: "#334155", 800: "#1e293b", 900: "#0f172a" },
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stokari · POS Till (Owner Desktop)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "monospace"],
+              ethiopic: ['"Noto Sans Ethiopic"', "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#172554",
+              },
+              success: {
+                50: "#ecfdf5",
+                100: "#a7f3d0",
+                600: "#059669",
+                700: "#047857",
+                800: "#065f46",
+                900: "#022c22",
+              },
+              warning: {
+                50: "#fffbeb",
+                100: "#fde68a",
+                600: "#d97706",
+                700: "#b45309",
+                800: "#92400e",
+                900: "#78350f",
+              },
+              danger: {
+                50: "#fef2f2",
+                100: "#fecaca",
+                600: "#dc2626",
+                700: "#b91c1c",
+                800: "#991b1b",
+                900: "#7f1d1d",
+              },
+              neutral: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
           },
         },
-      },
-    };
-  </script>
-  <style>
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { margin: 0; font-family: "Inter", system-ui, sans-serif; }
-    .material-symbols-outlined {
-      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      display: inline-flex; align-items: center; vertical-align: middle; line-height: 1;
-    }
-    .tabular-nums { font-variant-numeric: tabular-nums; font-family: "JetBrains Mono", monospace; }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-corner { background: transparent; }
-    @keyframes pulse-subtle { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .pulse-dot { animation: pulse-subtle 2s ease-in-out infinite; }
-    @media (prefers-reduced-motion: reduce) { .pulse-dot { animation: none; opacity: 1; } }
-  </style>
-</head>
-<body class="h-screen bg-neutral-50 text-neutral-900 antialiased flex">
-  <!-- LEFT SIDEBAR (240px) -->
-  <aside class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-neutral-200 z-30 flex flex-col" aria-label="Main navigation">
-    <!-- Header in sidebar -->
-    <div class="h-14 border-b border-neutral-200 px-4 flex items-center gap-3">
-      <div class="w-8 h-8 rounded-md bg-primary-800 flex items-center justify-center text-white shrink-0 shadow-sm">
-        <span class="material-symbols-outlined" style="font-size: 18px">storefront</span>
-      </div>
-      <div>
-        <p class="text-sm font-bold tracking-tight text-neutral-900">Stokari</p>
-        <p class="text-[11px] text-neutral-500 font-mono leading-none">Central Kiosk</p>
-      </div>
-    </div>
-
-    <nav class="flex-1 p-3 space-y-1 overflow-y-auto" role="navigation" aria-label="Sidebar navigation">
-      <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-primary-50 text-primary-800 font-semibold text-xs transition-colors" aria-current="page">
-        <div class="flex items-center gap-2.5">
-          <span class="material-symbols-outlined text-primary-800" style="font-size: 18px">point_of_sale</span>
-          <span>POS Till / Sell</span>
+      };
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      .tabular-nums {
+        font-variant-numeric: tabular-nums;
+        font-family: "JetBrains Mono", monospace;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+      @keyframes pulse-subtle {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .pulse-dot {
+        animation: pulse-subtle 2s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .pulse-dot {
+          animation: none;
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body class="h-screen bg-neutral-50 text-neutral-900 antialiased flex">
+    <!-- LEFT SIDEBAR (240px) -->
+    <aside
+      class="fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-neutral-200 z-30 flex flex-col"
+      aria-label="Main navigation"
+    >
+      <!-- Header in sidebar -->
+      <div class="h-14 border-b border-neutral-200 px-4 flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-md bg-primary-800 flex items-center justify-center text-white shrink-0 shadow-sm"
+        >
+          <span class="material-symbols-outlined" style="font-size: 18px">storefront</span>
         </div>
-        <span class="text-[10px] font-bold bg-primary-800 text-white px-1.5 py-0.5 rounded-full">2</span>
-      </a>
-      <a href="today_dashboard.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors">
-        <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">bar_chart</span>
-        <span>Today's Overview</span>
-      </a>
-      <a href="product_catalog.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors">
-        <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">inventory_2</span>
-        <span>Product Catalog</span>
-      </a>
-      <a href="stock.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors">
-        <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">warehouse</span>
-        <span>Stock & Movements</span>
-      </a>
-      <a href="conflict_review.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors">
-        <div class="flex items-center gap-2.5">
-          <span class="material-symbols-outlined text-danger-600" style="font-size: 18px">gavel</span>
-          <span>Conflict Review</span>
-        </div>
-        <span class="text-[10px] font-bold bg-danger-600 text-white px-1.5 py-0.5 rounded-full">3</span>
-      </a>
-      <div class="h-px bg-neutral-100 my-2"></div>
-      <a href="staff_settings.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors">
-        <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px">badge</span>
-        <span>Staff & Lease</span>
-      </a>
-    </nav>
-
-    <!-- Sidebar Footer -->
-    <div class="p-3 border-t border-neutral-100 text-[11px] text-neutral-400 font-mono space-y-1">
-      <div class="flex items-center justify-between">
-        <span>DEVICE:</span>
-        <span class="text-neutral-700 font-bold">ETB-POS-044</span>
-      </div>
-      <div class="flex items-center justify-between">
-        <span>NETWORK:</span>
-        <span id="sidebar-net-state" class="text-success-700 font-bold">ONLINE</span>
-      </div>
-      <div class="flex items-center justify-between">
-        <span>ROLE:</span>
-        <span class="text-primary-700 font-bold">Owner</span>
-      </div>
-    </div>
-  </aside>
-
-  <!-- TOP BAR (48px) - Only on desktop for SyncPill -->
-  <header class="fixed left-64 right-0 top-0 h-14 bg-white border-b border-neutral-200 z-40 px-4 flex items-center justify-between" style="display: none;" id="desktop-header">
-    <div class="flex items-center gap-3">
-      <span class="text-sm font-bold tracking-tight text-neutral-900">Stokari · Central Kiosk</span>
-      <span class="text-[11px] text-neutral-500 font-mono">Register #1 · Hana Bekele</span>
-    </div>
-    <div class="flex items-center gap-2">
-      <button id="sync-pill-btn" onclick="toggleSyncPopover()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-success-50 text-success-800 border-success-200 hover:bg-success-100" style="min-height: 36px;">
-        <span id="sync-pill-dot" class="w-2 h-2 rounded-full bg-success-500 pulse-dot shrink-0"></span>
-        <span id="sync-pill-label">Synced just now</span>
-        <span class="material-symbols-outlined text-neutral-400" style="font-size: 14px">expand_more</span>
-      </button>
-      <div class="w-8 h-8 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-bold flex items-center justify-center">HB</div>
-    </div>
-  </header>
-
-  <!-- SYNC POPOVER -->
-  <div id="sync-popover" class="hidden fixed top-16 right-4 w-80 bg-white rounded-lg border border-neutral-200 shadow-lg z-50 p-4 space-y-3" role="dialog" aria-label="Connection & Storage Details">
-    <div class="flex items-center justify-between border-b border-neutral-100 pb-2">
-      <div><p class="text-xs font-bold text-neutral-900">Connection & Storage</p><p class="text-[11px] text-neutral-500">Offline-First Engine (Dexie)</p></div>
-      <button onclick="toggleSyncPopover()" class="text-neutral-400 hover:text-neutral-600 p-1"><span class="material-symbols-outlined" style="font-size: 18px">close</span></button>
-    </div>
-    <div class="space-y-2 text-xs">
-      <div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Cloud Status</span><span class="font-semibold text-success-700 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-success-500"></span> Connected</span></div>
-      <div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Last Synced</span><span class="font-mono text-neutral-700">Today at 14:32 EAT</span></div>
-      <div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">Local Outbox</span><span class="font-mono font-bold text-neutral-800">0 pending</span></div>
-      <div class="flex items-center justify-between py-1 border-b border-neutral-50"><span class="text-neutral-500">IndexedDB Storage</span><span class="font-mono text-neutral-700">14.2 MB / 2.0 GB</span></div>
-      <div class="flex items-center justify-between py-1"><span class="text-neutral-500">Storage Eviction Safe</span><span class="text-success-700 font-semibold">Enabled</span></div>
-    </div>
-    <div class="pt-2 flex gap-2"><button onclick="simulateSyncNow()" class="flex-1 py-2 text-xs font-bold rounded-lg bg-primary-800 text-white hover:bg-primary-700 transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined" style="font-size: 14px">sync</span><span>Sync Now</span></button></div>
-  </div>
-
-  <!-- MAIN LAYOUT: 3-PANE -->
-  <main class="flex-1 flex lg:pl-64 min-h-screen bg-neutral-50" style="padding-top: 0;">
-    <!-- PANE 1: CATALOG (Left, ~320px) -->
-    <aside class="hidden lg:flex lg:w-80 lg:max-w-[320px] bg-white border-r border-neutral-200 flex flex-col h-screen" style="height: 100vh;">
-      <!-- Search + Barcode -->
-      <div class="p-4 border-b border-neutral-200 sticky top-0 bg-white z-10 space-y-3">
-        <div class="relative">
-          <span class="material-symbols-outlined text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" style="font-size: 18px">search</span>
-          <input id="search-input" type="search" oninput="filterProducts()" placeholder="Search items, SKU, or Amharic (ስኳር, ዘይት)..." class="w-full pl-9 pr-10 py-2 text-sm bg-white border border-neutral-200 rounded-lg focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800 transition-all placeholder:text-neutral-400" inputmode="search" autocomplete="off" aria-label="Search products" />
-          <button onclick="flashScanner()" title="Simulate Barcode Scan" class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-primary-800"> <span class="material-symbols-outlined" style="font-size: 20px">barcode_scanner</span> </button>
-        </div>
-        <button onclick="flashScanner()" class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-lg text-neutral-700 hover:bg-neutral-50 text-xs font-semibold flex items-center justify-center gap-1"> <span class="material-symbols-outlined text-neutral-500" style="font-size: 18px">qr_code_scanner</span> <span>Scan Barcode</span> </button>
-      </div>
-
-      <!-- Quick Favorites -->
-      <div class="p-4 border-b border-neutral-200">
-        <div class="flex items-center justify-between mb-2 px-1">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-neutral-400">Quick Select</span>
-          <span class="text-[11px] text-neutral-400">1-Tap Add</span>
-        </div>
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar" role="list" aria-label="Frequent products">
-          <button onclick="quickAdd('sugar')" class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5" role="listitem"> <span>Sugar 1kg</span> <span class="font-mono text-neutral-500 text-[11px] tabular-nums">125</span> </button>
-          <button onclick="quickAdd('rice')" class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5" role="listitem"> <span>Rice 2kg</span> <span class="font-mono text-neutral-500 text-[11px] tabular-nums">210</span> </button>
-          <button onclick="quickAdd('oil')" class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5" role="listitem"> <span>Sunflower Oil</span> <span class="font-mono text-neutral-500 text-[11px] tabular-nums">170</span> </button>
-          <button onclick="quickAdd('coffee')" class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5" role="listitem"> <span>Coffee 500g</span> <span class="font-mono text-neutral-500 text-[11px] tabular-nums">320</span> </button>
-          <button onclick="quickAdd('salt')" class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5" role="listitem"> <span>Salt 500g</span> <span class="font-mono text-neutral-500 text-[11px] tabular-nums">25</span> </button>
+        <div>
+          <p class="text-sm font-bold tracking-tight text-neutral-900">Stokari</p>
+          <p class="text-[11px] text-neutral-500 font-mono leading-none">Central Kiosk</p>
         </div>
       </div>
 
-      <!-- Category Filters -->
-      <div class="p-4 border-b border-neutral-200">
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar" role="tablist" aria-label="Category filters">
-          <button onclick="setCategory('all', this)" role="tab" aria-selected="true" class="cat-pill active-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold bg-neutral-900 text-white transition-all">All</button>
-          <button onclick="setCategory('grains', this)" role="tab" aria-selected="false" class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all">Grains & Flour</button>
-          <button onclick="setCategory('oils', this)" role="tab" aria-selected="false" class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all">Oils</button>
-          <button onclick="setCategory('beverages', this)" role="tab" aria-selected="false" class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all">Beverages</button>
-          <button onclick="setCategory('spices', this)" role="tab" aria-selected="false" class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all">Spices & Salt</button>
-        </div>
-      </div>
+      <nav
+        class="flex-1 p-3 space-y-1 overflow-y-auto"
+        role="navigation"
+        aria-label="Sidebar navigation"
+      >
+        <a
+          href="#"
+          class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-primary-50 text-primary-800 font-semibold text-xs transition-colors"
+          aria-current="page"
+        >
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-primary-800" style="font-size: 18px"
+              >point_of_sale</span
+            >
+            <span>POS Till / Sell</span>
+          </div>
+          <span class="text-[10px] font-bold bg-primary-800 text-white px-1.5 py-0.5 rounded-full"
+            >2</span
+          >
+        </a>
+        <a
+          href="today_dashboard.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >bar_chart</span
+          >
+          <span>Today's Overview</span>
+        </a>
+        <a
+          href="product_catalog.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >inventory_2</span
+          >
+          <span>Product Catalog</span>
+        </a>
+        <a
+          href="stock.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >warehouse</span
+          >
+          <span>Stock & Movements</span>
+        </a>
+        <a
+          href="conflict_review.html"
+          class="flex items-center justify-between px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+        >
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-danger-600" style="font-size: 18px"
+              >gavel</span
+            >
+            <span>Conflict Review</span>
+          </div>
+          <span class="text-[10px] font-bold bg-danger-600 text-white px-1.5 py-0.5 rounded-full"
+            >3</span
+          >
+        </a>
+        <div class="h-px bg-neutral-100 my-2"></div>
+        <a
+          href="staff_settings.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+        >
+          <span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >badge</span
+          >
+          <span>Staff & Lease</span>
+        </a>
+      </nav>
 
-      <!-- Product Grid (Scrollable) -->
-      <div class="flex-1 overflow-y-auto p-4" style="max-height: calc(100vh - 280px);">
-        <div id="product-grid" class="grid grid-cols-1 gap-2.5">
-          <!-- Rendered by JS -->
+      <!-- Sidebar Footer -->
+      <div class="p-3 border-t border-neutral-100 text-[11px] text-neutral-400 font-mono space-y-1">
+        <div class="flex items-center justify-between">
+          <span>DEVICE:</span>
+          <span class="text-neutral-700 font-bold">ETB-POS-044</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span>NETWORK:</span>
+          <span id="sidebar-net-state" class="text-success-700 font-bold">ONLINE</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span>ROLE:</span>
+          <span class="text-primary-700 font-bold">Owner</span>
         </div>
       </div>
     </aside>
 
-    <!-- PANE 2: CART & CHECKOUT (Center, flexible) -->
-    <section class="flex-1 flex flex-col bg-neutral-50 min-w-0" style="min-height: 100vh;">
-      <!-- Cart Header -->
-      <div class="p-4 border-b border-neutral-200 bg-white flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary-800" style="font-size: 20px">shopping_cart</span>
-          <h2 class="text-sm font-bold text-neutral-900">Current Order</h2>
-          <span id="cart-item-count-badge" class="text-xs font-bold text-primary-800 bg-primary-50 px-2 py-0.5 rounded-full font-mono tabular-nums">2 items</span>
+    <!-- TOP BAR (48px) - Only on desktop for SyncPill -->
+    <header
+      class="fixed left-64 right-0 top-0 h-14 bg-white border-b border-neutral-200 z-40 px-4 flex items-center justify-between"
+      style="display: none"
+      id="desktop-header"
+    >
+      <div class="flex items-center gap-3">
+        <span class="text-sm font-bold tracking-tight text-neutral-900"
+          >Stokari · Central Kiosk</span
+        >
+        <span class="text-[11px] text-neutral-500 font-mono">Register #1 · Hana Bekele</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button
+          id="sync-pill-btn"
+          onclick="toggleSyncPopover()"
+          class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-success-50 text-success-800 border-success-200 hover:bg-success-100"
+          style="min-height: 36px"
+        >
+          <span
+            id="sync-pill-dot"
+            class="w-2 h-2 rounded-full bg-success-500 pulse-dot shrink-0"
+          ></span>
+          <span id="sync-pill-label">Synced just now</span>
+          <span class="material-symbols-outlined text-neutral-400" style="font-size: 14px"
+            >expand_more</span
+          >
+        </button>
+        <div
+          class="w-8 h-8 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 text-xs font-bold flex items-center justify-center"
+        >
+          HB
         </div>
-        <button onclick="clearCart()" class="text-xs font-semibold text-danger-600 hover:text-danger-700 px-2 py-1 rounded hover:bg-danger-50 transition-colors">Clear</button>
       </div>
+    </header>
 
-      <!-- Cart Items -->
-      <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-2.5 divide-y divide-neutral-100">
-        <!-- Populated by JS -->
-      </div>
-
-      <!-- Cart Empty State -->
-      <div id="cart-empty-state" class="hidden flex-1 flex flex-col items-center justify-center p-6 text-center text-neutral-400">
-        <div class="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400 mb-3"> <span class="material-symbols-outlined" style="font-size: 32px">shopping_basket</span> </div>
-        <p class="text-xs font-semibold text-neutral-700">Order Cart is Empty</p>
-        <p class="text-[11px] text-neutral-400 mt-1 max-w-[200px]">Tap any item from the catalog or scan a barcode to begin checkout.</p>
-      </div>
-
-      <!-- Cart Footer: Payment + Total + Actions -->
-      <div class="p-4 border-t border-neutral-200 bg-neutral-50/70 space-y-3 shrink-0">
-        <!-- Modifiers Row -->
-        <div class="flex gap-2">
-          <button onclick="addDiscount(5)" class="flex-1 py-2 px-2 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-700 hover:bg-neutral-50 flex items-center justify-center gap-1 touch-target"> <span class="material-symbols-outlined text-neutral-400" style="font-size: 15px">percent</span> <span>5% Discount</span> </button>
-          <button onclick="promptNote()" class="flex-1 py-2 px-2 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-700 hover:bg-neutral-50 flex items-center justify-center gap-1 touch-target"> <span class="material-symbols-outlined text-neutral-400" style="font-size: 15px">edit_note</span> <span>Add Note</span> </button>
-        </div>
-
-        <!-- Payment Selector (Segmented) -->
+    <!-- SYNC POPOVER -->
+    <div
+      id="sync-popover"
+      class="hidden fixed top-16 right-4 w-80 bg-white rounded-lg border border-neutral-200 shadow-lg z-50 p-4 space-y-3"
+      role="dialog"
+      aria-label="Connection & Storage Details"
+    >
+      <div class="flex items-center justify-between border-b border-neutral-100 pb-2">
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500 mb-2">Payment Method</p>
-          <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Payment method">
-            <button id="pay-cash-btn" onclick="selectPayment('cash')" role="radio" aria-checked="true" class="pay-method-btn py-2.5 px-2 rounded-lg border-2 border-primary-800 bg-primary-50 text-primary-900 font-bold text-xs flex flex-col items-center justify-center transition-all tap-active"> <span class="material-symbols-outlined text-primary-800 mb-0.5" style="font-size: 18px">payments</span> <span>Cash</span> <span class="text-[10px] text-primary-700 font-normal font-ethiopic">ጥሬ ገንዘብ</span> </button>
-            <button id="pay-telebirr-btn" onclick="selectPayment('telebirr')" role="radio" aria-checked="false" class="pay-method-btn py-2.5 px-2 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex flex-col items-center justify-center transition-all tap-active"> <span class="material-symbols-outlined text-neutral-500 mb-0.5" style="font-size: 18px">smartphone</span> <span>Telebirr</span> <span class="text-[10px] text-neutral-400 font-normal font-ethiopic">ቴሌብር</span> </button>
-            <button id="pay-other-btn" onclick="selectPayment('other')" role="radio" aria-checked="false" class="pay-method-btn py-2.5 px-2 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex flex-col items-center justify-center transition-all tap-active"> <span class="material-symbols-outlined text-neutral-500 mb-0.5" style="font-size: 18px">more_horiz</span> <span>Other</span> <span class="text-[10px] text-neutral-400 font-normal">Credit/Check</span> </button>
+          <p class="text-xs font-bold text-neutral-900">Connection & Storage</p>
+          <p class="text-[11px] text-neutral-500">Offline-First Engine (Dexie)</p>
+        </div>
+        <button onclick="toggleSyncPopover()" class="text-neutral-400 hover:text-neutral-600 p-1">
+          <span class="material-symbols-outlined" style="font-size: 18px">close</span>
+        </button>
+      </div>
+      <div class="space-y-2 text-xs">
+        <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+          <span class="text-neutral-500">Cloud Status</span
+          ><span class="font-semibold text-success-700 flex items-center gap-1"
+            ><span class="w-1.5 h-1.5 rounded-full bg-success-500"></span> Connected</span
+          >
+        </div>
+        <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+          <span class="text-neutral-500">Last Synced</span
+          ><span class="font-mono text-neutral-700">Today at 14:32 EAT</span>
+        </div>
+        <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+          <span class="text-neutral-500">Local Outbox</span
+          ><span class="font-mono font-bold text-neutral-800">0 pending</span>
+        </div>
+        <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+          <span class="text-neutral-500">IndexedDB Storage</span
+          ><span class="font-mono text-neutral-700">14.2 MB / 2.0 GB</span>
+        </div>
+        <div class="flex items-center justify-between py-1">
+          <span class="text-neutral-500">Storage Eviction Safe</span
+          ><span class="text-success-700 font-semibold">Enabled</span>
+        </div>
+      </div>
+      <div class="pt-2 flex gap-2">
+        <button
+          onclick="simulateSyncNow()"
+          class="flex-1 py-2 text-xs font-bold rounded-lg bg-primary-800 text-white hover:bg-primary-700 transition-colors flex items-center justify-center gap-1"
+        >
+          <span class="material-symbols-outlined" style="font-size: 14px">sync</span
+          ><span>Sync Now</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN LAYOUT: 3-PANE -->
+    <main class="flex-1 flex lg:pl-64 min-h-screen bg-neutral-50" style="padding-top: 0">
+      <!-- PANE 1: CATALOG (Left, ~320px) -->
+      <aside
+        class="hidden lg:flex lg:w-80 lg:max-w-[320px] bg-white border-r border-neutral-200 flex flex-col h-screen"
+        style="height: 100vh"
+      >
+        <!-- Search + Barcode -->
+        <div class="p-4 border-b border-neutral-200 sticky top-0 bg-white z-10 space-y-3">
+          <div class="relative">
+            <span
+              class="material-symbols-outlined text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2"
+              style="font-size: 18px"
+              >search</span
+            >
+            <input
+              id="search-input"
+              type="search"
+              oninput="filterProducts()"
+              placeholder="Search items, SKU, or Amharic (ስኳር, ዘይት)..."
+              class="w-full pl-9 pr-10 py-2 text-sm bg-white border border-neutral-200 rounded-lg focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800 transition-all placeholder:text-neutral-400"
+              inputmode="search"
+              autocomplete="off"
+              aria-label="Search products"
+            />
+            <button
+              onclick="flashScanner()"
+              title="Simulate Barcode Scan"
+              class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-primary-800"
+            >
+              <span class="material-symbols-outlined" style="font-size: 20px">barcode_scanner</span>
+            </button>
+          </div>
+          <button
+            onclick="flashScanner()"
+            class="w-full px-3 py-2 bg-white border border-neutral-200 rounded-lg text-neutral-700 hover:bg-neutral-50 text-xs font-semibold flex items-center justify-center gap-1"
+          >
+            <span class="material-symbols-outlined text-neutral-500" style="font-size: 18px"
+              >qr_code_scanner</span
+            >
+            <span>Scan Barcode</span>
+          </button>
+        </div>
+
+        <!-- Quick Favorites -->
+        <div class="p-4 border-b border-neutral-200">
+          <div class="flex items-center justify-between mb-2 px-1">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-neutral-400"
+              >Quick Select</span
+            >
+            <span class="text-[11px] text-neutral-400">1-Tap Add</span>
+          </div>
+          <div
+            class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar"
+            role="list"
+            aria-label="Frequent products"
+          >
+            <button
+              onclick="quickAdd('sugar')"
+              class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5"
+              role="listitem"
+            >
+              <span>Sugar 1kg</span>
+              <span class="font-mono text-neutral-500 text-[11px] tabular-nums">125</span>
+            </button>
+            <button
+              onclick="quickAdd('rice')"
+              class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5"
+              role="listitem"
+            >
+              <span>Rice 2kg</span>
+              <span class="font-mono text-neutral-500 text-[11px] tabular-nums">210</span>
+            </button>
+            <button
+              onclick="quickAdd('oil')"
+              class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5"
+              role="listitem"
+            >
+              <span>Sunflower Oil</span>
+              <span class="font-mono text-neutral-500 text-[11px] tabular-nums">170</span>
+            </button>
+            <button
+              onclick="quickAdd('coffee')"
+              class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5"
+              role="listitem"
+            >
+              <span>Coffee 500g</span>
+              <span class="font-mono text-neutral-500 text-[11px] tabular-nums">320</span>
+            </button>
+            <button
+              onclick="quickAdd('salt')"
+              class="tap-active shrink-0 px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 hover:border-neutral-300 shadow-sm flex items-center gap-1.5"
+              role="listitem"
+            >
+              <span>Salt 500g</span>
+              <span class="font-mono text-neutral-500 text-[11px] tabular-nums">25</span>
+            </button>
           </div>
         </div>
 
-        <!-- Total Breakdown -->
-        <div class="bg-white p-3 rounded-lg border border-neutral-200 space-y-1">
-          <div class="flex items-center justify-between text-xs text-neutral-500"><span>Subtotal</span><span id="subtotal-amount" class="font-mono font-medium text-neutral-800 tabular-nums">ETB 465.00</span></div>
-          <div class="flex items-center justify-between text-xs text-neutral-500"><span>Tax (Exempt)</span><span class="font-mono text-neutral-400 tabular-nums">ETB 0.00</span></div>
-          <div class="h-px bg-neutral-100 my-1"></div>
-          <div class="flex items-center justify-between"><span class="text-xs font-bold text-neutral-900">Total Payable</span><div class="text-right"><span id="total-amount" class="text-lg font-black text-neutral-900 font-mono tabular-nums tracking-tight">ETB 465.00</span></div></div>
+        <!-- Category Filters -->
+        <div class="p-4 border-b border-neutral-200">
+          <div
+            class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar"
+            role="tablist"
+            aria-label="Category filters"
+          >
+            <button
+              onclick="setCategory('all', this)"
+              role="tab"
+              aria-selected="true"
+              class="cat-pill active-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold bg-neutral-900 text-white transition-all"
+            >
+              All
+            </button>
+            <button
+              onclick="setCategory('grains', this)"
+              role="tab"
+              aria-selected="false"
+              class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all"
+            >
+              Grains & Flour
+            </button>
+            <button
+              onclick="setCategory('oils', this)"
+              role="tab"
+              aria-selected="false"
+              class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all"
+            >
+              Oils
+            </button>
+            <button
+              onclick="setCategory('beverages', this)"
+              role="tab"
+              aria-selected="false"
+              class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all"
+            >
+              Beverages
+            </button>
+            <button
+              onclick="setCategory('spices', this)"
+              role="tab"
+              aria-selected="false"
+              class="cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all"
+            >
+              Spices & Salt
+            </button>
+          </div>
         </div>
 
-        <!-- Quick Actions (Owner only) -->
-        <div class="flex gap-2 pt-2 border-t border-neutral-200">
-          <button onclick="openReceiveModal()" class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"> <span class="material-symbols-outlined" style="font-size: 16px">add_box</span> <span>Receive Stock</span> </button>
-          <button onclick="openAdjustModal()" class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"> <span class="material-symbols-outlined" style="font-size: 16px">tune</span> <span>Adjust Stock</span> </button>
-          <button onclick="navigateToToday()" class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"> <span class="material-symbols-outlined" style="font-size: 16px">bar_chart</span> <span>Today</span> </button>
+        <!-- Product Grid (Scrollable) -->
+        <div class="flex-1 overflow-y-auto p-4" style="max-height: calc(100vh - 280px)">
+          <div id="product-grid" class="grid grid-cols-1 gap-2.5">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- PANE 2: CART & CHECKOUT (Center, flexible) -->
+      <section class="flex-1 flex flex-col bg-neutral-50 min-w-0" style="min-height: 100vh">
+        <!-- Cart Header -->
+        <div
+          class="p-4 border-b border-neutral-200 bg-white flex items-center justify-between shrink-0"
+        >
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-800" style="font-size: 20px"
+              >shopping_cart</span
+            >
+            <h2 class="text-sm font-bold text-neutral-900">Current Order</h2>
+            <span
+              id="cart-item-count-badge"
+              class="text-xs font-bold text-primary-800 bg-primary-50 px-2 py-0.5 rounded-full font-mono tabular-nums"
+              >2 items</span
+            >
+          </div>
+          <button
+            onclick="clearCart()"
+            class="text-xs font-semibold text-danger-600 hover:text-danger-700 px-2 py-1 rounded hover:bg-danger-50 transition-colors"
+          >
+            Clear
+          </button>
         </div>
 
-        <!-- Complete Sale Button -->
-        <button id="complete-sale-btn" onclick="completeCheckout()" class="tap-active w-full py-3 px-4 rounded-lg bg-primary-800 hover:bg-primary-700 text-white font-bold text-sm shadow flex items-center justify-center gap-2 font-mono tabular-nums touch-target" style="min-height: 48px;"> <span class="material-symbols-outlined" style="font-size: 20px">check_circle</span> <span id="checkout-btn-text">Complete Sale · ETB 465.00</span> </button>
-      </div>
-    </section>
-
-    <!-- PANE 3: QUICK ACTIONS / INFO (Right, ~280px) -->
-    <aside class="hidden lg:flex lg:w-72 lg:max-w-[280px] bg-white border-l border-neutral-200 flex flex-col h-screen shrink-0" style="height: 100vh;">
-      <div class="p-4 border-b border-neutral-200">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">Quick Actions</h3>
-        <div class="space-y-2">
-          <button onclick="openReceiveModal()" class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"> <span class="material-symbols-outlined" style="font-size: 16px">add_box</span> <span>Receive Stock</span> </button>
-          <button onclick="openAdjustModal()" class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"> <span class="material-symbols-outlined" style="font-size: 16px">tune</span> <span>Adjust Stock</span> </button>
-          <button onclick="navigateToToday()" class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"> <span class="material-symbols-outlined" style="font-size: 16px">bar_chart</span> <span>Today Dashboard</span> </button>
-          <button onclick="navigateToReview()" class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"> <span class="material-symbols-outlined text-danger-600" style="font-size: 16px">gavel</span> <span>Conflict Review <span class="ml-1 text-[10px] font-bold bg-danger-600 text-white px-1.5 py-0.5 rounded-full">3</span></span> </button>
-        </div>
-      </div>
-
-      <div class="p-4 border-b border-neutral-200">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">Today's Summary</h3>
-        <div class="space-y-2 text-xs">
-          <div class="flex justify-between"><span class="text-neutral-500">Total Sales</span><span class="font-mono font-bold text-neutral-900 tabular-nums">42</span></div>
-          <div class="flex justify-between"><span class="text-neutral-500">Confirmed Revenue</span><span class="font-mono font-bold text-success-700 tabular-nums">ETB 12,450.00</span></div>
-          <div class="flex justify-between"><span class="text-neutral-500">Pending Sync</span><span class="font-mono font-bold text-warning-700 tabular-nums">ETB 860.00</span></div>
-          <div class="flex justify-between"><span class="text-neutral-500">Needs Review</span><span class="font-mono font-bold text-danger-700 tabular-nums">ETB 420.00</span></div>
-        </div>
-      </div>
-
-      <div class="flex-1 overflow-y-auto p-4">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">Low Stock Alerts</h3>
-        <div class="space-y-2" id="low-stock-alerts">
+        <!-- Cart Items -->
+        <div
+          id="cart-items-container"
+          class="flex-1 overflow-y-auto p-4 space-y-2.5 divide-y divide-neutral-100"
+        >
           <!-- Populated by JS -->
         </div>
+
+        <!-- Cart Empty State -->
+        <div
+          id="cart-empty-state"
+          class="hidden flex-1 flex flex-col items-center justify-center p-6 text-center text-neutral-400"
+        >
+          <div
+            class="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400 mb-3"
+          >
+            <span class="material-symbols-outlined" style="font-size: 32px">shopping_basket</span>
+          </div>
+          <p class="text-xs font-semibold text-neutral-700">Order Cart is Empty</p>
+          <p class="text-[11px] text-neutral-400 mt-1 max-w-[200px]">
+            Tap any item from the catalog or scan a barcode to begin checkout.
+          </p>
+        </div>
+
+        <!-- Cart Footer: Payment + Total + Actions -->
+        <div class="p-4 border-t border-neutral-200 bg-neutral-50/70 space-y-3 shrink-0">
+          <!-- Modifiers Row -->
+          <div class="flex gap-2">
+            <button
+              onclick="addDiscount(5)"
+              class="flex-1 py-2 px-2 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-700 hover:bg-neutral-50 flex items-center justify-center gap-1 touch-target"
+            >
+              <span class="material-symbols-outlined text-neutral-400" style="font-size: 15px"
+                >percent</span
+              >
+              <span>5% Discount</span>
+            </button>
+            <button
+              onclick="promptNote()"
+              class="flex-1 py-2 px-2 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-700 hover:bg-neutral-50 flex items-center justify-center gap-1 touch-target"
+            >
+              <span class="material-symbols-outlined text-neutral-400" style="font-size: 15px"
+                >edit_note</span
+              >
+              <span>Add Note</span>
+            </button>
+          </div>
+
+          <!-- Payment Selector (Segmented) -->
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-wider text-neutral-500 mb-2">
+              Payment Method
+            </p>
+            <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Payment method">
+              <button
+                id="pay-cash-btn"
+                onclick="selectPayment('cash')"
+                role="radio"
+                aria-checked="true"
+                class="pay-method-btn py-2.5 px-2 rounded-lg border-2 border-primary-800 bg-primary-50 text-primary-900 font-bold text-xs flex flex-col items-center justify-center transition-all tap-active"
+              >
+                <span
+                  class="material-symbols-outlined text-primary-800 mb-0.5"
+                  style="font-size: 18px"
+                  >payments</span
+                >
+                <span>Cash</span>
+                <span class="text-[10px] text-primary-700 font-normal font-ethiopic">ጥሬ ገንዘብ</span>
+              </button>
+              <button
+                id="pay-telebirr-btn"
+                onclick="selectPayment('telebirr')"
+                role="radio"
+                aria-checked="false"
+                class="pay-method-btn py-2.5 px-2 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex flex-col items-center justify-center transition-all tap-active"
+              >
+                <span
+                  class="material-symbols-outlined text-neutral-500 mb-0.5"
+                  style="font-size: 18px"
+                  >smartphone</span
+                >
+                <span>Telebirr</span>
+                <span class="text-[10px] text-neutral-400 font-normal font-ethiopic">ቴሌብር</span>
+              </button>
+              <button
+                id="pay-other-btn"
+                onclick="selectPayment('other')"
+                role="radio"
+                aria-checked="false"
+                class="pay-method-btn py-2.5 px-2 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex flex-col items-center justify-center transition-all tap-active"
+              >
+                <span
+                  class="material-symbols-outlined text-neutral-500 mb-0.5"
+                  style="font-size: 18px"
+                  >more_horiz</span
+                >
+                <span>Other</span>
+                <span class="text-[10px] text-neutral-400 font-normal">Credit/Check</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Total Breakdown -->
+          <div class="bg-white p-3 rounded-lg border border-neutral-200 space-y-1">
+            <div class="flex items-center justify-between text-xs text-neutral-500">
+              <span>Subtotal</span
+              ><span
+                id="subtotal-amount"
+                class="font-mono font-medium text-neutral-800 tabular-nums"
+                >ETB 465.00</span
+              >
+            </div>
+            <div class="flex items-center justify-between text-xs text-neutral-500">
+              <span>Tax (Exempt)</span
+              ><span class="font-mono text-neutral-400 tabular-nums">ETB 0.00</span>
+            </div>
+            <div class="h-px bg-neutral-100 my-1"></div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-neutral-900">Total Payable</span>
+              <div class="text-right">
+                <span
+                  id="total-amount"
+                  class="text-lg font-black text-neutral-900 font-mono tabular-nums tracking-tight"
+                  >ETB 465.00</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions (Owner only) -->
+          <div class="flex gap-2 pt-2 border-t border-neutral-200">
+            <button
+              onclick="openReceiveModal()"
+              class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">add_box</span>
+              <span>Receive Stock</span>
+            </button>
+            <button
+              onclick="openAdjustModal()"
+              class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">tune</span>
+              <span>Adjust Stock</span>
+            </button>
+            <button
+              onclick="navigateToToday()"
+              class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">bar_chart</span>
+              <span>Today</span>
+            </button>
+          </div>
+
+          <!-- Complete Sale Button -->
+          <button
+            id="complete-sale-btn"
+            onclick="completeCheckout()"
+            class="tap-active w-full py-3 px-4 rounded-lg bg-primary-800 hover:bg-primary-700 text-white font-bold text-sm shadow flex items-center justify-center gap-2 font-mono tabular-nums touch-target"
+            style="min-height: 48px"
+          >
+            <span class="material-symbols-outlined" style="font-size: 20px">check_circle</span>
+            <span id="checkout-btn-text">Complete Sale · ETB 465.00</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- PANE 3: QUICK ACTIONS / INFO (Right, ~280px) -->
+      <aside
+        class="hidden lg:flex lg:w-72 lg:max-w-[280px] bg-white border-l border-neutral-200 flex flex-col h-screen shrink-0"
+        style="height: 100vh"
+      >
+        <div class="p-4 border-b border-neutral-200">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">
+            Quick Actions
+          </h3>
+          <div class="space-y-2">
+            <button
+              onclick="openReceiveModal()"
+              class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">add_box</span>
+              <span>Receive Stock</span>
+            </button>
+            <button
+              onclick="openAdjustModal()"
+              class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">tune</span>
+              <span>Adjust Stock</span>
+            </button>
+            <button
+              onclick="navigateToToday()"
+              class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"
+            >
+              <span class="material-symbols-outlined" style="font-size: 16px">bar_chart</span>
+              <span>Today Dashboard</span>
+            </button>
+            <button
+              onclick="navigateToReview()"
+              class="w-full py-2.5 px-3 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex items-center justify-center gap-1 hover:bg-neutral-50 touch-target"
+            >
+              <span class="material-symbols-outlined text-danger-600" style="font-size: 16px"
+                >gavel</span
+              >
+              <span
+                >Conflict Review
+                <span
+                  class="ml-1 text-[10px] font-bold bg-danger-600 text-white px-1.5 py-0.5 rounded-full"
+                  >3</span
+                ></span
+              >
+            </button>
+          </div>
+        </div>
+
+        <div class="p-4 border-b border-neutral-200">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">
+            Today's Summary
+          </h3>
+          <div class="space-y-2 text-xs">
+            <div class="flex justify-between">
+              <span class="text-neutral-500">Total Sales</span
+              ><span class="font-mono font-bold text-neutral-900 tabular-nums">42</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-neutral-500">Confirmed Revenue</span
+              ><span class="font-mono font-bold text-success-700 tabular-nums">ETB 12,450.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-neutral-500">Pending Sync</span
+              ><span class="font-mono font-bold text-warning-700 tabular-nums">ETB 860.00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-neutral-500">Needs Review</span
+              ><span class="font-mono font-bold text-danger-700 tabular-nums">ETB 420.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">
+            Low Stock Alerts
+          </h3>
+          <div class="space-y-2" id="low-stock-alerts">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div
+          class="p-4 border-t border-neutral-100 text-[11px] text-neutral-400 font-mono space-y-1"
+        >
+          <div class="flex items-center justify-between">
+            <span>DEVICE:</span><span class="text-neutral-700 font-bold">ETB-POS-044</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span>NETWORK:</span
+            ><span id="sidebar-net-state" class="text-success-700 font-bold">ONLINE</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- MODALS (Same as mobile) -->
+    <!-- Keypad Modal -->
+    <div
+      id="keypad-modal"
+      class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="keypad-title"
+    >
+      <div class="bg-white w-full max-w-xs rounded-xl p-5 shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-neutral-100 pb-2">
+          <div>
+            <h3 id="keypad-title" class="text-xs font-bold text-neutral-900">Set Quantity</h3>
+            <p class="text-[11px] text-neutral-500" id="keypad-unit">
+              Unit: kg (Supports decimals)
+            </p>
+          </div>
+          <button onclick="closeKeypad()" class="text-neutral-400 hover:text-neutral-600 p-1">
+            <span class="material-symbols-outlined" style="font-size: 20px">close</span>
+          </button>
+        </div>
+        <div class="bg-neutral-50 border border-neutral-200 rounded-lg p-3 text-right">
+          <span
+            id="keypad-display"
+            class="font-mono text-2xl font-black text-neutral-900 tabular-nums"
+            >1</span
+          ><span
+            class="text-xs font-mono text-neutral-400 ml-1 tabular-nums"
+            id="keypad-display-unit"
+            >kg</span
+          >
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            onclick="keypadPress('1')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            1
+          </button>
+          <button
+            onclick="keypadPress('2')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            2
+          </button>
+          <button
+            onclick="keypadPress('3')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            3
+          </button>
+          <button
+            onclick="keypadPress('4')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            4
+          </button>
+          <button
+            onclick="keypadPress('5')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            5
+          </button>
+          <button
+            onclick="keypadPress('6')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            6
+          </button>
+          <button
+            onclick="keypadPress('7')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            7
+          </button>
+          <button
+            onclick="keypadPress('8')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            8
+          </button>
+          <button
+            onclick="keypadPress('9')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            9
+          </button>
+          <button
+            onclick="keypadPress('.')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            .
+          </button>
+          <button
+            onclick="keypadPress('0')"
+            class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100"
+          >
+            0
+          </button>
+          <button
+            onclick="keypadBackspace()"
+            class="py-3 bg-neutral-100 border border-neutral-200 rounded-lg font-mono text-sm font-bold text-neutral-700 active:bg-neutral-200 flex items-center justify-center"
+          >
+            <span class="material-symbols-outlined" style="font-size: 18px">backspace</span>
+          </button>
+        </div>
+        <div class="flex gap-2">
+          <button
+            onclick="closeKeypad()"
+            class="flex-1 py-3 border border-neutral-200 text-neutral-700 font-semibold text-xs rounded-lg hover:bg-neutral-50"
+          >
+            Cancel</button
+          ><button
+            onclick="saveKeypadQty()"
+            class="flex-1 py-3 bg-primary-800 hover:bg-primary-700 text-white font-bold text-xs rounded-lg shadow"
+          >
+            Confirm Quantity
+          </button>
+        </div>
       </div>
+    </div>
 
-      <div class="p-4 border-t border-neutral-100 text-[11px] text-neutral-400 font-mono space-y-1">
-        <div class="flex items-center justify-between"><span>DEVICE:</span><span class="text-neutral-700 font-bold">ETB-POS-044</span></div>
-        <div class="flex items-center justify-between"><span>NETWORK:</span><span id="sidebar-net-state" class="text-success-700 font-bold">ONLINE</span></div>
+    <!-- Sell Anyway Modal -->
+    <div
+      id="sell-anyway-modal"
+      class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      role="alertdialog"
+      aria-modal="true"
+    >
+      <div
+        class="bg-white w-full max-w-sm rounded-xl p-5 shadow-xl space-y-4 border border-warning-100"
+      >
+        <div class="flex items-center gap-3 text-warning-600">
+          <div
+            class="w-10 h-10 rounded-full bg-warning-50 flex items-center justify-center shrink-0"
+          >
+            <span class="material-symbols-outlined text-warning-600" style="font-size: 22px"
+              >warning</span
+            >
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-neutral-900">Insufficient Confirmed Stock</h3>
+            <p class="text-[11px] text-neutral-400">Inventory review will be required</p>
+          </div>
+        </div>
+        <div
+          class="bg-warning-50 border border-warning-200 rounded-lg p-3 text-xs text-warning-900 space-y-1"
+          id="sell-anyway-message"
+        ></div>
+        <div class="flex gap-2">
+          <button
+            onclick="closeSellAnywayModal(false)"
+            class="flex-1 py-2.5 px-3 rounded-lg border border-neutral-200 text-xs font-semibold text-neutral-700 hover:bg-neutral-50"
+          >
+            Cancel</button
+          ><button
+            onclick="closeSellAnywayModal(true)"
+            class="flex-1 py-2.5 px-3 rounded-lg bg-warning-600 hover:bg-warning-700 text-white text-xs font-bold shadow-sm"
+          >
+            Sell Anyway
+          </button>
+        </div>
       </div>
-    </aside>
-  </main>
+    </div>
 
-  <!-- MODALS (Same as mobile) -->
-  <!-- Keypad Modal -->
-  <div id="keypad-modal" class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="keypad-title">
-    <div class="bg-white w-full max-w-xs rounded-xl p-5 shadow-xl space-y-4">
-      <div class="flex items-center justify-between border-b border-neutral-100 pb-2"><div><h3 id="keypad-title" class="text-xs font-bold text-neutral-900">Set Quantity</h3><p class="text-[11px] text-neutral-500" id="keypad-unit">Unit: kg (Supports decimals)</p></div><button onclick="closeKeypad()" class="text-neutral-400 hover:text-neutral-600 p-1"><span class="material-symbols-outlined" style="font-size: 20px">close</span></button></div>
-      <div class="bg-neutral-50 border border-neutral-200 rounded-lg p-3 text-right"><span id="keypad-display" class="font-mono text-2xl font-black text-neutral-900 tabular-nums">1</span><span class="text-xs font-mono text-neutral-400 ml-1 tabular-nums" id="keypad-display-unit">kg</span></div>
-      <div class="grid grid-cols-3 gap-2">
-        <button onclick="keypadPress('1')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">1</button>
-        <button onclick="keypadPress('2')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">2</button>
-        <button onclick="keypadPress('3')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">3</button>
-        <button onclick="keypadPress('4')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">4</button>
-        <button onclick="keypadPress('5')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">5</button>
-        <button onclick="keypadPress('6')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">6</button>
-        <button onclick="keypadPress('7')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">7</button>
-        <button onclick="keypadPress('8')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">8</button>
-        <button onclick="keypadPress('9')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">9</button>
-        <button onclick="keypadPress('.')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">.</button>
-        <button onclick="keypadPress('0')" class="py-3 bg-white border border-neutral-200 rounded-lg font-mono text-lg font-bold text-neutral-800 active:bg-neutral-100">0</button>
-        <button onclick="keypadBackspace()" class="py-3 bg-neutral-100 border border-neutral-200 rounded-lg font-mono text-sm font-bold text-neutral-700 active:bg-neutral-200 flex items-center justify-center"><span class="material-symbols-outlined" style="font-size: 18px">backspace</span></button>
+    <!-- Checkout Success Modal -->
+    <div
+      id="checkout-modal"
+      class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="bg-white w-full max-w-sm rounded-xl p-5 shadow-xl space-y-4">
+        <div class="text-center space-y-1.5">
+          <div
+            class="w-12 h-12 rounded-full bg-success-100 text-success-600 flex items-center justify-center mx-auto"
+          >
+            <span class="material-symbols-outlined" style="font-size: 28px">check</span>
+          </div>
+          <h3 class="text-base font-bold text-neutral-900">Sale Completed</h3>
+          <p class="text-xs text-neutral-500 font-mono tabular-nums">
+            Receipt #1043 · Recorded to local ledger
+          </p>
+        </div>
+        <div class="bg-neutral-50 border border-neutral-200 rounded-lg p-3 text-xs space-y-2">
+          <div class="flex justify-between text-neutral-500">
+            <span>Amount Paid</span
+            ><span
+              id="modal-amount"
+              class="font-mono font-bold text-neutral-900 text-sm tabular-nums"
+              >ETB 465.00</span
+            >
+          </div>
+          <div class="flex justify-between text-neutral-500">
+            <span>Payment Method</span
+            ><span id="modal-method" class="font-semibold text-neutral-800">Cash</span>
+          </div>
+          <div class="flex justify-between text-neutral-500">
+            <span>Attendant</span><span class="text-neutral-800">Hana Bekele</span>
+          </div>
+          <div class="flex justify-between text-neutral-500">
+            <span>Ledger Hash</span
+            ><span class="font-mono text-[10px] text-neutral-400">e8a9...41c2</span>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <button
+            onclick="printMockReceipt()"
+            class="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1.5 shadow"
+          >
+            <span class="material-symbols-outlined" style="font-size: 16px">print</span
+            ><span>Print Thermal Receipt (ESC/POS)</span></button
+          ><button
+            onclick="closeModalAndReset()"
+            class="w-full py-2.5 border border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-semibold text-xs rounded-lg"
+          >
+            New Sale (Next Customer)
+          </button>
+        </div>
       </div>
-      <div class="flex gap-2"><button onclick="closeKeypad()" class="flex-1 py-3 border border-neutral-200 text-neutral-700 font-semibold text-xs rounded-lg hover:bg-neutral-50">Cancel</button><button onclick="saveKeypadQty()" class="flex-1 py-3 bg-primary-800 hover:bg-primary-700 text-white font-bold text-xs rounded-lg shadow">Confirm Quantity</button></div>
     </div>
-  </div>
 
-  <!-- Sell Anyway Modal -->
-  <div id="sell-anyway-modal" class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" role="alertdialog" aria-modal="true">
-    <div class="bg-white w-full max-w-sm rounded-xl p-5 shadow-xl space-y-4 border border-warning-100">
-      <div class="flex items-center gap-3 text-warning-600"><div class="w-10 h-10 rounded-full bg-warning-50 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-warning-600" style="font-size: 22px">warning</span></div><div><h3 class="text-sm font-bold text-neutral-900">Insufficient Confirmed Stock</h3><p class="text-[11px] text-neutral-400">Inventory review will be required</p></div></div>
-      <div class="bg-warning-50 border border-warning-200 rounded-lg p-3 text-xs text-warning-900 space-y-1" id="sell-anyway-message"></div>
-      <div class="flex gap-2"><button onclick="closeSellAnywayModal(false)" class="flex-1 py-2.5 px-3 rounded-lg border border-neutral-200 text-xs font-semibold text-neutral-700 hover:bg-neutral-50">Cancel</button><button onclick="closeSellAnywayModal(true)" class="flex-1 py-2.5 px-3 rounded-lg bg-warning-600 hover:bg-warning-700 text-white text-xs font-bold shadow-sm">Sell Anyway</button></div>
-    </div>
-  </div>
+    <script>
+      // Same JS logic as pos_till.html - shared via import in real app
+      // This is a prototype - full implementation would use shared modules
+      const PRODUCTS = [
+        {
+          id: "sugar",
+          name: "White Sugar",
+          amharic: "ነጭ ስኳር",
+          unit: "1 kg",
+          price: 125.0,
+          stock: 14.0,
+          stockUnit: "kg",
+          cat: "grains",
+          unitKind: "COUNT",
+        },
+        {
+          id: "oil",
+          name: "Sunflower Oil",
+          amharic: "የሱፍ ዘይት",
+          unit: "1 Litre",
+          price: 170.0,
+          stock: 2.0,
+          stockUnit: "L",
+          cat: "oils",
+          low: true,
+          unitKind: "MEASURE",
+        },
+        {
+          id: "rice",
+          name: "Imported Rice",
+          amharic: "የውጭ ሩዝ",
+          unit: "2 kg",
+          price: 210.0,
+          stock: 18.0,
+          stockUnit: "kg",
+          cat: "grains",
+          unitKind: "COUNT",
+        },
+        {
+          id: "coffee",
+          name: "Yirgacheffe Coffee",
+          amharic: "ይርጋጨፌ ቡና",
+          unit: "500g",
+          price: 320.0,
+          stock: 12.0,
+          stockUnit: "pcs",
+          cat: "beverages",
+          unitKind: "COUNT",
+        },
+        {
+          id: "salt",
+          name: "Table Salt",
+          amharic: "የገበታ ጨው",
+          unit: "500g",
+          price: 25.0,
+          stock: 0.0,
+          stockUnit: "pcs",
+          cat: "spices",
+          out: true,
+          unitKind: "COUNT",
+        },
+        {
+          id: "teff",
+          name: "Mag Teff Flour",
+          amharic: "የማግ ጤፍ",
+          unit: "5 kg",
+          price: 580.0,
+          stock: 24.0,
+          stockUnit: "kg",
+          cat: "grains",
+          unitKind: "COUNT",
+        },
+        {
+          id: "tea",
+          name: "Black Tea Bags",
+          amharic: "ጥቁር ሻይ",
+          unit: "100 pcs",
+          price: 145.0,
+          stock: 9.0,
+          stockUnit: "pcs",
+          cat: "beverages",
+          unitKind: "COUNT",
+        },
+        {
+          id: "soap",
+          name: "Bar Soap",
+          amharic: "የገላ ሳሙና",
+          unit: "200g",
+          price: 65.0,
+          stock: 35.0,
+          stockUnit: "pcs",
+          cat: "spices",
+          unitKind: "COUNT",
+        },
+      ];
 
-  <!-- Checkout Success Modal -->
-  <div id="checkout-modal" class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
-    <div class="bg-white w-full max-w-sm rounded-xl p-5 shadow-xl space-y-4">
-      <div class="text-center space-y-1.5"><div class="w-12 h-12 rounded-full bg-success-100 text-success-600 flex items-center justify-center mx-auto"><span class="material-symbols-outlined" style="font-size: 28px">check</span></div><h3 class="text-base font-bold text-neutral-900">Sale Completed</h3><p class="text-xs text-neutral-500 font-mono tabular-nums">Receipt #1043 · Recorded to local ledger</p></div>
-      <div class="bg-neutral-50 border border-neutral-200 rounded-lg p-3 text-xs space-y-2"><div class="flex justify-between text-neutral-500"><span>Amount Paid</span><span id="modal-amount" class="font-mono font-bold text-neutral-900 text-sm tabular-nums">ETB 465.00</span></div><div class="flex justify-between text-neutral-500"><span>Payment Method</span><span id="modal-method" class="font-semibold text-neutral-800">Cash</span></div><div class="flex justify-between text-neutral-500"><span>Attendant</span><span class="text-neutral-800">Hana Bekele</span></div><div class="flex justify-between text-neutral-500"><span>Ledger Hash</span><span class="font-mono text-[10px] text-neutral-400">e8a9...41c2</span></div></div>
-      <div class="space-y-2"><button onclick="printMockReceipt()" class="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs rounded-lg flex items-center justify-center gap-1.5 shadow"><span class="material-symbols-outlined" style="font-size: 16px">print</span><span>Print Thermal Receipt (ESC/POS)</span></button><button onclick="closeModalAndReset()" class="w-full py-2.5 border border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-semibold text-xs rounded-lg">New Sale (Next Customer)</button></div>
-    </div>
-  </div>
+      let cart = [
+        { id: "sugar", qty: 1 },
+        { id: "oil", qty: 2 },
+      ];
+      let currentCategory = "all";
+      let selectedPayment = "cash";
+      let editingCartItemId = null;
+      let keypadBuffer = "1";
 
-  <script>
-    // Same JS logic as pos_till.html - shared via import in real app
-    // This is a prototype - full implementation would use shared modules
-    const PRODUCTS = [
-      { id: "sugar", name: "White Sugar", amharic: "ነጭ ስኳር", unit: "1 kg", price: 125.0, stock: 14.0, stockUnit: "kg", cat: "grains", unitKind: "COUNT" },
-      { id: "oil", name: "Sunflower Oil", amharic: "የሱፍ ዘይት", unit: "1 Litre", price: 170.0, stock: 2.0, stockUnit: "L", cat: "oils", low: true, unitKind: "MEASURE" },
-      { id: "rice", name: "Imported Rice", amharic: "የውጭ ሩዝ", unit: "2 kg", price: 210.0, stock: 18.0, stockUnit: "kg", cat: "grains", unitKind: "COUNT" },
-      { id: "coffee", name: "Yirgacheffe Coffee", amharic: "ይርጋጨፌ ቡና", unit: "500g", price: 320.0, stock: 12.0, stockUnit: "pcs", cat: "beverages", unitKind: "COUNT" },
-      { id: "salt", name: "Table Salt", amharic: "የገበታ ጨው", unit: "500g", price: 25.0, stock: 0.0, stockUnit: "pcs", cat: "spices", out: true, unitKind: "COUNT" },
-      { id: "teff", name: "Mag Teff Flour", amharic: "የማግ ጤፍ", unit: "5 kg", price: 580.0, stock: 24.0, stockUnit: "kg", cat: "grains", unitKind: "COUNT" },
-      { id: "tea", name: "Black Tea Bags", amharic: "ጥቁር ሻይ", unit: "100 pcs", price: 145.0, stock: 9.0, stockUnit: "pcs", cat: "beverages", unitKind: "COUNT" },
-      { id: "soap", name: "Bar Soap", amharic: "የገላ ሳሙና", unit: "200g", price: 65.0, stock: 35.0, stockUnit: "pcs", cat: "spices", unitKind: "COUNT" },
-    ];
+      const UNIT_CONFIG = {
+        PIECE: {
+          kind: "COUNT",
+          decimals: 0,
+          step: 1,
+          symbol: "pcs",
+          symbolAm: "ቁራጭ",
+          quickChips: [1, 2, 3, 6, 12],
+        },
+        PACK: {
+          kind: "COUNT",
+          decimals: 0,
+          step: 1,
+          symbol: "pk",
+          symbolAm: "ፓኬት",
+          quickChips: [1, 2, 3, 6, 12],
+        },
+        KG: {
+          kind: "MEASURE",
+          decimals: 3,
+          step: 0.25,
+          symbol: "kg",
+          symbolAm: "ኪ.ግ",
+          quickChips: [0.25, 0.5, 1, 2, 5],
+        },
+        LITRE: {
+          kind: "MEASURE",
+          decimals: 3,
+          step: 0.25,
+          symbol: "L",
+          symbolAm: "ሊ",
+          quickChips: [0.25, 0.5, 1, 2, 5],
+        },
+        GRAM: {
+          kind: "MEASURE",
+          decimals: 3,
+          step: 0.1,
+          symbol: "g",
+          symbolAm: "ግ",
+          quickChips: [50, 100, 250, 500],
+        },
+        MILLILITRE: {
+          kind: "MEASURE",
+          decimals: 3,
+          step: 0.1,
+          symbol: "mL",
+          symbolAm: "ሚ.ሊ",
+          quickChips: [50, 100, 250, 500],
+        },
+      };
 
-    let cart = [ { id: "sugar", qty: 1 }, { id: "oil", qty: 2 } ];
-    let currentCategory = "all";
-    let selectedPayment = "cash";
-    let editingCartItemId = null;
-    let keypadBuffer = "1";
-
-    const UNIT_CONFIG = {
-      PIECE: { kind: "COUNT", decimals: 0, step: 1, symbol: "pcs", symbolAm: "ቁራጭ", quickChips: [1,2,3,6,12] },
-      PACK: { kind: "COUNT", decimals: 0, step: 1, symbol: "pk", symbolAm: "ፓኬት", quickChips: [1,2,3,6,12] },
-      KG: { kind: "MEASURE", decimals: 3, step: 0.25, symbol: "kg", symbolAm: "ኪ.ግ", quickChips: [0.25, 0.5, 1, 2, 5] },
-      LITRE: { kind: "MEASURE", decimals: 3, step: 0.25, symbol: "L", symbolAm: "ሊ", quickChips: [0.25, 0.5, 1, 2, 5] },
-      GRAM: { kind: "MEASURE", decimals: 3, step: 0.1, symbol: "g", symbolAm: "ግ", quickChips: [50, 100, 250, 500] },
-      MILLILITRE: { kind: "MEASURE", decimals: 3, step: 0.1, symbol: "mL", symbolAm: "ሚ.ሊ", quickChips: [50, 100, 250, 500] },
-    };
-
-    function formatCurrency(santim) { const sign = santim < 0 ? "−" : ""; const abs = Math.abs(santim); const birr = (abs / 100).toFixed(2); return sign + "ETB " + birr; }
-    function formatQuantity(qty, unit) { const cfg = UNIT_CONFIG[unit] || { kind: "MEASURE", decimals: 3, symbol: unit }; if (cfg.kind === "COUNT") return Math.round(qty) + " " + cfg.symbol; return qty.toFixed(cfg.decimals) + " " + cfg.symbol; }
-    function getUnitConfig(unit) { return UNIT_CONFIG[unit] || UNIT_CONFIG.KG; }
-
-    function renderProducts(items) {
-      const grid = document.getElementById("product-grid");
-      grid.innerHTML = items.map(p => {
-        const inCart = cart.find(c => c.id === p.id);
-        const qtyInCart = inCart ? inCart.qty : 0;
-        let stockBadge = "";
-        if (p.out) stockBadge = `<span class="text-[10px] font-bold text-danger-700 bg-danger-50 px-1.5 py-0.5 rounded">OUT OF STOCK</span>`;
-        else if (p.low) stockBadge = `<span class="text-[10px] font-bold text-warning-700 bg-warning-50 px-1.5 py-0.5 rounded">LOW: ${formatQuantity(p.stock, p.stockUnit)}</span>`;
-        else stockBadge = `<span class="text-[10px] font-mono font-medium text-success-700 bg-success-50 px-1.5 py-0.5 rounded">${formatQuantity(p.stock, p.stockUnit)}</span>`;
-        return `<div onclick="handleProductTap('${p.id}')" class="tap-active bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg p-3 flex flex-col justify-between cursor-pointer transition-all shadow-sm" tabindex="0" role="button"><div><div class="flex items-start justify-between gap-1.5"><div class="min-w-0"><h3 class="text-xs font-bold text-neutral-900 leading-snug truncate">${p.name}</h3><p class="text-[11px] text-neutral-400 font-ethiopic">${p.amharic || ''} · ${p.unit}</p></div>${qtyInCart > 0 ? `<span class="bg-primary-800 text-white font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0">${qtyInCart} in cart</span>` : ""}</div></div><div class="mt-3 flex items-center justify-between pt-2 border-t border-neutral-50"><div><span class="text-[10px] text-neutral-400 block leading-none">Price</span><span class="text-sm font-black font-mono text-neutral-900 tabular-nums">${formatCurrency(p.price * 100)}</span></div><div class="flex items-center gap-1.5">${stockBadge}<button onclick="event.stopPropagation();handleProductTap('${p.id}')" class="w-8 h-8 rounded-lg bg-neutral-100 hover:bg-primary-800 hover:text-white text-neutral-700 flex items-center justify-center transition-colors"><span class="material-symbols-outlined" style="font-size:16px">add</span></button></div></div></div>`;
-      }).join("");
-    }
-
-    function renderCart() {
-      const container = document.getElementById("cart-items-container");
-      const emptyState = document.getElementById("cart-empty-state");
-      const totalCount = cart.reduce((acc, c) => acc + c.qty, 0);
-
-      if (cart.length === 0) {
-        container.classList.add("hidden");
-        emptyState.classList.remove("hidden");
-        return;
+      function formatCurrency(santim) {
+        const sign = santim < 0 ? "−" : "";
+        const abs = Math.abs(santim);
+        const birr = (abs / 100).toFixed(2);
+        return sign + "ETB " + birr;
       }
-      container.classList.remove("hidden");
-      emptyState.classList.add("hidden");
+      function formatQuantity(qty, unit) {
+        const cfg = UNIT_CONFIG[unit] || { kind: "MEASURE", decimals: 3, symbol: unit };
+        if (cfg.kind === "COUNT") return Math.round(qty) + " " + cfg.symbol;
+        return qty.toFixed(cfg.decimals) + " " + cfg.symbol;
+      }
+      function getUnitConfig(unit) {
+        return UNIT_CONFIG[unit] || UNIT_CONFIG.KG;
+      }
 
-      let subtotal = 0;
-      container.innerHTML = cart.map(item => {
-        const p = PRODUCTS.find(prod => prod.id === item.id);
-        const lineTotal = p.price * item.qty;
-        subtotal += lineTotal;
-        return `<div class="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between gap-2"><div class="flex-1 min-w-0" onclick="openKeypad('${item.id}')" title="Tap to enter exact quantity"><p class="text-xs font-bold text-neutral-900 truncate">${p.name}</p><p class="text-[11px] text-neutral-400 font-mono tabular-nums">${formatCurrency(p.price * 100)} / ${p.unit}</p></div><div class="flex items-center bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200 shrink-0"><button onclick="decrement('${item.id}')" class="w-11 h-11 flex items-center justify-center text-neutral-700 hover:bg-neutral-200 font-bold active:bg-neutral-300"><span class="material-symbols-outlined" style="font-size:16px">remove</span></button><button onclick="openKeypad('${item.id}')" class="px-3 font-mono text-xs font-bold text-neutral-900 hover:text-primary-800 border-x border-neutral-200">${item.qty}</button><button onclick="increment('${item.id}')" class="w-11 h-11 flex items-center justify-center text-neutral-700 hover:bg-neutral-200 font-bold active:bg-neutral-300"><span class="material-symbols-outlined" style="font-size:16px">add</span></button></div><div class="w-24 text-right shrink-0"><span class="text-xs font-mono font-bold text-neutral-900 tabular-nums">${formatCurrency(lineTotal * 100)}</span></div></div>`;
-      }).join("");
+      function renderProducts(items) {
+        const grid = document.getElementById("product-grid");
+        grid.innerHTML = items
+          .map((p) => {
+            const inCart = cart.find((c) => c.id === p.id);
+            const qtyInCart = inCart ? inCart.qty : 0;
+            let stockBadge = "";
+            if (p.out)
+              stockBadge = `<span class="text-[10px] font-bold text-danger-700 bg-danger-50 px-1.5 py-0.5 rounded">OUT OF STOCK</span>`;
+            else if (p.low)
+              stockBadge = `<span class="text-[10px] font-bold text-warning-700 bg-warning-50 px-1.5 py-0.5 rounded">LOW: ${formatQuantity(p.stock, p.stockUnit)}</span>`;
+            else
+              stockBadge = `<span class="text-[10px] font-mono font-medium text-success-700 bg-success-50 px-1.5 py-0.5 rounded">${formatQuantity(p.stock, p.stockUnit)}</span>`;
+            return `<div onclick="handleProductTap('${p.id}')" class="tap-active bg-white border border-neutral-200 hover:border-neutral-300 rounded-lg p-3 flex flex-col justify-between cursor-pointer transition-all shadow-sm" tabindex="0" role="button"><div><div class="flex items-start justify-between gap-1.5"><div class="min-w-0"><h3 class="text-xs font-bold text-neutral-900 leading-snug truncate">${p.name}</h3><p class="text-[11px] text-neutral-400 font-ethiopic">${p.amharic || ""} · ${p.unit}</p></div>${qtyInCart > 0 ? `<span class="bg-primary-800 text-white font-mono text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0">${qtyInCart} in cart</span>` : ""}</div></div><div class="mt-3 flex items-center justify-between pt-2 border-t border-neutral-50"><div><span class="text-[10px] text-neutral-400 block leading-none">Price</span><span class="text-sm font-black font-mono text-neutral-900 tabular-nums">${formatCurrency(p.price * 100)}</span></div><div class="flex items-center gap-1.5">${stockBadge}<button onclick="event.stopPropagation();handleProductTap('${p.id}')" class="w-8 h-8 rounded-lg bg-neutral-100 hover:bg-primary-800 hover:text-white text-neutral-700 flex items-center justify-center transition-colors"><span class="material-symbols-outlined" style="font-size:16px">add</span></button></div></div></div>`;
+          })
+          .join("");
+      }
 
-      document.getElementById("subtotal-amount").textContent = formatCurrency(subtotal * 100);
-      document.getElementById("total-amount").textContent = formatCurrency(subtotal * 100);
-      document.getElementById("checkout-btn-text").textContent = `Complete Sale · ${formatCurrency(subtotal * 100)}`;
-      document.getElementById("cart-item-count-badge").textContent = `${totalCount} items`;
-    }
+      function renderCart() {
+        const container = document.getElementById("cart-items-container");
+        const emptyState = document.getElementById("cart-empty-state");
+        const totalCount = cart.reduce((acc, c) => acc + c.qty, 0);
 
-    function handleProductTap(id) { const prod = PRODUCTS.find(p => p.id === id); if (prod.out) { showSellAnywayModal(prod); return; } addToCart(id); }
-    function quickAdd(id) { handleProductTap(id); }
-    function addToCart(id) { const existing = cart.find(c => c.id === id); if (existing) { existing.qty += 1; } else { cart.push({ id, qty: 1 }); } renderCart(); renderProducts(getFilteredProducts()); }
-    function increment(id) { const item = cart.find(c => c.id === id); if (item) { const prod = PRODUCTS.find(p => p.id === id); if (prod && item.qty >= prod.stock) { showSellAnywayModal(prod); return; } item.qty += 1; renderCart(); renderProducts(getFilteredProducts()); } }
-    function decrement(id) { const index = cart.findIndex(c => c.id === id); if (index > -1) { if (cart[index].qty > 1) { cart[index].qty -= 1; } else { cart.splice(index, 1); } renderCart(); renderProducts(getFilteredProducts()); } }
+        if (cart.length === 0) {
+          container.classList.add("hidden");
+          emptyState.classList.remove("hidden");
+          return;
+        }
+        container.classList.remove("hidden");
+        emptyState.classList.add("hidden");
 
-    function getFilteredProducts() { const q = document.getElementById("search-input").value.toLowerCase().trim(); return PRODUCTS.filter(p => { const matchesCat = currentCategory === "all" || p.cat === currentCategory; const matchesQuery = !q || p.name.toLowerCase().includes(q) || (p.amharic && p.amharic.includes(q)) || p.unit.toLowerCase().includes(q); return matchesCat && matchesQuery; }); }
-    function filterProducts() { renderProducts(getFilteredProducts()); }
-    function setCategory(cat, btn) { currentCategory = cat; document.querySelectorAll(".cat-pill").forEach(b => b.className = "cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all"); btn.className = "cat-pill active-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold bg-neutral-900 text-white transition-all"; filterProducts(); }
-    function selectPayment(method) { selectedPayment = method; document.querySelectorAll('[id^="pay-"]').forEach(b => { b.className = "pay-method-btn py-2.5 px-2 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex flex-col items-center justify-center transition-all tap-active"; b.setAttribute("aria-checked", "false"); }); const activeBtn = document.getElementById(`pay-${method}-btn`); activeBtn.className = "pay-method-btn py-2.5 px-2 rounded-lg border-2 border-primary-800 bg-primary-50 text-primary-900 font-bold text-xs flex flex-col items-center justify-center transition-all tap-active"; activeBtn.setAttribute("aria-checked", "true"); }
+        let subtotal = 0;
+        container.innerHTML = cart
+          .map((item) => {
+            const p = PRODUCTS.find((prod) => prod.id === item.id);
+            const lineTotal = p.price * item.qty;
+            subtotal += lineTotal;
+            return `<div class="py-2.5 first:pt-0 last:pb-0 flex items-center justify-between gap-2"><div class="flex-1 min-w-0" onclick="openKeypad('${item.id}')" title="Tap to enter exact quantity"><p class="text-xs font-bold text-neutral-900 truncate">${p.name}</p><p class="text-[11px] text-neutral-400 font-mono tabular-nums">${formatCurrency(p.price * 100)} / ${p.unit}</p></div><div class="flex items-center bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200 shrink-0"><button onclick="decrement('${item.id}')" class="w-11 h-11 flex items-center justify-center text-neutral-700 hover:bg-neutral-200 font-bold active:bg-neutral-300"><span class="material-symbols-outlined" style="font-size:16px">remove</span></button><button onclick="openKeypad('${item.id}')" class="px-3 font-mono text-xs font-bold text-neutral-900 hover:text-primary-800 border-x border-neutral-200">${item.qty}</button><button onclick="increment('${item.id}')" class="w-11 h-11 flex items-center justify-center text-neutral-700 hover:bg-neutral-200 font-bold active:bg-neutral-300"><span class="material-symbols-outlined" style="font-size:16px">add</span></button></div><div class="w-24 text-right shrink-0"><span class="text-xs font-mono font-bold text-neutral-900 tabular-nums">${formatCurrency(lineTotal * 100)}</span></div></div>`;
+          })
+          .join("");
 
-    function openKeypad(itemId) { editingCartItemId = itemId; const item = cart.find(c => c.id === itemId); const prod = PRODUCTS.find(p => p.id === itemId); const cfg = getUnitConfig(prod.unit); keypadBuffer = String(item.qty); document.getElementById("keypad-display").textContent = keypadBuffer; document.getElementById("keypad-display-unit").textContent = cfg.symbol; document.getElementById("keypad-title").textContent = `Set Quantity — ${prod.name}`; document.getElementById("keypad-unit").textContent = `Unit: ${prod.unit} (${cfg.kind === "COUNT" ? "Whole numbers" : "Decimals allowed"})`; document.getElementById("keypad-modal").classList.remove("hidden"); document.body.style.overflow = "hidden"; }
-    function closeKeypad() { document.getElementById("keypad-modal").classList.add("hidden"); document.body.style.overflow = ""; editingCartItemId = null; keypadBuffer = "1"; }
-    function keypadPress(val) { if (val === "." && keypadBuffer.includes(".")) return; if (keypadBuffer === "0" && val !== ".") keypadBuffer = val; else keypadBuffer += val; document.getElementById("keypad-display").textContent = keypadBuffer; }
-    function keypadBackspace() { keypadBuffer = keypadBuffer.slice(0, -1); if (!keypadBuffer) keypadBuffer = "0"; document.getElementById("keypad-display").textContent = keypadBuffer; }
-    function saveKeypadQty() { if (!editingCartItemId) return; const prod = PRODUCTS.find(p => p.id === editingCartItemId); const cfg = getUnitConfig(prod.unit); let val = parseFloat(keypadBuffer); if (isNaN(val) || val < 0.001) val = 1; if (val > 999999.999) val = 999999.999; if (cfg.kind === "COUNT") val = Math.round(val); else val = Math.round(val * 1000) / 1000; const item = cart.find(c => c.id === editingCartItemId); if (item) { item.qty = val; } renderCart(); renderProducts(getFilteredProducts()); closeKeypad(); }
+        document.getElementById("subtotal-amount").textContent = formatCurrency(subtotal * 100);
+        document.getElementById("total-amount").textContent = formatCurrency(subtotal * 100);
+        document.getElementById("checkout-btn-text").textContent =
+          `Complete Sale · ${formatCurrency(subtotal * 100)}`;
+        document.getElementById("cart-item-count-badge").textContent = `${totalCount} items`;
+      }
 
-    function showSellAnywayModal(prod) { const msg = `Confirmed balance is <strong class="font-mono tabular-nums">${formatQuantity(prod.stock, prod.stockUnit)}</strong>. Selling beyond this will flag for manager review.`; document.getElementById("sell-anyway-message").innerHTML = msg; document.getElementById("sell-anyway-modal").classList.remove("hidden"); document.body.style.overflow = "hidden"; }
-    function closeSellAnywayModal(confirmed) { document.getElementById("sell-anyway-modal").classList.add("hidden"); document.body.style.overflow = ""; if (confirmed) addToCart(editingCartItemId || "oil"); }
+      function handleProductTap(id) {
+        const prod = PRODUCTS.find((p) => p.id === id);
+        if (prod.out) {
+          showSellAnywayModal(prod);
+          return;
+        }
+        addToCart(id);
+      }
+      function quickAdd(id) {
+        handleProductTap(id);
+      }
+      function addToCart(id) {
+        const existing = cart.find((c) => c.id === id);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ id, qty: 1 });
+        }
+        renderCart();
+        renderProducts(getFilteredProducts());
+      }
+      function increment(id) {
+        const item = cart.find((c) => c.id === id);
+        if (item) {
+          const prod = PRODUCTS.find((p) => p.id === id);
+          if (prod && item.qty >= prod.stock) {
+            showSellAnywayModal(prod);
+            return;
+          }
+          item.qty += 1;
+          renderCart();
+          renderProducts(getFilteredProducts());
+        }
+      }
+      function decrement(id) {
+        const index = cart.findIndex((c) => c.id === id);
+        if (index > -1) {
+          if (cart[index].qty > 1) {
+            cart[index].qty -= 1;
+          } else {
+            cart.splice(index, 1);
+          }
+          renderCart();
+          renderProducts(getFilteredProducts());
+        }
+      }
 
-    function completeCheckout() { if (cart.length === 0) return; const subtotal = cart.reduce((acc, item) => { const p = PRODUCTS.find(prod => prod.id === item.id); return acc + p.price * item.qty; }, 0); document.getElementById("modal-amount").textContent = formatCurrency(subtotal * 100); document.getElementById("modal-method").textContent = selectedPayment === "cash" ? "Cash (ጥሬ ገንዘብ)" : selectedPayment === "telebirr" ? "Telebirr (ቴሌብር)" : "Other"; document.getElementById("checkout-modal").classList.remove("hidden"); document.body.style.overflow = "hidden"; cart = []; setTimeout(() => { renderCart(); renderProducts(getFilteredProducts()); }, 100); }
-    function closeModalAndReset() { document.getElementById("checkout-modal").classList.add("hidden"); document.body.style.overflow = ""; }
-    function printMockReceipt() { alert("ESC/POS thermal receipt sent to printer"); }
-    function clearCart() { cart = []; renderCart(); renderProducts(getFilteredProducts()); }
-    function addDiscount(pct) { alert(`${pct}% discount applied`); }
-    function promptNote() { alert("Note added to order"); }
-    function navigateToToday() { window.open("today_dashboard.html", "_blank"); }
-    function navigateToReview() { window.open("conflict_review.html", "_blank"); }
-    function openReceiveModal() { alert("Open Receive Stock modal"); }
-    function openAdjustModal() { alert("Open Adjust Stock modal"); }
+      function getFilteredProducts() {
+        const q = document.getElementById("search-input").value.toLowerCase().trim();
+        return PRODUCTS.filter((p) => {
+          const matchesCat = currentCategory === "all" || p.cat === currentCategory;
+          const matchesQuery =
+            !q ||
+            p.name.toLowerCase().includes(q) ||
+            (p.amharic && p.amharic.includes(q)) ||
+            p.unit.toLowerCase().includes(q);
+          return matchesCat && matchesQuery;
+        });
+      }
+      function filterProducts() {
+        renderProducts(getFilteredProducts());
+      }
+      function setCategory(cat, btn) {
+        currentCategory = cat;
+        document
+          .querySelectorAll(".cat-pill")
+          .forEach(
+            (b) =>
+              (b.className =
+                "cat-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300 transition-all"),
+          );
+        btn.className =
+          "cat-pill active-pill shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold bg-neutral-900 text-white transition-all";
+        filterProducts();
+      }
+      function selectPayment(method) {
+        selectedPayment = method;
+        document.querySelectorAll('[id^="pay-"]').forEach((b) => {
+          b.className =
+            "pay-method-btn py-2.5 px-2 rounded-lg border border-neutral-200 bg-white text-neutral-700 font-semibold text-xs flex flex-col items-center justify-center transition-all tap-active";
+          b.setAttribute("aria-checked", "false");
+        });
+        const activeBtn = document.getElementById(`pay-${method}-btn`);
+        activeBtn.className =
+          "pay-method-btn py-2.5 px-2 rounded-lg border-2 border-primary-800 bg-primary-50 text-primary-900 font-bold text-xs flex flex-col items-center justify-center transition-all tap-active";
+        activeBtn.setAttribute("aria-checked", "true");
+      }
 
-    function toggleSyncPopover() { const popover = document.getElementById("sync-popover"); const btn = document.getElementById("sync-pill-btn"); const isHidden = popover.classList.toggle("hidden"); btn.setAttribute("aria-expanded", !isHidden); }
-    function simulateSyncNow() { toggleOfflineModeDemo(); setTimeout(toggleOfflineModeDemo, 1500); }
-    function toggleOfflineModeDemo() { const isOffline = document.getElementById("sync-pill-label").textContent.includes("Offline"); const pill = document.getElementById("sync-pill-btn"); const label = document.getElementById("sync-pill-label"); const dot = document.getElementById("sync-pill-dot"); const outbox = document.getElementById("popover-outbox"); if (isOffline) { label.textContent = "Synced just now"; pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-success-50 text-success-800 border-success-200 hover:bg-success-100"; dot.className = "w-2 h-2 rounded-full bg-success-500 pulse-dot shrink-0"; outbox.textContent = "0 pending"; } else { label.textContent = "Offline · 3 waiting"; pill.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-warning-50 text-warning-800 border-warning-200 hover:bg-warning-100"; dot.className = "w-2 h-2 rounded-full bg-warning-600 pulse-dot shrink-0"; outbox.textContent = "3 pending"; } }
-    function flashScanner() { const banner = document.getElementById("scanner-banner"); if (banner) banner.classList.remove("hidden"); }
+      function openKeypad(itemId) {
+        editingCartItemId = itemId;
+        const item = cart.find((c) => c.id === itemId);
+        const prod = PRODUCTS.find((p) => p.id === itemId);
+        const cfg = getUnitConfig(prod.unit);
+        keypadBuffer = String(item.qty);
+        document.getElementById("keypad-display").textContent = keypadBuffer;
+        document.getElementById("keypad-display-unit").textContent = cfg.symbol;
+        document.getElementById("keypad-title").textContent = `Set Quantity — ${prod.name}`;
+        document.getElementById("keypad-unit").textContent =
+          `Unit: ${prod.unit} (${cfg.kind === "COUNT" ? "Whole numbers" : "Decimals allowed"})`;
+        document.getElementById("keypad-modal").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+      function closeKeypad() {
+        document.getElementById("keypad-modal").classList.add("hidden");
+        document.body.style.overflow = "";
+        editingCartItemId = null;
+        keypadBuffer = "1";
+      }
+      function keypadPress(val) {
+        if (val === "." && keypadBuffer.includes(".")) return;
+        if (keypadBuffer === "0" && val !== ".") keypadBuffer = val;
+        else keypadBuffer += val;
+        document.getElementById("keypad-display").textContent = keypadBuffer;
+      }
+      function keypadBackspace() {
+        keypadBuffer = keypadBuffer.slice(0, -1);
+        if (!keypadBuffer) keypadBuffer = "0";
+        document.getElementById("keypad-display").textContent = keypadBuffer;
+      }
+      function saveKeypadQty() {
+        if (!editingCartItemId) return;
+        const prod = PRODUCTS.find((p) => p.id === editingCartItemId);
+        const cfg = getUnitConfig(prod.unit);
+        let val = parseFloat(keypadBuffer);
+        if (isNaN(val) || val < 0.001) val = 1;
+        if (val > 999999.999) val = 999999.999;
+        if (cfg.kind === "COUNT") val = Math.round(val);
+        else val = Math.round(val * 1000) / 1000;
+        const item = cart.find((c) => c.id === editingCartItemId);
+        if (item) {
+          item.qty = val;
+        }
+        renderCart();
+        renderProducts(getFilteredProducts());
+        closeKeypad();
+      }
 
-    // Populate low stock alerts in sidebar
-    function populateLowStockAlerts() {
-      const container = document.getElementById("low-stock-alerts");
-      const lowItems = PRODUCTS.filter(p => p.low || p.out);
-      container.innerHTML = lowItems.map(p => `
+      function showSellAnywayModal(prod) {
+        const msg = `Confirmed balance is <strong class="font-mono tabular-nums">${formatQuantity(prod.stock, prod.stockUnit)}</strong>. Selling beyond this will flag for manager review.`;
+        document.getElementById("sell-anyway-message").innerHTML = msg;
+        document.getElementById("sell-anyway-modal").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+      function closeSellAnywayModal(confirmed) {
+        document.getElementById("sell-anyway-modal").classList.add("hidden");
+        document.body.style.overflow = "";
+        if (confirmed) addToCart(editingCartItemId || "oil");
+      }
+
+      function completeCheckout() {
+        if (cart.length === 0) return;
+        const subtotal = cart.reduce((acc, item) => {
+          const p = PRODUCTS.find((prod) => prod.id === item.id);
+          return acc + p.price * item.qty;
+        }, 0);
+        document.getElementById("modal-amount").textContent = formatCurrency(subtotal * 100);
+        document.getElementById("modal-method").textContent =
+          selectedPayment === "cash"
+            ? "Cash (ጥሬ ገንዘብ)"
+            : selectedPayment === "telebirr"
+              ? "Telebirr (ቴሌብር)"
+              : "Other";
+        document.getElementById("checkout-modal").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+        cart = [];
+        setTimeout(() => {
+          renderCart();
+          renderProducts(getFilteredProducts());
+        }, 100);
+      }
+      function closeModalAndReset() {
+        document.getElementById("checkout-modal").classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+      function printMockReceipt() {
+        alert("ESC/POS thermal receipt sent to printer");
+      }
+      function clearCart() {
+        cart = [];
+        renderCart();
+        renderProducts(getFilteredProducts());
+      }
+      function addDiscount(pct) {
+        alert(`${pct}% discount applied`);
+      }
+      function promptNote() {
+        alert("Note added to order");
+      }
+      function navigateToToday() {
+        window.open("today_dashboard.html", "_blank");
+      }
+      function navigateToReview() {
+        window.open("conflict_review.html", "_blank");
+      }
+      function openReceiveModal() {
+        alert("Open Receive Stock modal");
+      }
+      function openAdjustModal() {
+        alert("Open Adjust Stock modal");
+      }
+
+      function toggleSyncPopover() {
+        const popover = document.getElementById("sync-popover");
+        const btn = document.getElementById("sync-pill-btn");
+        const isHidden = popover.classList.toggle("hidden");
+        btn.setAttribute("aria-expanded", !isHidden);
+      }
+      function simulateSyncNow() {
+        toggleOfflineModeDemo();
+        setTimeout(toggleOfflineModeDemo, 1500);
+      }
+      function toggleOfflineModeDemo() {
+        const isOffline = document
+          .getElementById("sync-pill-label")
+          .textContent.includes("Offline");
+        const pill = document.getElementById("sync-pill-btn");
+        const label = document.getElementById("sync-pill-label");
+        const dot = document.getElementById("sync-pill-dot");
+        const outbox = document.getElementById("popover-outbox");
+        if (isOffline) {
+          label.textContent = "Synced just now";
+          pill.className =
+            "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-success-50 text-success-800 border-success-200 hover:bg-success-100";
+          dot.className = "w-2 h-2 rounded-full bg-success-500 pulse-dot shrink-0";
+          outbox.textContent = "0 pending";
+        } else {
+          label.textContent = "Offline · 3 waiting";
+          pill.className =
+            "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-warning-50 text-warning-800 border-warning-200 hover:bg-warning-100";
+          dot.className = "w-2 h-2 rounded-full bg-warning-600 pulse-dot shrink-0";
+          outbox.textContent = "3 pending";
+        }
+      }
+      function flashScanner() {
+        const banner = document.getElementById("scanner-banner");
+        if (banner) banner.classList.remove("hidden");
+      }
+
+      // Populate low stock alerts in sidebar
+      function populateLowStockAlerts() {
+        const container = document.getElementById("low-stock-alerts");
+        const lowItems = PRODUCTS.filter((p) => p.low || p.out);
+        container.innerHTML = lowItems
+          .map(
+            (p) => `
         <div class="p-2 bg-warning-50 border border-warning-200 rounded-lg">
           <p class="font-medium text-xs text-neutral-900">${p.name}</p>
           <p class="text-[11px] text-warning-700 font-mono tabular-nums">${p.out ? "OUT OF STOCK" : `Stock: ${formatQuantity(p.stock, p.stockUnit)} (threshold: 5 ${p.stockUnit})`}</p>
         </div>
-      `).join("");
-    }
+      `,
+          )
+          .join("");
+      }
 
-    // Init
-    document.getElementById("search-input")?.addEventListener("input", filterProducts);
-    renderProducts(getFilteredProducts());
-    renderCart();
-    populateLowStockAlerts();
-  </script>
-</body>
+      // Init
+      document.getElementById("search-input")?.addEventListener("input", filterProducts);
+      renderProducts(getFilteredProducts());
+      renderCart();
+      populateLowStockAlerts();
+    </script>
+  </body>
 </html>

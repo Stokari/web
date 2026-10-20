@@ -7,14 +7,14 @@
 
 ## 🎯 Two UIs, One Design System
 
-| | **Attendant (Cashier)** | **Owner (Manager)** |
-|---|---|---|
-| **Primary Device** | Mobile (320–640px) | Desktop (≥1024px) |
-| **Navigation** | Bottom Tab Bar (5 tabs) | Left Sidebar (collapsible) |
-| **Density** | Single-column cards | Multi-column tables |
-| **Primary Action** | 54px sticky footer button | Toolbar buttons |
-| **Data Access** | Read-only (no cost/valuation) | Full CRUD + conflicts |
-| **SyncPill** | Top header | Top header |
+|                    | **Attendant (Cashier)**       | **Owner (Manager)**        |
+| ------------------ | ----------------------------- | -------------------------- |
+| **Primary Device** | Mobile (320–640px)            | Desktop (≥1024px)          |
+| **Navigation**     | Bottom Tab Bar (5 tabs)       | Left Sidebar (collapsible) |
+| **Density**        | Single-column cards           | Multi-column tables        |
+| **Primary Action** | 54px sticky footer button     | Toolbar buttons            |
+| **Data Access**    | Read-only (no cost/valuation) | Full CRUD + conflicts      |
+| **SyncPill**       | Top header                    | Top header                 |
 
 ---
 
@@ -22,54 +22,54 @@
 
 ```css
 /* Surfaces */
---color-background: #F8FAFC;    /* Page bg */
---color-surface: #FFFFFF;       /* Cards, modals */
---color-surface-subtle: #F1F5F9;/* Hover, disabled */
+--color-background: #f8fafc; /* Page bg */
+--color-surface: #ffffff; /* Cards, modals */
+--color-surface-subtle: #f1f5f9; /* Hover, disabled */
 
 /* Borders */
---color-border: #E2E8F0;        /* Hairline (1px) */
---color-border-strong: #CBD5E1; /* Focus, selected */
+--color-border: #e2e8f0; /* Hairline (1px) */
+--color-border-strong: #cbd5e1; /* Focus, selected */
 
 /* Text */
---color-text: #0F172A;          /* Primary (4.5:1) */
---color-text-secondary: #475569;/* Metadata */
---color-text-muted: #64748B;    /* Muted (4.6:1) */
+--color-text: #0f172a; /* Primary (4.5:1) */
+--color-text-secondary: #475569; /* Metadata */
+--color-text-muted: #64748b; /* Muted (4.6:1) */
 
 /* Semantic */
---color-success: #065F46;       /* Confirmed, positive */
---color-warning: #92400E;       /* Pending, expiring */
---color-danger: #991B1B;        /* Review, negative, destructive */
---color-primary: #1E40AF;       /* Primary actions */
+--color-success: #065f46; /* Confirmed, positive */
+--color-warning: #92400e; /* Pending, expiring */
+--color-danger: #991b1b; /* Review, negative, destructive */
+--color-primary: #1e40af; /* Primary actions */
 ```
 
 ---
 
 ## 📐 Spacing & Sizing
 
-| Token | Value | Use |
-|---|---|---|
-| `--space-xs` | 4px | Icon gaps, badge padding |
-| `--space-sm` | 8px | Standard gap, card padding |
-| `--space-md` | 16px | Section gaps, modal padding |
-| `--space-lg` | 24px | Page margins, large gaps |
-| `--touch-target-min` | 44px | **Minimum** touch target |
-| `--touch-target-primary-mobile` | 54px | Primary mobile button height |
-| `--radius-sm` | 4px | Badges, chips |
-| `--radius-md` | 8px | Inputs, buttons, cards |
-| `--radius-lg` | 12px | Modals, sheets |
+| Token                           | Value | Use                          |
+| ------------------------------- | ----- | ---------------------------- |
+| `--space-xs`                    | 4px   | Icon gaps, badge padding     |
+| `--space-sm`                    | 8px   | Standard gap, card padding   |
+| `--space-md`                    | 16px  | Section gaps, modal padding  |
+| `--space-lg`                    | 24px  | Page margins, large gaps     |
+| `--touch-target-min`            | 44px  | **Minimum** touch target     |
+| `--touch-target-primary-mobile` | 54px  | Primary mobile button height |
+| `--radius-sm`                   | 4px   | Badges, chips                |
+| `--radius-md`                   | 8px   | Inputs, buttons, cards       |
+| `--radius-lg`                   | 12px  | Modals, sheets               |
 
 ---
 
 ## 🔤 Typography Scale
 
-| Class | Size | Weight | Line | Use |
-|---|---|---|---|---|
-| `.heading1` | 20px | 600 | 1.3 | Screen titles |
-| `.heading2` | 16px | 600 | 1.4 | Section headers |
-| `.body` | 14px | 400 | 1.5 | Default text |
-| `.caption` | 12px | 500 | 1.4 | Labels, metadata |
-| `.badge` | 11px | 700 | 1.2 | Status badges |
-| `.tabular-nums` | — | — | — | **All numbers** |
+| Class           | Size | Weight | Line | Use              |
+| --------------- | ---- | ------ | ---- | ---------------- |
+| `.heading1`     | 20px | 600    | 1.3  | Screen titles    |
+| `.heading2`     | 16px | 600    | 1.4  | Section headers  |
+| `.body`         | 14px | 400    | 1.5  | Default text     |
+| `.caption`      | 12px | 500    | 1.4  | Labels, metadata |
+| `.badge`        | 11px | 700    | 1.2  | Status badges    |
+| `.tabular-nums` | —    | —      | —    | **All numbers**  |
 
 **Font Stack:** `Inter` → system fallbacks → `JetBrains Mono` (numbers) → `Noto Sans Ethiopic` (Amharic)
 
@@ -94,13 +94,13 @@
 
 ```tsx
 // Design System
-import { Button, Input, Badge, Card, Modal, Sheet, Drawer } from '@/ui';
-import { SyncPill, QuantityInput, CurrencyInput, UnitSelect } from '@/ui/specialized';
-import { DataTable, ProductCard, RevenueBucket, ConflictCaseCard } from '@/ui/composite';
-import { StockLevelDisplay, PaymentSelector, QuantityKeypadSheet, SellAnywaySheet } from '@/ui/pos';
+import { Button, Input, Badge, Card, Modal, Sheet, Drawer } from "@/ui";
+import { SyncPill, QuantityInput, CurrencyInput, UnitSelect } from "@/ui/specialized";
+import { DataTable, ProductCard, RevenueBucket, ConflictCaseCard } from "@/ui/composite";
+import { StockLevelDisplay, PaymentSelector, QuantityKeypadSheet, SellAnywaySheet } from "@/ui/pos";
 
 // Hooks
-import { useSync, useSession, useProducts, useStock, useReview } from '@/features/*/hooks';
+import { useSync, useSession, useProducts, useStock, useReview } from "@/features/*/hooks";
 ```
 
 ---
@@ -108,6 +108,7 @@ import { useSync, useSession, useProducts, useStock, useReview } from '@/feature
 ## 📱 Mobile-First Patterns
 
 ### Sell Screen (Attendant Primary)
+
 ```
 Header (48px) → Sticky
   Shop Name | SyncPill
@@ -120,6 +121,7 @@ Sticky Footer (54px)
 ```
 
 ### QuantityKeypadSheet (40vh, drag handle)
+
 ```
 Handle
 Header: Product Name + Unit | Live Total
@@ -128,6 +130,7 @@ Footer: [Cancel] [Done] ← Primary
 ```
 
 ### SellAnywaySheet (Alert)
+
 ```
 ⚠️ Sell beyond stock?
 Confirmed: 1.000 kg | Requested: 2.000 kg
@@ -140,6 +143,7 @@ Will flag for manager review.
 ## 🖥️ Desktop Patterns (Owner)
 
 ### Sidebar (240px → 48px icon rail)
+
 ```
 Operations:    Sell | Products | Stock | Today
 Management:    Review (2) | Staff (3) | Settings
@@ -147,6 +151,7 @@ System:        Sync | Backup | About
 ```
 
 ### DataTable (Owner Screens)
+
 ```
 Sticky Header (th) | Hairline borders | 40px rows
 Sortable columns | Filter toolbar | Bulk actions on select
@@ -154,6 +159,7 @@ Numeric: tabular-nums, right-align
 ```
 
 ### Split-Pane (Review, History)
+
 ```
 List (320px) | Drawer (480px)
 Virtualized | Scrollable detail
@@ -181,13 +187,13 @@ formatQty(-3000, 'KG')    → "−3.000 kg"  (oversell)
 
 ## 🔄 SyncPill States (Header, Right)
 
-| State | BG | Border | Text | Icon | Label |
-|---|---|---|---|---|---|
-| `synced` | `#ECFDF5` | `#A7F3D0` | `#065F46` | 🟢 | `Synced 2m ago` |
-| `offline_pending` | `#FFFBEB` | `#FDE68A` | `#92400E` | 🟡 | `Offline · 3 waiting` |
-| `syncing` | `#F1F5F9` | `#CBD5E1` | `#334155` | 🔄 | `Syncing…` |
-| `review_required` | `#FEF2F2` | `#FECACA` | `#991B1B` | 🔴 | `Review Required (1)` |
-| `local_only` | `#F1F5F9` | `#CBD5E1` | `#334155` | 📴 | `Local Only` |
+| State             | BG        | Border    | Text      | Icon | Label                 |
+| ----------------- | --------- | --------- | --------- | ---- | --------------------- |
+| `synced`          | `#ECFDF5` | `#A7F3D0` | `#065F46` | 🟢   | `Synced 2m ago`       |
+| `offline_pending` | `#FFFBEB` | `#FDE68A` | `#92400E` | 🟡   | `Offline · 3 waiting` |
+| `syncing`         | `#F1F5F9` | `#CBD5E1` | `#334155` | 🔄   | `Syncing…`            |
+| `review_required` | `#FEF2F2` | `#FECACA` | `#991B1B` | 🔴   | `Review Required (1)` |
+| `local_only`      | `#F1F5F9` | `#CBD5E1` | `#334155` | 📴   | `Local Only`          |
 
 **Popover:** Last sync (EAT), outbox count, storage, persistent status, [Sync Now] button.
 
@@ -195,13 +201,13 @@ formatQty(-3000, 'KG')    → "−3.000 kg"  (oversell)
 
 ## 🏷️ Status Badges (Record-Level)
 
-| State | Variant | Icon | Text |
-|---|---|---|---|
-| `WAITING_TO_SYNC` | Warning | 🟡 | Waiting to sync |
-| `SYNCING` | Info | 🔄 | Syncing… |
-| `SYNCED` | Success | 🟢 | Synced |
-| `NEEDS_REVIEW` | Danger | 🔴 | Needs review |
-| `REJECTED` | Neutral | ⚪ | Rejected |
+| State             | Variant | Icon | Text            |
+| ----------------- | ------- | ---- | --------------- |
+| `WAITING_TO_SYNC` | Warning | 🟡   | Waiting to sync |
+| `SYNCING`         | Info    | 🔄   | Syncing…        |
+| `SYNCED`          | Success | 🟢   | Synced          |
+| `NEEDS_REVIEW`    | Danger  | 🔴   | Needs review    |
+| `REJECTED`        | Neutral | ⚪   | Rejected        |
 
 **Conflict Types:** `OFFLINE_OVERSELL` (Danger), `AUTHORIZATION_REVIEW` (Warning), `PRODUCT_INACTIVE` (Neutral), `INVALID_STOCK_OPERATION` (Danger), `CANCELLATION_CONFLICT` (Danger)
 
@@ -265,12 +271,12 @@ pnpm test:visual   # Chromatic / Percy (all 4 states × 3 breakpoints × 2 roles
 
 ## 📦 Bundle Budgets
 
-| Metric | Target |
-|---|---|
-| Compressed JS | ≤ 2 MB |
-| 200 Sales Payload | ≤ 200 KB |
-| Initial Paint (3G) | < 3s |
-| TTI (low-end) | < 4s |
+| Metric             | Target   |
+| ------------------ | -------- |
+| Compressed JS      | ≤ 2 MB   |
+| 200 Sales Payload  | ≤ 200 KB |
+| Initial Paint (3G) | < 3s     |
+| TTI (low-end)      | < 4s     |
 
 ---
 

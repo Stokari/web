@@ -1,387 +1,787 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stokari · Design System & Screen Prototypes</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ["Inter", "system-ui", "sans-serif"],
-            mono: ['"JetBrains Mono"', "monospace"],
-          },
-          colors: {
-            primary: { 50: "#eff6ff", 100: "#dbeafe", 500: "#3b82f6", 600: "#2563eb", 700: "#1d4ed8", 800: "#1e40af", 900: "#172554" },
-            success: { 50: "#ecfdf5", 100: "#a7f3d0", 600: "#059669", 700: "#047857", 800: "#065f46", 900: "#022c22" },
-            warning: { 50: "#fffbeb", 100: "#fde68a", 600: "#d97706", 700: "#b45309", 800: "#92400e", 900: "#78350f" },
-            danger: { 50: "#fef2f2", 100: "#fecaca", 600: "#dc2626", 700: "#b91c1c", 800: "#991b1b", 900: "#7f1d1d" },
-            neutral: { 50: "#f8fafc", 100: "#f1f5f9", 200: "#e2e8f0", 300: "#cbd5e1", 400: "#94a3b8", 500: "#64748b", 600: "#475569", 700: "#334155", 800: "#1e293b", 900: "#0f172a" },
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stokari · Design System & Screen Prototypes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "monospace"],
+            },
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#172554",
+              },
+              success: {
+                50: "#ecfdf5",
+                100: "#a7f3d0",
+                600: "#059669",
+                700: "#047857",
+                800: "#065f46",
+                900: "#022c22",
+              },
+              warning: {
+                50: "#fffbeb",
+                100: "#fde68a",
+                600: "#d97706",
+                700: "#b45309",
+                800: "#92400e",
+                900: "#78350f",
+              },
+              danger: {
+                50: "#fef2f2",
+                100: "#fecaca",
+                600: "#dc2626",
+                700: "#b91c1c",
+                800: "#991b1b",
+                900: "#7f1d1d",
+              },
+              neutral: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
           },
         },
-      },
-    };
-  </script>
-  <style>
-    * { box-sizing: border-box; }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    .material-symbols-outlined {
-      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      display: inline-flex; align-items: center; vertical-align: middle; line-height: 1;
-    }
-    .tabular-nums { font-variant-numeric: tabular-nums; font-family: "JetBrains Mono", monospace; }
-    .screen-card { transition: box-shadow 150ms, border-color 150ms, transform 150ms; }
-    .screen-card:hover { box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); border-color: #cbd5e1; transform: translateY(-2px); }
-    .state-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px; }
-  </style>
-</head>
-<body class="min-h-screen bg-neutral-50 font-sans text-neutral-900 antialiased">
-  <!-- TOP BAR -->
-  <header class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-neutral-200 z-40 px-4 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-md bg-primary-800 flex items-center justify-center text-white shrink-0 shadow-sm">
-        <span class="material-symbols-outlined" style="font-size: 18px">storefront</span>
+      };
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      .tabular-nums {
+        font-variant-numeric: tabular-nums;
+        font-family: "JetBrains Mono", monospace;
+      }
+      .screen-card {
+        transition:
+          box-shadow 150ms,
+          border-color 150ms,
+          transform 150ms;
+      }
+      .screen-card:hover {
+        box-shadow:
+          0 10px 15px -3px rgb(0 0 0 / 0.1),
+          0 4px 6px -4px rgb(0 0 0 / 0.1);
+        border-color: #cbd5e1;
+        transform: translateY(-2px);
+      }
+      .state-badge {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-neutral-50 font-sans text-neutral-900 antialiased">
+    <!-- TOP BAR -->
+    <header
+      class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-neutral-200 z-40 px-4 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-md bg-primary-800 flex items-center justify-center text-white shrink-0 shadow-sm"
+        >
+          <span class="material-symbols-outlined" style="font-size: 18px">storefront</span>
+        </div>
+        <div>
+          <p class="text-sm font-bold tracking-tight text-neutral-900">Stokari</p>
+          <p class="text-[11px] text-neutral-500 font-mono leading-none mt-0.5">
+            Design System v0.4 — Screen Prototypes
+          </p>
+        </div>
       </div>
-      <div>
-        <p class="text-sm font-bold tracking-tight text-neutral-900">Stokari</p>
-        <p class="text-[11px] text-neutral-500 font-mono leading-none mt-0.5">Design System v0.4 — Screen Prototypes</p>
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-medium text-neutral-500 hidden sm:inline"
+          >Light theme only — No dark mode</span
+        >
       </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <span class="text-xs font-medium text-neutral-500 hidden sm:inline">Light theme only — No dark mode</span>
-    </div>
-  </header>
+    </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="pt-14 pb-16 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto">
-      <!-- HERO SECTION -->
-      <section class="mb-12">
-        <div class="bg-white border border-neutral-200 rounded-lg p-6 sm:p-8">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight">Stokari Design System</h1>
-              <p class="mt-2 text-neutral-600 max-w-2xl">Offline-first retail POS & inventory for Ethiopian kiosks. Industrial, utilitarian, fast. Zero AI slop.</p>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="state-badge bg-success-50 text-success-800 border border-success-200"><span class="material-symbols-outlined text-[11px]">check_circle</span>Spec Compliant</span>
-              <span class="state-badge bg-primary-50 text-primary-800 border border-primary-200"><span class="material-symbols-outlined text-[11px]">mobile_friendly</span>Mobile First</span>
-              <span class="state-badge bg-warning-50 text-warning-800 border border-warning-200"><span class="material-symbols-outlined text-[11px]">g_translate</span>Amharic Ready</span>
-              <span class="state-badge bg-neutral-100 text-neutral-700 border border-neutral-200"><span class="material-symbols-outlined text-[11px]">block</span>No Purple</span>
+    <!-- MAIN CONTENT -->
+    <main class="pt-14 pb-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- HERO SECTION -->
+        <section class="mb-12">
+          <div class="bg-white border border-neutral-200 rounded-lg p-6 sm:p-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight">
+                  Stokari Design System
+                </h1>
+                <p class="mt-2 text-neutral-600 max-w-2xl">
+                  Offline-first retail POS & inventory for Ethiopian kiosks. Industrial,
+                  utilitarian, fast. Zero AI slop.
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="state-badge bg-success-50 text-success-800 border border-success-200"
+                  ><span class="material-symbols-outlined text-[11px]">check_circle</span>Spec
+                  Compliant</span
+                >
+                <span class="state-badge bg-primary-50 text-primary-800 border border-primary-200"
+                  ><span class="material-symbols-outlined text-[11px]">mobile_friendly</span>Mobile
+                  First</span
+                >
+                <span class="state-badge bg-warning-50 text-warning-800 border border-warning-200"
+                  ><span class="material-symbols-outlined text-[11px]">g_translate</span>Amharic
+                  Ready</span
+                >
+                <span class="state-badge bg-neutral-100 text-neutral-700 border border-neutral-200"
+                  ><span class="material-symbols-outlined text-[11px]">block</span>No Purple</span
+                >
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- DESIGN TOKENS QUICK REF -->
-      <section class="mb-12">
-        <h2 class="text-lg font-bold text-neutral-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary-700">palette</span> Design Tokens (CSS Variables)</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div class="bg-white border border-neutral-200 rounded-lg p-4">
-            <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Primary</p>
-            <div class="space-y-1 text-xs font-mono">
-              <div class="flex justify-between"><span>--primary</span><span class="text-primary-700">#1e40af</span></div>
-              <div class="flex justify-between"><span>--primary-hover</span><span class="text-primary-600">#1d4ed8</span></div>
-              <div class="flex justify-between"><span>--primary-active</span><span class="text-primary-900">#172554</span></div>
+        <!-- DESIGN TOKENS QUICK REF -->
+        <section class="mb-12">
+          <h2 class="text-lg font-bold text-neutral-900 mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-700">palette</span> Design Tokens
+            (CSS Variables)
+          </h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="bg-white border border-neutral-200 rounded-lg p-4">
+              <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">
+                Primary
+              </p>
+              <div class="space-y-1 text-xs font-mono">
+                <div class="flex justify-between">
+                  <span>--primary</span><span class="text-primary-700">#1e40af</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--primary-hover</span><span class="text-primary-600">#1d4ed8</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--primary-active</span><span class="text-primary-900">#172554</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded-lg p-4">
+              <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">
+                Semantic
+              </p>
+              <div class="space-y-1 text-xs font-mono">
+                <div class="flex justify-between">
+                  <span>--success</span><span class="text-success-700">#065f46</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--warning</span><span class="text-warning-700">#92400e</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--danger</span><span class="text-danger-700">#991b1b</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded-lg p-4">
+              <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">
+                Surfaces
+              </p>
+              <div class="space-y-1 text-xs font-mono">
+                <div class="flex justify-between">
+                  <span>--background</span><span class="text-neutral-700">#f8fafc</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--surface</span><span class="text-neutral-700">#ffffff</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--border</span><span class="text-neutral-700">#e2e8f0</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded-lg p-4">
+              <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">
+                Typography
+              </p>
+              <div class="space-y-1 text-xs font-mono">
+                <div class="flex justify-between">
+                  <span>--font-sans</span><span class="text-neutral-700">Inter</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--font-mono</span><span class="text-neutral-700">JetBrains Mono</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>--font-ethiopic</span
+                  ><span class="text-neutral-700">Noto Sans Ethiopic</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="bg-white border border-neutral-200 rounded-lg p-4">
-            <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Semantic</p>
-            <div class="space-y-1 text-xs font-mono">
-              <div class="flex justify-between"><span>--success</span><span class="text-success-700">#065f46</span></div>
-              <div class="flex justify-between"><span>--warning</span><span class="text-warning-700">#92400e</span></div>
-              <div class="flex justify-between"><span>--danger</span><span class="text-danger-700">#991b1b</span></div>
+        </section>
+
+        <!-- SCREEN PROTOTYPES GRID -->
+        <section>
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-bold text-neutral-900 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary-700">dashboard</span> Screen
+              Prototypes
+            </h2>
+            <p class="text-xs text-neutral-500">
+              Click to open standalone — each screen implements DESIGN.md & SCREENS.md exactly
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- 1. POS Till Mobile -->
+            <a
+              href="pos_till.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-primary-800 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px"
+                      >point_of_sale</span
+                    >
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">1. POS Till (Attendant)</p>
+                    <p class="text-[11px] text-neutral-500">Mobile-first, thumb-zone</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-primary-50 text-primary-800 border border-primary-200"
+                  >Attendant</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Header + SyncPill (48px)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Search + Quick chips (1-tap add)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Cart with stepper + keypad sheet
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Segmented payment selector
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >54px sticky Complete Sale button
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Bottom tab bar (5 tabs)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Sell Anyway alert sheet
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/sell</code> |
+                Breakpoints: 320px / 640px / 1024px
+              </p>
+            </a>
+
+            <!-- 2. POS Till Desktop (Owner) -->
+            <a
+              href="pos_till_desktop.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-primary-800 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px"
+                      >desktop_windows</span
+                    >
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">2. POS Till (Owner Desktop)</p>
+                    <p class="text-[11px] text-neutral-500">Split-pane, sidebar nav</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-success-50 text-success-800 border border-success-200"
+                  >Owner</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >240px sidebar (collapsible to 48px)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Left: catalog with categories
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Center: cart + payment + totals
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Right: quick actions panel
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Keyboard shortcuts (Cmd+K, Cmd+S)
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/sell</code> |
+                ≥1024px only
+              </p>
+            </a>
+
+            <!-- 3. Product Catalog -->
+            <a
+              href="product_catalog.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-success-800 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px"
+                      >inventory_2</span
+                    >
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">3. Product Catalog</p>
+                    <p class="text-[11px] text-neutral-500">Search, CRUD, Amharic</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-success-50 text-success-800 border border-success-200"
+                  >Both</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Mobile: card list with stock badges
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Desktop: 8-column DataTable (sortable/filterable)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Create/Edit modal with UnitSelect
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Amharic name field + font fallback
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Owner sees cost; Attendant stripped
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>4
+                  data states (loading/error/empty/populated)
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/products</code>
+              </p>
+            </a>
+
+            <!-- 4. Stock Screen -->
+            <a
+              href="stock.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-warning-700 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px">warehouse</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">4. Stock & Movements</p>
+                    <p class="text-[11px] text-neutral-500">Receive, Adjust, History</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-warning-50 text-warning-800 border border-warning-200"
+                  >Owner</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >StockLevelDisplay: confirmed vs projected
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Receive modal: packaging live preview
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Adjust modal: reason enum (DAMAGE/LOSS/...)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >History drawer: chronological + balance
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Attendant: read-only, no cost fields
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/stock</code>
+              </p>
+            </a>
+
+            <!-- 5. Today Dashboard -->
+            <a
+              href="today_dashboard.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-neutral-800 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px">bar_chart</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">5. Today Dashboard</p>
+                    <p class="text-[11px] text-neutral-500">3-Bucket revenue + valuation</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-neutral-100 text-neutral-700 border border-neutral-200"
+                  >Both</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>3
+                  RevenueBucket cards (mutually exclusive)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Confirmed (emerald) / Pending (amber) / Review (crimson)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >ValuationCard (owner only, approximate flag)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >LowStockList with Restock buttons
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Date selector (EAT timezone)
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/today</code>
+              </p>
+            </a>
+
+            <!-- 6. Conflict Review -->
+            <a
+              href="conflict_review.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-danger-800 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px">gavel</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">6. Conflict Review</p>
+                    <p class="text-[11px] text-neutral-500">Owner arbitration + quarantine</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-danger-50 text-danger-800 border border-danger-200"
+                  >Owner</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Mobile: card list → full sheet detail
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Desktop: split-pane (list + 480px drawer)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Timeline: concurrent offline sales
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>3
+                  actions: Restock / Cancel / Acknowledge
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Quarantine tab: Accept/Reject per op
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Stale resolution protection (caseVersion)
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/review</code>
+              </p>
+            </a>
+
+            <!-- 7. Staff & Settings -->
+            <a
+              href="staff_settings.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-neutral-700 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px">badge</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">7. Staff & Settings</p>
+                    <p class="text-[11px] text-neutral-500">Lease health, export, backup</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-neutral-100 text-neutral-700 border border-neutral-200"
+                  >Owner</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >LeaseHealthRow: email, device, days remaining
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Deactivate attendant (destructive action)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Storage health: quota + persistent status
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Emergency export: pending records JSON
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Attendant view: sync status + export only
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/settings</code>
+              </p>
+            </a>
+
+            <!-- 8. Auth & Onboarding -->
+            <a
+              href="auth_flows.html"
+              target="_blank"
+              class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group"
+            >
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-10 h-10 rounded-md bg-primary-700 flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined" style="font-size: 20px">login</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-neutral-900">8. Auth & Onboarding</p>
+                    <p class="text-[11px] text-neutral-500">Sign in, create shop, accept invite</p>
+                  </div>
+                </div>
+                <span class="state-badge bg-primary-50 text-primary-800 border border-primary-200"
+                  >All</span
+                >
+              </div>
+              <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Google Sign-In + nonce flow
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Multi-shop selection (if >1 membership)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Create shop (owner) — shop name only
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Accept invite (attendant) — join shop
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary-600 text-[14px]">check</span
+                  >Offline-first: works after first sign-in
+                </li>
+              </ul>
+              <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">
+                Routes: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/auth/*</code>
+              </p>
+            </a>
+          </div>
+        </section>
+
+        <!-- QUICK REFERENCE -->
+        <section class="mt-12">
+          <h2 class="text-lg font-bold text-neutral-900 mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-700">cheatsheet</span> Quick
+            Reference
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white border border-neutral-200 rounded-lg p-5">
+              <h3 class="font-semibold text-neutral-900 mb-3 flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary-700 text-lg">block</span> Banned
+                (Zero Tolerance)
+              </h3>
+              <ul class="space-y-1.5 text-sm text-neutral-600">
+                <li>• Purple/violet gradients</li>
+                <li>• rounded-3xl (24px+) on containers</li>
+                <li>• Glassmorphism / backdrop-blur</li>
+                <li>• Decorative orbs, sparkles, 3D clay</li>
+                <li>• Marketing hero sections in app</li>
+                <li>• Low-density card sprawls</li>
+                <li>• Centered empty states w/ illustrations</li>
+                <li>• Color-only status indicators</li>
+                <li>• Spinners for content loading</li>
+              </ul>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded-lg p-5">
+              <h3 class="font-semibold text-neutral-900 mb-3 flex items-center gap-2">
+                <span class="material-symbols-outlined text-success-700 text-lg">check_circle</span>
+                Required (Enforced)
+              </h3>
+              <ul class="space-y-1.5 text-sm text-neutral-600">
+                <li>• Hairline borders (1px #e2e8f0)</li>
+                <li>• Tabular monospace on ALL numbers</li>
+                <li>• 44px touch targets (54px primary mobile)</li>
+                <li>• Thumb-zone primary actions</li>
+                <li>• Icon + Text badges (never color alone)</li>
+                <li>• Skeleton loading matching layout</li>
+                <li>• Inline errors with Retry button</li>
+                <li>• Compact empty states with CTA</li>
+                <li>• inputmode="numeric/decimal" on qty</li>
+              </ul>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded-lg p-5">
+              <h3 class="font-semibold text-neutral-900 mb-3 flex items-center gap-2">
+                <span class="material-symbols-outlined text-warning-700 text-lg">keyboard</span>
+                Keyboard Shortcuts (Desktop)
+              </h3>
+              <ul class="space-y-1.5 text-sm text-neutral-600 font-mono">
+                <li>
+                  <kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Cmd+K</kbd> Global
+                  search
+                </li>
+                <li>
+                  <kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Cmd+S</kbd> Sync now
+                </li>
+                <li>
+                  <kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Esc</kbd> Close
+                  modal/drawer
+                </li>
+                <li>
+                  <kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Tab</kbd> Navigate table
+                  rows
+                </li>
+                <li>
+                  <kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Enter</kbd> Open row
+                  detail
+                </li>
+                <li>
+                  <kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Space</kbd> Toggle
+                  selection
+                </li>
+              </ul>
             </div>
           </div>
-          <div class="bg-white border border-neutral-200 rounded-lg p-4">
-            <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Surfaces</p>
-            <div class="space-y-1 text-xs font-mono">
-              <div class="flex justify-between"><span>--background</span><span class="text-neutral-700">#f8fafc</span></div>
-              <div class="flex justify-between"><span>--surface</span><span class="text-neutral-700">#ffffff</span></div>
-              <div class="flex justify-between"><span>--border</span><span class="text-neutral-700">#e2e8f0</span></div>
-            </div>
-          </div>
-          <div class="bg-white border border-neutral-200 rounded-lg p-4">
-            <p class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Typography</p>
-            <div class="space-y-1 text-xs font-mono">
-              <div class="flex justify-between"><span>--font-sans</span><span class="text-neutral-700">Inter</span></div>
-              <div class="flex justify-between"><span>--font-mono</span><span class="text-neutral-700">JetBrains Mono</span></div>
-              <div class="flex justify-between"><span>--font-ethiopic</span><span class="text-neutral-700">Noto Sans Ethiopic</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
+    </main>
 
-      <!-- SCREEN PROTOTYPES GRID -->
-      <section>
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-lg font-bold text-neutral-900 flex items-center gap-2"><span class="material-symbols-outlined text-primary-700">dashboard</span> Screen Prototypes</h2>
-          <p class="text-xs text-neutral-500">Click to open standalone — each screen implements DESIGN.md & SCREENS.md exactly</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- 1. POS Till Mobile -->
-          <a href="pos_till.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-primary-800 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">point_of_sale</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">1. POS Till (Attendant)</p>
-                  <p class="text-[11px] text-neutral-500">Mobile-first, thumb-zone</p>
-                </div>
-              </div>
-              <span class="state-badge bg-primary-50 text-primary-800 border border-primary-200">Attendant</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Header + SyncPill (48px)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Search + Quick chips (1-tap add)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Cart with stepper + keypad sheet</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Segmented payment selector</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>54px sticky Complete Sale button</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Bottom tab bar (5 tabs)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Sell Anyway alert sheet</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/sell</code> | Breakpoints: 320px / 640px / 1024px</p>
-          </a>
-
-          <!-- 2. POS Till Desktop (Owner) -->
-          <a href="pos_till_desktop.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-primary-800 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">desktop_windows</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">2. POS Till (Owner Desktop)</p>
-                  <p class="text-[11px] text-neutral-500">Split-pane, sidebar nav</p>
-                </div>
-              </div>
-              <span class="state-badge bg-success-50 text-success-800 border border-success-200">Owner</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>240px sidebar (collapsible to 48px)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Left: catalog with categories</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Center: cart + payment + totals</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Right: quick actions panel</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Keyboard shortcuts (Cmd+K, Cmd+S)</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/sell</code> | ≥1024px only</p>
-          </a>
-
-          <!-- 3. Product Catalog -->
-          <a href="product_catalog.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-success-800 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">inventory_2</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">3. Product Catalog</p>
-                  <p class="text-[11px] text-neutral-500">Search, CRUD, Amharic</p>
-                </div>
-              </div>
-              <span class="state-badge bg-success-50 text-success-800 border border-success-200">Both</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Mobile: card list with stock badges</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Desktop: 8-column DataTable (sortable/filterable)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Create/Edit modal with UnitSelect</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Amharic name field + font fallback</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Owner sees cost; Attendant stripped</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>4 data states (loading/error/empty/populated)</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/products</code></p>
-          </a>
-
-          <!-- 4. Stock Screen -->
-          <a href="stock.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-warning-700 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">warehouse</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">4. Stock & Movements</p>
-                  <p class="text-[11px] text-neutral-500">Receive, Adjust, History</p>
-                </div>
-              </div>
-              <span class="state-badge bg-warning-50 text-warning-800 border border-warning-200">Owner</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>StockLevelDisplay: confirmed vs projected</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Receive modal: packaging live preview</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Adjust modal: reason enum (DAMAGE/LOSS/...)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>History drawer: chronological + balance</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Attendant: read-only, no cost fields</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/stock</code></p>
-          </a>
-
-          <!-- 5. Today Dashboard -->
-          <a href="today_dashboard.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-neutral-800 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">bar_chart</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">5. Today Dashboard</p>
-                  <p class="text-[11px] text-neutral-500">3-Bucket revenue + valuation</p>
-                </div>
-              </div>
-              <span class="state-badge bg-neutral-100 text-neutral-700 border border-neutral-200">Both</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>3 RevenueBucket cards (mutually exclusive)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Confirmed (emerald) / Pending (amber) / Review (crimson)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>ValuationCard (owner only, approximate flag)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>LowStockList with Restock buttons</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Date selector (EAT timezone)</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/today</code></p>
-          </a>
-
-          <!-- 6. Conflict Review -->
-          <a href="conflict_review.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-danger-800 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">gavel</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">6. Conflict Review</p>
-                  <p class="text-[11px] text-neutral-500">Owner arbitration + quarantine</p>
-                </div>
-              </div>
-              <span class="state-badge bg-danger-50 text-danger-800 border border-danger-200">Owner</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Mobile: card list → full sheet detail</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Desktop: split-pane (list + 480px drawer)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Timeline: concurrent offline sales</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>3 actions: Restock / Cancel / Acknowledge</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Quarantine tab: Accept/Reject per op</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Stale resolution protection (caseVersion)</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/review</code></p>
-          </a>
-
-          <!-- 7. Staff & Settings -->
-          <a href="staff_settings.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-neutral-700 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">badge</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">7. Staff & Settings</p>
-                  <p class="text-[11px] text-neutral-500">Lease health, export, backup</p>
-                </div>
-              </div>
-              <span class="state-badge bg-neutral-100 text-neutral-700 border border-neutral-200">Owner</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>LeaseHealthRow: email, device, days remaining</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Deactivate attendant (destructive action)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Storage health: quota + persistent status</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Emergency export: pending records JSON</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Attendant view: sync status + export only</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Route: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/settings</code></p>
-          </a>
-
-          <!-- 8. Auth & Onboarding -->
-          <a href="auth_flows.html" target="_blank" class="screen-card bg-white border border-neutral-200 rounded-lg p-5 flex flex-col group">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-md bg-primary-700 flex items-center justify-center text-white">
-                  <span class="material-symbols-outlined" style="font-size: 20px">login</span>
-                </div>
-                <div>
-                  <p class="font-semibold text-neutral-900">8. Auth & Onboarding</p>
-                  <p class="text-[11px] text-neutral-500">Sign in, create shop, accept invite</p>
-                </div>
-              </div>
-              <span class="state-badge bg-primary-50 text-primary-800 border border-primary-200">All</span>
-            </div>
-            <ul class="space-y-1.5 text-sm text-neutral-600 flex-1">
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Google Sign-In + nonce flow</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Multi-shop selection (if >1 membership)</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Create shop (owner) — shop name only</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Accept invite (attendant) — join shop</li>
-              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary-600 text-[14px]">check</span>Offline-first: works after first sign-in</li>
-            </ul>
-            <p class="mt-3 pt-3 border-t border-neutral-100 text-xs text-neutral-500">Routes: <code class="font-mono bg-neutral-100 px-1.5 py-0.5 rounded">/auth/*</code></p>
-          </a>
-        </div>
-      </section>
-
-      <!-- QUICK REFERENCE -->
-      <section class="mt-12">
-        <h2 class="text-lg font-bold text-neutral-900 mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary-700">cheatsheet</span> Quick Reference</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-white border border-neutral-200 rounded-lg p-5">
-            <h3 class="font-semibold text-neutral-900 mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-primary-700 text-lg">block</span> Banned (Zero Tolerance)</h3>
-            <ul class="space-y-1.5 text-sm text-neutral-600">
-              <li>• Purple/violet gradients</li>
-              <li>• rounded-3xl (24px+) on containers</li>
-              <li>• Glassmorphism / backdrop-blur</li>
-              <li>• Decorative orbs, sparkles, 3D clay</li>
-              <li>• Marketing hero sections in app</li>
-              <li>• Low-density card sprawls</li>
-              <li>• Centered empty states w/ illustrations</li>
-              <li>• Color-only status indicators</li>
-              <li>• Spinners for content loading</li>
-            </ul>
-          </div>
-          <div class="bg-white border border-neutral-200 rounded-lg p-5">
-            <h3 class="font-semibold text-neutral-900 mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-success-700 text-lg">check_circle</span> Required (Enforced)</h3>
-            <ul class="space-y-1.5 text-sm text-neutral-600">
-              <li>• Hairline borders (1px #e2e8f0)</li>
-              <li>• Tabular monospace on ALL numbers</li>
-              <li>• 44px touch targets (54px primary mobile)</li>
-              <li>• Thumb-zone primary actions</li>
-              <li>• Icon + Text badges (never color alone)</li>
-              <li>• Skeleton loading matching layout</li>
-              <li>• Inline errors with Retry button</li>
-              <li>• Compact empty states with CTA</li>
-              <li>• inputmode="numeric/decimal" on qty</li>
-            </ul>
-          </div>
-          <div class="bg-white border border-neutral-200 rounded-lg p-5">
-            <h3 class="font-semibold text-neutral-900 mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-warning-700 text-lg">keyboard</span> Keyboard Shortcuts (Desktop)</h3>
-            <ul class="space-y-1.5 text-sm text-neutral-600 font-mono">
-              <li><kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Cmd+K</kbd> Global search</li>
-              <li><kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Cmd+S</kbd> Sync now</li>
-              <li><kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Esc</kbd> Close modal/drawer</li>
-              <li><kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Tab</kbd> Navigate table rows</li>
-              <li><kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Enter</kbd> Open row detail</li>
-              <li><kbd class="px-1.5 py-0.5 bg-neutral-100 rounded text-xs">Space</kbd> Toggle selection</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <script>
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    <script>
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href"))?.scrollIntoView({ behavior: "smooth" });
+        });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
