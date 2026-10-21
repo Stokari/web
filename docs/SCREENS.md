@@ -7,15 +7,15 @@
 
 ## 1. Screen Inventory by Role
 
-| Screen | Attendant (Mobile) | Owner (Mobile) | Owner (Desktop/Tablet) | Primary Component |
-|---|---|---|---|---|
-| **Sell / POS** | ✅ Full | ✅ Full | ✅ Split-pane | `SellScreen`, `Cart`, `QuantityKeypadSheet`, `PaymentSelector` |
-| **Products** | ✅ Search/Browse | ✅ Search/Browse + Edit | ✅ Full CRUD Table | `ProductList` (cards), `ProductTable`, `ProductFormModal` |
-| **Stock** | ✅ View Levels | ✅ View + Receive/Adjust | ✅ View + Receive/Adjust + History | `StockList`, `ReceiveStockModal`, `AdjustStockModal`, `StockHistoryDrawer` |
-| **Today / Dashboard** | ✅ 3-Bucket Summary | ✅ 3-Bucket + Valuation + Low Stock | ✅ Full Dashboard | `RevenueBuckets`, `ValuationCard`, `LowStockTable` |
-| **Review / Conflicts** | ❌ Hidden | ✅ List + Resolve | ✅ List + Split-pane Detail | `ConflictCaseList`, `ConflictCaseDetailDrawer`, `ResolutionActions` |
-| **Staff & Settings** | ✅ Sync, Export, Profile | ✅ Full Management | ✅ Full Management | `StaffList`, `LeaseHealthRow`, `SyncSettings`, `ExportActions` |
-| **Auth / Onboarding** | ✅ Sign in, Create Shop, Accept Invite | ✅ Same | ✅ Same | `SignInFlow`, `CreateShopFlow`, `AcceptInviteFlow` |
+| Screen                 | Attendant (Mobile)                     | Owner (Mobile)                      | Owner (Desktop/Tablet)             | Primary Component                                                          |
+| ---------------------- | -------------------------------------- | ----------------------------------- | ---------------------------------- | -------------------------------------------------------------------------- |
+| **Sell / POS**         | ✅ Full                                | ✅ Full                             | ✅ Split-pane                      | `SellScreen`, `Cart`, `QuantityKeypadSheet`, `PaymentSelector`             |
+| **Products**           | ✅ Search/Browse                       | ✅ Search/Browse + Edit             | ✅ Full CRUD Table                 | `ProductList` (cards), `ProductTable`, `ProductFormModal`                  |
+| **Stock**              | ✅ View Levels                         | ✅ View + Receive/Adjust            | ✅ View + Receive/Adjust + History | `StockList`, `ReceiveStockModal`, `AdjustStockModal`, `StockHistoryDrawer` |
+| **Today / Dashboard**  | ✅ 3-Bucket Summary                    | ✅ 3-Bucket + Valuation + Low Stock | ✅ Full Dashboard                  | `RevenueBuckets`, `ValuationCard`, `LowStockTable`                         |
+| **Review / Conflicts** | ❌ Hidden                              | ✅ List + Resolve                   | ✅ List + Split-pane Detail        | `ConflictCaseList`, `ConflictCaseDetailDrawer`, `ResolutionActions`        |
+| **Staff & Settings**   | ✅ Sync, Export, Profile               | ✅ Full Management                  | ✅ Full Management                 | `StaffList`, `LeaseHealthRow`, `SyncSettings`, `ExportActions`             |
+| **Auth / Onboarding**  | ✅ Sign in, Create Shop, Accept Invite | ✅ Same                             | ✅ Same                            | `SignInFlow`, `CreateShopFlow`, `AcceptInviteFlow`                         |
 
 ---
 
@@ -180,7 +180,7 @@ interface CartProps {
 ```tsx
 // Segmented control (NOT radio buttons)
 <div className="flex gap-xs" role="radiogroup" aria-label="Payment method">
-  {['CASH', 'TELEBIRR', 'OTHER'].map(label => (
+  {["CASH", "TELEBIRR", "OTHER"].map((label) => (
     <button
       key={label}
       role="radio"
@@ -189,11 +189,13 @@ interface CartProps {
         "flex-1 py-sm px-md rounded-md text-sm font-medium transition-colors",
         selected
           ? "bg-primary text-primary-contrast shadow-sm"
-          : "bg-surface border border-border hover:bg-surface-subtle"
+          : "bg-surface border border-border hover:bg-surface-subtle",
       )}
       onClick={() => setSelected(label)}
     >
-      {label === 'CASH' && '💵 '}{label === 'TELEBIRR' && '📱 '}{label === 'OTHER' && '🏷️ '}
+      {label === "CASH" && "💵 "}
+      {label === "TELEBIRR" && "📱 "}
+      {label === "OTHER" && "🏷️ "}
       {t(`sell.payment.${label.toLowerCase()}`)}
     </button>
   ))}
@@ -208,12 +210,12 @@ interface CartProps {
 <button
   className={cn(
     "btn-primary font-mono tabular-nums",
-    isMobile && "w-full h-[54px] fixed bottom-0 left-0 right-0"
+    isMobile && "w-full h-[54px] fixed bottom-0 left-0 right-0",
   )}
   disabled={cart.lines.length === 0}
   onClick={handleCompleteSale}
 >
-  {t('sell.completeSale', { amount: formatCurrency(total) })}
+  {t("sell.completeSale", { amount: formatCurrency(total) })}
 </button>
 ```
 
@@ -224,19 +226,25 @@ interface CartProps {
 <Sheet>
   <SheetHandle />
   <SheetHeader>
-    <h2 className="heading2">{productName} — {unitLabel}</h2>
+    <h2 className="heading2">
+      {productName} — {unitLabel}
+    </h2>
     <LiveTotalDisplay qty={qtyMilli} unitPrice={unitPriceSantim} unit={unit} />
   </SheetHeader>
   <Keypad
-    mode={unitKind === 'COUNT' ? 'numeric' : 'decimal'}
+    mode={unitKind === "COUNT" ? "numeric" : "decimal"}
     value={qtyMilli}
     onChange={setQtyMilli}
-    quickChips={unitConfig.quickQtyMilli.map(q => formatQuantity(q, unit))}
+    quickChips={unitConfig.quickQtyMilli.map((q) => formatQuantity(q, unit))}
     max={999_999_999}
   />
   <SheetFooter>
-    <Button variant="ghost" onClick={onCancel}>Cancel</Button>
-    <Button variant="primary" onClick={onConfirm}>Done</Button>
+    <Button variant="ghost" onClick={onCancel}>
+      Cancel
+    </Button>
+    <Button variant="primary" onClick={onConfirm}>
+      Done
+    </Button>
   </SheetFooter>
 </Sheet>
 ```
@@ -249,13 +257,18 @@ interface CartProps {
   <AlertIcon variant="warning" />
   <h3 className="heading2">Sell beyond stock?</h3>
   <p className="body text-text-secondary">
-    Confirmed stock is <strong className="tabular-nums">{formatQuantity(confirmedStock, unit)}</strong>.
-    Selling <strong className="tabular-nums">{formatQuantity(requestedQty, unit)}</strong>
+    Confirmed stock is{" "}
+    <strong className="tabular-nums">{formatQuantity(confirmedStock, unit)}</strong>. Selling{" "}
+    <strong className="tabular-nums">{formatQuantity(requestedQty, unit)}</strong>
     will flag this sale for manager review.
   </p>
   <div className="flex gap-sm mt-lg">
-    <Button variant="ghost" flex={1} onClick={onCancel}>{t('common.cancel')}</Button>
-    <Button variant="destructive" flex={1} onClick={onConfirm}>{t('sell.sellAnywayConfirm')}</Button>
+    <Button variant="ghost" flex={1} onClick={onCancel}>
+      {t("common.cancel")}
+    </Button>
+    <Button variant="destructive" flex={1} onClick={onConfirm}>
+      {t("sell.sellAnywayConfirm")}
+    </Button>
   </div>
 </AlertSheet>
 ```
@@ -303,13 +316,9 @@ interface CartProps {
     <span className="tabular-nums font-mono text-lg font-semibold text-text">
       {formatCurrency(product.priceSantim)}
     </span>
-    <span className="text-text-muted">
-      {formatQuantity(product.stockMilli, product.unit)}
-    </span>
+    <span className="text-text-muted">{formatQuantity(product.stockMilli, product.unit)}</span>
     {isOwner && product.costSantim && (
-      <span className="text-text-muted">
-        Cost: {formatCurrency(product.costSantim)}
-      </span>
+      <span className="text-text-muted">Cost: {formatCurrency(product.costSantim)}</span>
     )}
   </div>
   <footer className="card-actions">
@@ -344,14 +353,29 @@ interface CartProps {
     <main className="flex-1 overflow-auto p-md">
       <DataTable
         columns={[
-          { key: 'name', header: 'Product Name', render: (p) => <ProductNameCell product={p} /> },
-          { key: 'sku', header: 'SKU', className: 'hidden md:table-cell' },
-          { key: 'category', header: 'Category', className: 'hidden lg:table-cell' },
-          { key: 'price', header: 'Price (ETB)', className: 'numeric', render: (p) => formatCurrency(p.priceSantim) },
-          { key: 'cost', header: 'Cost (ETB)', className: 'numeric hidden md:table-cell', render: (p) => p.costSantim ? formatCurrency(p.costSantim) : '—' },
-          { key: 'stock', header: 'Stock Level', className: 'numeric', render: (p) => <StockLevelCell product={p} /> },
-          { key: 'status', header: 'Status', render: (p) => <StatusBadge status={p.status} /> },
-          { key: 'actions', header: '', render: (p) => <ActionMenu product={p} /> },
+          { key: "name", header: "Product Name", render: (p) => <ProductNameCell product={p} /> },
+          { key: "sku", header: "SKU", className: "hidden md:table-cell" },
+          { key: "category", header: "Category", className: "hidden lg:table-cell" },
+          {
+            key: "price",
+            header: "Price (ETB)",
+            className: "numeric",
+            render: (p) => formatCurrency(p.priceSantim),
+          },
+          {
+            key: "cost",
+            header: "Cost (ETB)",
+            className: "numeric hidden md:table-cell",
+            render: (p) => (p.costSantim ? formatCurrency(p.costSantim) : "—"),
+          },
+          {
+            key: "stock",
+            header: "Stock Level",
+            className: "numeric",
+            render: (p) => <StockLevelCell product={p} />,
+          },
+          { key: "status", header: "Status", render: (p) => <StatusBadge status={p.status} /> },
+          { key: "actions", header: "", render: (p) => <ActionMenu product={p} /> },
         ]}
         data={products}
         onRowClick={navigateToDetail}
@@ -359,7 +383,11 @@ interface CartProps {
         onSelectionChange={setSelectedProducts}
       />
       {selectedProducts.length > 0 && (
-        <BulkActionBar count={selectedProducts.length} onDelete={bulkDelete} onStatusChange={bulkStatusChange} />
+        <BulkActionBar
+          count={selectedProducts.length}
+          onDelete={bulkDelete}
+          onStatusChange={bulkStatusChange}
+        />
       )}
     </main>
   </div>
@@ -372,7 +400,7 @@ interface CartProps {
 // Mobile: Full-screen sheet. Desktop: Modal max-w-2xl
 <Modal>
   <ModalHeader>
-    <h2 className="heading2">{isEditing ? 'Edit Product' : 'Add Product'}</h2>
+    <h2 className="heading2">{isEditing ? "Edit Product" : "Add Product"}</h2>
   </ModalHeader>
   <form className="space-y-md p-md" onSubmit={handleSubmit}>
     <div className="grid gap-md sm:grid-cols-2">
@@ -408,9 +436,11 @@ interface CartProps {
       </Field>
     </div>
     <ModalFooter>
-      <Button variant="ghost" onClick={onClose}>Cancel</Button>
+      <Button variant="ghost" onClick={onClose}>
+        Cancel
+      </Button>
       <Button variant="primary" type="submit" disabled={isSubmitting}>
-        {isEditing ? 'Save Changes' : 'Create Product'}
+        {isEditing ? "Save Changes" : "Create Product"}
       </Button>
     </ModalFooter>
   </form>
@@ -434,7 +464,7 @@ interface CartProps {
     <SyncPill />
   </Header>
   <main className="p-md">
-    <StockSummaryCards />  // Total SKUs, Low Stock Count
+    <StockSummaryCards /> // Total SKUs, Low Stock Count
     <ProductStockCardList
       products={products}
       onReceive={openReceiveModal}
@@ -509,25 +539,38 @@ interface CartProps {
         <StatusFilterSelect />
         <LowStockFilterCheckbox />
         <div className="flex gap-sm ml-auto">
-          <Button variant="secondary" icon="download" onClick={openReceiveModal}>Receive Stock</Button>
-          <Button variant="ghost" icon="edit" onClick={openAdjustModal}>Adjust Stock</Button>
+          <Button variant="secondary" icon="download" onClick={openReceiveModal}>
+            Receive Stock
+          </Button>
+          <Button variant="ghost" icon="edit" onClick={openAdjustModal}>
+            Adjust Stock
+          </Button>
         </div>
       </Toolbar>
     </Header>
     <main className="flex-1 flex overflow-hidden">
       <DataTable
         columns={[
-          { key: 'name', header: 'Product', render: ProductNameCell },
-          { key: 'unit', header: 'Unit', render: UnitBadge },
-          { key: 'confirmed', header: 'Confirmed Stock', className: 'numeric', render: StockCell },
-          { key: 'projected', header: 'Projected', className: 'numeric text-text-muted', render: ProjectedCell },
-          { key: 'threshold', header: 'Low Stock', className: 'numeric', render: ThresholdCell },
-          { key: 'status', header: 'Status', render: StatusBadge },
+          { key: "name", header: "Product", render: ProductNameCell },
+          { key: "unit", header: "Unit", render: UnitBadge },
+          { key: "confirmed", header: "Confirmed Stock", className: "numeric", render: StockCell },
+          {
+            key: "projected",
+            header: "Projected",
+            className: "numeric text-text-muted",
+            render: ProjectedCell,
+          },
+          { key: "threshold", header: "Low Stock", className: "numeric", render: ThresholdCell },
+          { key: "status", header: "Status", render: StatusBadge },
         ]}
         data={products}
         onRowClick={openHistoryDrawer}
       />
-      <HistoryDrawer isOpen={!!selectedProduct} onClose={clearSelection} product={selectedProduct} />
+      <HistoryDrawer
+        isOpen={!!selectedProduct}
+        onClose={clearSelection}
+        product={selectedProduct}
+      />
     </main>
   </div>
 </StockScreen>
@@ -537,7 +580,9 @@ interface CartProps {
 
 ```tsx
 <Modal>
-  <ModalHeader><h2>Receive Stock</h2></ModalHeader>
+  <ModalHeader>
+    <h2>Receive Stock</h2>
+  </ModalHeader>
   <form className="space-y-md p-md" onSubmit={handleSubmit}>
     <Field>
       <Label>Product *</Label>
@@ -563,8 +608,12 @@ interface CartProps {
       <Textarea rows={3} placeholder="Supplier invoice #, delivery note..." />
     </Field>
     <ModalFooter>
-      <Button variant="ghost" onClick={onClose}>Cancel</Button>
-      <Button variant="primary" type="submit">Save Stock Receipt</Button>
+      <Button variant="ghost" onClick={onClose}>
+        Cancel
+      </Button>
+      <Button variant="primary" type="submit">
+        Save Stock Receipt
+      </Button>
     </ModalFooter>
   </form>
 </Modal>
@@ -574,7 +623,9 @@ interface CartProps {
 
 ```tsx
 <Modal>
-  <ModalHeader><h2>Adjust Stock</h2></ModalHeader>
+  <ModalHeader>
+    <h2>Adjust Stock</h2>
+  </ModalHeader>
   <form className="space-y-md p-md" onSubmit={handleSubmit}>
     <Field>
       <Label>Product *</Label>
@@ -592,22 +643,30 @@ interface CartProps {
     </Field>
     <Field>
       <Label>Reason *</Label>
-      <Select required options={[
-        { value: 'DAMAGE', label: 'Damage (Broken / spoiled)' },
-        { value: 'LOSS', label: 'Loss (Theft / unexplained)' },
-        { value: 'CORRECTION', label: 'Correction (Counting error)' },
-        { value: 'OTHER', label: 'Other (Requires note)' },
-      ]} onChange={handleReasonChange} />
+      <Select
+        required
+        options={[
+          { value: "DAMAGE", label: "Damage (Broken / spoiled)" },
+          { value: "LOSS", label: "Loss (Theft / unexplained)" },
+          { value: "CORRECTION", label: "Correction (Counting error)" },
+          { value: "OTHER", label: "Other (Requires note)" },
+        ]}
+        onChange={handleReasonChange}
+      />
     </Field>
-    {reason === 'OTHER' && (
+    {reason === "OTHER" && (
       <Field>
         <Label>Note *</Label>
         <Textarea required rows={3} placeholder="Explain the adjustment..." />
       </Field>
     )}
     <ModalFooter>
-      <Button variant="ghost" onClick={onClose}>Cancel</Button>
-      <Button variant="primary" type="submit">Save Adjustment</Button>
+      <Button variant="ghost" onClick={onClose}>
+        Cancel
+      </Button>
+      <Button variant="primary" type="submit">
+        Save Adjustment
+      </Button>
     </ModalFooter>
   </form>
 </Modal>
@@ -622,7 +681,7 @@ interface CartProps {
     <Button variant="ghost" icon="x" onClick={onClose} />
   </DrawerHeader>
   <div className="flex-1 overflow-y-auto p-md space-y-sm">
-    {movements.map(m => (
+    {movements.map((m) => (
       <MovementRow key={m.id} movement={m} />
     ))}
     {movements.length === 0 && <EmptyState title="No movements yet" />}
@@ -634,11 +693,16 @@ interface CartProps {
 
 ```tsx
 <div className="flex items-start gap-sm p-sm border-b border-border last:border-0">
-  <div className="shrink-0 w-20 tabular-nums text-text-muted text-sm">{formatTime(m.timestamp)}</div>
+  <div className="shrink-0 w-20 tabular-nums text-text-muted text-sm">
+    {formatTime(m.timestamp)}
+  </div>
   <div className="flex-1 min-w-0">
     <div className="flex items-baseline gap-xs">
-      <span className={cn("font-mono font-medium", m.deltaMilli > 0 ? 'text-success' : 'text-danger')}>
-        {m.deltaMilli > 0 ? '+' : ''}{formatQuantity(m.deltaMilli, product.unit)}
+      <span
+        className={cn("font-mono font-medium", m.deltaMilli > 0 ? "text-success" : "text-danger")}
+      >
+        {m.deltaMilli > 0 ? "+" : ""}
+        {formatQuantity(m.deltaMilli, product.unit)}
       </span>
       <span className="text-text-secondary">{m.type}</span>
       {m.note && <span className="text-text-muted">({m.note})</span>}
@@ -676,9 +740,15 @@ interface CartProps {
     <LowStockList items={lowStock} onRestock={navigateToStock} />
     {isOwner && (
       <QuickActions>
-        <Button variant="secondary" icon="download" onClick={openReceiveModal}>Receive Stock</Button>
-        <Button variant="ghost" icon="edit" onClick={openAdjustModal}>Adjust Stock</Button>
-        <Button variant="ghost" icon="download" onClick={exportCSV}>Export CSV</Button>
+        <Button variant="secondary" icon="download" onClick={openReceiveModal}>
+          Receive Stock
+        </Button>
+        <Button variant="ghost" icon="edit" onClick={openAdjustModal}>
+          Adjust Stock
+        </Button>
+        <Button variant="ghost" icon="download" onClick={exportCSV}>
+          Export CSV
+        </Button>
       </QuickActions>
     )}
   </main>
@@ -691,14 +761,14 @@ interface CartProps {
 <div className="grid gap-sm sm:grid-cols-3">
   <RevenueBucket
     variant="confirmed"
-    label={t('dashboard.confirmedRevenue')}
+    label={t("dashboard.confirmedRevenue")}
     amount={confirmedSantim}
     count={confirmedCount}
     icon="check-circle"
   />
   <RevenueBucket
     variant="pending"
-    label={t('dashboard.pendingRevenue')}
+    label={t("dashboard.pendingRevenue")}
     amount={pendingSantim}
     count={pendingCount}
     icon="clock"
@@ -706,7 +776,7 @@ interface CartProps {
   />
   <RevenueBucket
     variant="review"
-    label={t('dashboard.needsReview')}
+    label={t("dashboard.needsReview")}
     amount={reviewSantim}
     count={reviewCount}
     icon="alert-circle"
@@ -724,7 +794,9 @@ interface CartProps {
     <Icon name={icon} className={iconColor[variant]} />
     <h3 className="caption text-text-secondary">{label}</h3>
   </div>
-  <div className="tabular-nums font-mono text-2xl font-bold text-text">{formatCurrency(amount)}</div>
+  <div className="tabular-nums font-mono text-2xl font-bold text-text">
+    {formatCurrency(amount)}
+  </div>
   <div className="text-sm text-text-secondary">{count} sales</div>
   {subtitle && <div className="text-xs text-text-muted mt-xs">{subtitle}</div>}
 </article>
@@ -757,9 +829,13 @@ interface CartProps {
 <section>
   <div className="flex items-center justify-between mb-sm">
     <h3 className="heading2">Low Stock Warnings ({count})</h3>
-    {count > 0 && <Button variant="ghost" size="sm" onClick={navigateToStock}>View All</Button>}
+    {count > 0 && (
+      <Button variant="ghost" size="sm" onClick={navigateToStock}>
+        View All
+      </Button>
+    )}
   </div>
-  {items.map(item => (
+  {items.map((item) => (
     <LowStockCard key={item.productId} item={item} onRestock={navigateToStock} />
   ))}
   {items.length === 0 && <EmptyState title="All stocked" icon="check-circle" />}
@@ -804,8 +880,8 @@ interface CartProps {
     <SyncPill />
   </Header>
   <main className="p-md space-y-md">
-    <SegmentedTabs value={tab} onChange={setTab} options={['Conflicts', 'Quarantined']} />
-    {tab === 'conflicts' ? (
+    <SegmentedTabs value={tab} onChange={setTab} options={["Conflicts", "Quarantined"]} />
+    {tab === "conflicts" ? (
       <ConflictCaseList cases={conflicts} onSelect={openCaseSheet} />
     ) : (
       <QuarantinedOpsList ops={quarantined} onAccept={handleAccept} onReject={handleReject} />
@@ -848,19 +924,33 @@ interface CartProps {
 <ReviewScreen>
   <Sidebar />
   <div className="flex-1 flex flex-col">
-    <Header><Title>Review Queue</Title><SyncPill /></Header>
+    <Header>
+      <Title>Review Queue</Title>
+      <SyncPill />
+    </Header>
     <div className="flex-1 flex overflow-hidden">
       <aside className="w-96 border-r border-border overflow-y-auto">
         <Toolbar>
-          <SegmentedTabs value={tab} options={['Conflicts', 'Quarantined']} />
+          <SegmentedTabs value={tab} options={["Conflicts", "Quarantined"]} />
         </Toolbar>
-        <ConflictCaseList cases={filteredCases} onSelect={setSelectedCase} selected={selectedCaseId} />
+        <ConflictCaseList
+          cases={filteredCases}
+          onSelect={setSelectedCase}
+          selected={selectedCaseId}
+        />
       </aside>
       <main className="flex-1 overflow-y-auto p-md">
         {selectedCase ? (
-          <ConflictCaseDetail case={selectedCase} onResolve={handleResolve} onClose={clearSelection} />
+          <ConflictCaseDetail
+            case={selectedCase}
+            onResolve={handleResolve}
+            onClose={clearSelection}
+          />
         ) : (
-          <EmptyState title="Select a case" subtitle="Choose a case from the list to review and resolve" />
+          <EmptyState
+            title="Select a case"
+            subtitle="Choose a case from the list to review and resolve"
+          />
         )}
       </main>
     </div>
@@ -956,16 +1046,23 @@ interface CartProps {
 <SettingsScreen>
   <Sidebar />
   <div className="flex-1 flex flex-col">
-    <Header><Title>Staff & Settings</Title><SyncPill /></Header>
+    <Header>
+      <Title>Staff & Settings</Title>
+      <SyncPill />
+    </Header>
     <main className="flex-1 overflow-y-auto p-md space-y-xl max-w-4xl mx-auto w-full">
       {/* Active Attendants */}
       <section>
         <div className="flex items-center justify-between mb-md">
           <h2 className="heading2">Active Attendants ({activeCount}/5)</h2>
-          <Button variant="primary" icon="plus" onClick={openInviteModal}>Invite New</Button>
+          <Button variant="primary" icon="plus" onClick={openInviteModal}>
+            Invite New
+          </Button>
         </div>
         <div className="space-y-sm">
-          {attendants.map(a => <LeaseHealthRow key={a.id} attendant={a} onDeactivate={handleDeactivate} />)}
+          {attendants.map((a) => (
+            <LeaseHealthRow key={a.id} attendant={a} onDeactivate={handleDeactivate} />
+          ))}
         </div>
       </section>
 
@@ -974,10 +1071,12 @@ interface CartProps {
         <h3 className="heading2 mb-md">Offline Storage & Lease Health</h3>
         <dl className="grid grid-cols-2 gap-sm text-sm">
           <dt className="text-text-secondary">Storage Used</dt>
-          <dd className="tabular-nums font-mono text-text">{storageUsed} MB / {storageTotal} GB</dd>
+          <dd className="tabular-nums font-mono text-text">
+            {storageUsed} MB / {storageTotal} GB
+          </dd>
           <dt className="text-text-secondary">Persistent Storage</dt>
-          <dd className={persistentEnabled ? 'text-success' : 'text-warning'}>
-            {persistentEnabled ? 'Enabled (Safe from eviction)' : 'Not Granted (Risk of data loss)'}
+          <dd className={persistentEnabled ? "text-success" : "text-warning"}>
+            {persistentEnabled ? "Enabled (Safe from eviction)" : "Not Granted (Risk of data loss)"}
           </dd>
           <dt className="text-text-secondary">Current Lease</dt>
           <dd className="tabular-nums font-mono text-text">{leaseDaysRemaining} days remaining</dd>
@@ -990,8 +1089,8 @@ interface CartProps {
           <WarningIcon className="text-warning" /> Emergency Backup & Export
         </h3>
         <p className="text-text-secondary mb-md">
-          Export pending records before clearing or repairing this device.
-          These records have not yet synchronized to the cloud.
+          Export pending records before clearing or repairing this device. These records have not
+          yet synchronized to the cloud.
         </p>
         <div className="flex gap-sm">
           <Button variant="secondary" icon="download" onClick={exportPendingJSON}>
@@ -1009,8 +1108,8 @@ interface CartProps {
         <SettingsForm>
           <Toggle label="Compact Table Density" />
           <Toggle label="Show Projected Stock in Lists" />
-          <Select label="Date Format" options={['EAT (Ethiopia)', 'UTC']} />
-          <Select label="Language" options={['English', 'Amharic']} />
+          <Select label="Date Format" options={["EAT (Ethiopia)", "UTC"]} />
+          <Select label="Language" options={["English", "Amharic"]} />
         </SettingsForm>
       </section>
     </main>
@@ -1022,18 +1121,25 @@ interface CartProps {
 
 ```tsx
 <SettingsScreen>
-  <Header><Title>Settings</Title><SyncPill /></Header>
+  <Header>
+    <Title>Settings</Title>
+    <SyncPill />
+  </Header>
   <main className="p-md space-y-lg">
     <section className="card p-md">
       <h3 className="heading2 mb-md">Sync Status</h3>
-      <SyncPillDetail />  // Full popover content inline
-      <Button variant="primary" className="w-full mt-md" onClick={syncNow}>Sync Now</Button>
+      <SyncPillDetail /> // Full popover content inline
+      <Button variant="primary" className="w-full mt-md" onClick={syncNow}>
+        Sync Now
+      </Button>
     </section>
     <section className="card p-md">
       <h3 className="heading2 mb-md">Storage</h3>
       <StorageInfo />
       {persistentEnabled ? (
-        <Badge variant="success" className="mt-sm">Persistent storage enabled</Badge>
+        <Badge variant="success" className="mt-sm">
+          Persistent storage enabled
+        </Badge>
       ) : (
         <Button variant="secondary" className="w-full mt-sm" onClick={requestPersistence}>
           Enable Persistent Storage
@@ -1055,7 +1161,7 @@ interface CartProps {
       </p>
     </section>
   </main>
-  <BottomTabBar />  // Standard attendant tabs
+  <BottomTabBar /> // Standard attendant tabs
 </SettingsScreen>
 ```
 
@@ -1152,20 +1258,21 @@ interface CartProps {
 
 Every screen MUST implement these states:
 
-| Screen | Loading | Error | Empty | Populated |
-|---|---|---|---|---|
-| Sell | Skeleton cart + search | Inline banner + retry | "Cart empty" + quick chips | Full cart with totals |
-| Products | Skeleton cards/table | Inline banner + retry | "No products. Add first." + CTA | List/Table with density |
-| Stock | Skeleton cards/table | Inline banner + retry | "No stock tracked" | Levels + actions |
-| Today | Skeleton buckets | Inline banner + retry | "No sales today" | 3 buckets + valuation |
-| Review | Skeleton case cards | Inline banner + retry | "No conflicts" (celebration) | Case list + detail |
-| Staff | Skeleton rows | Inline banner + retry | "No attendants yet" + Invite CTA | Attendant rows + health |
+| Screen   | Loading                | Error                 | Empty                            | Populated               |
+| -------- | ---------------------- | --------------------- | -------------------------------- | ----------------------- |
+| Sell     | Skeleton cart + search | Inline banner + retry | "Cart empty" + quick chips       | Full cart with totals   |
+| Products | Skeleton cards/table   | Inline banner + retry | "No products. Add first." + CTA  | List/Table with density |
+| Stock    | Skeleton cards/table   | Inline banner + retry | "No stock tracked"               | Levels + actions        |
+| Today    | Skeleton buckets       | Inline banner + retry | "No sales today"                 | 3 buckets + valuation   |
+| Review   | Skeleton case cards    | Inline banner + retry | "No conflicts" (celebration)     | Case list + detail      |
+| Staff    | Skeleton rows          | Inline banner + retry | "No attendants yet" + Invite CTA | Attendant rows + health |
 
 ---
 
 ## 4. Navigation Flows
 
 ### Attendant Primary Flow
+
 ```
 Sign In → Select Shop → Sell (default tab)
   ↓
@@ -1173,6 +1280,7 @@ Products (browse) ←→ Stock (view) ←→ Today (view) ←→ More (sync, exp
 ```
 
 ### Owner Primary Flow
+
 ```
 Sign In → Select Shop → Today (default)
   ↓
@@ -1184,6 +1292,7 @@ Settings → Sync / Backup / Preferences
 ```
 
 ### Deep Links (for notifications)
+
 - `stokari://review/{caseId}` → Opens Review screen with case detail
 - `stokari://product/{productId}` → Opens Product detail
 - `stokari://sync` → Opens Settings > Sync
@@ -1192,25 +1301,25 @@ Settings → Sync / Backup / Preferences
 
 ## 5. Component Reusability Matrix
 
-| Component | Sell | Products | Stock | Today | Review | Staff |
-|---|---|---|---|---|---|---|
-| `SyncPill` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `ProductSearch` | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
-| `QuantityInput` | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ |
-| `CurrencyInput` | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
-| `DataTable` | ❌ | ✅ Owner | ✅ Owner | ✅ Owner | ✅ | ✅ |
-| `ProductCard` | ❌ | ✅ Mobile | ✅ Mobile | ❌ | ❌ | ❌ |
-| `RevenueBucket` | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
-| `ValuationCard` | ❌ | ❌ | ❌ | ✅ Owner | ❌ | ❌ |
-| `ConflictCaseCard` | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
-| `LeaseHealthRow` | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| `StockLevelDisplay` | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ |
-| `StatusBadge` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `UnitBadge` | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ |
-| `PaymentSelector` | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| `QuantityKeypadSheet` | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ |
-| `SellAnywaySheet` | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| `HistoryDrawer` | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ |
+| Component             | Sell | Products  | Stock     | Today    | Review | Staff |
+| --------------------- | ---- | --------- | --------- | -------- | ------ | ----- |
+| `SyncPill`            | ✅   | ✅        | ✅        | ✅       | ✅     | ✅    |
+| `ProductSearch`       | ✅   | ✅        | ✅        | ❌       | ❌     | ❌    |
+| `QuantityInput`       | ✅   | ✅        | ✅        | ❌       | ✅     | ❌    |
+| `CurrencyInput`       | ❌   | ✅        | ✅        | ❌       | ❌     | ❌    |
+| `DataTable`           | ❌   | ✅ Owner  | ✅ Owner  | ✅ Owner | ✅     | ✅    |
+| `ProductCard`         | ❌   | ✅ Mobile | ✅ Mobile | ❌       | ❌     | ❌    |
+| `RevenueBucket`       | ❌   | ❌        | ❌        | ✅       | ❌     | ❌    |
+| `ValuationCard`       | ❌   | ❌        | ❌        | ✅ Owner | ❌     | ❌    |
+| `ConflictCaseCard`    | ❌   | ❌        | ❌        | ❌       | ✅     | ❌    |
+| `LeaseHealthRow`      | ❌   | ❌        | ❌        | ❌       | ❌     | ✅    |
+| `StockLevelDisplay`   | ❌   | ✅        | ✅        | ✅       | ✅     | ❌    |
+| `StatusBadge`         | ✅   | ✅        | ✅        | ✅       | ✅     | ✅    |
+| `UnitBadge`           | ✅   | ✅        | ✅        | ❌       | ✅     | ❌    |
+| `PaymentSelector`     | ✅   | ❌        | ❌        | ❌       | ❌     | ❌    |
+| `QuantityKeypadSheet` | ✅   | ✅        | ✅        | ❌       | ✅     | ❌    |
+| `SellAnywaySheet`     | ✅   | ❌        | ❌        | ❌       | ❌     | ❌    |
+| `HistoryDrawer`       | ❌   | ❌        | ✅        | ❌       | ✅     | ❌    |
 
 ---
 
@@ -1230,14 +1339,14 @@ Each component must have visual regression tests for:
 
 ## 7. Performance Budgets (Per Screen)
 
-| Screen | Target | Measurement |
-|---|---|---|
-| Sell | < 100ms interaction latency | Keystroke → cart update |
-| Products (2000 items) | < 1s search + render | Keystroke → filtered list |
-| Stock (2000 items) | < 1s table render | Mount → interactive |
-| Today | < 200ms | Mount → buckets visible |
-| Review (50 cases) | < 300ms | Mount → list + first detail |
-| Settings | < 100ms | Mount → interactive |
+| Screen                | Target                      | Measurement                 |
+| --------------------- | --------------------------- | --------------------------- |
+| Sell                  | < 100ms interaction latency | Keystroke → cart update     |
+| Products (2000 items) | < 1s search + render        | Keystroke → filtered list   |
+| Stock (2000 items)    | < 1s table render           | Mount → interactive         |
+| Today                 | < 200ms                     | Mount → buckets visible     |
+| Review (50 cases)     | < 300ms                     | Mount → list + first detail |
+| Settings              | < 100ms                     | Mount → interactive         |
 
 ---
 
