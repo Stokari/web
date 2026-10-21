@@ -1,0 +1,7 @@
+{
+  "type": "SyncPull",
+  "payload": {
+    "cursor": "abc123",
+    "limit": 100
+  }
+}

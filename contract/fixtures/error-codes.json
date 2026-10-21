@@ -1,0 +1,80 @@
+{
+  "NOT_FOUND": {
+    "code": "NOT_FOUND",
+    "http_status": 404,
+    "title": "Not Found",
+    "description": "The requested resource was not found"
+  },
+  "CONFLICT": {
+    "code": "CONFLICT",
+    "http_status": 409,
+    "title": "Conflict",
+    "description": "The request conflicts with the current state of the resource"
+  },
+  "VALIDATION_ERROR": {
+    "code": "VALIDATION_ERROR",
+    "http_status": 400,
+    "title": "Validation Error",
+    "description": "The request data failed validation"
+  },
+  "UNAUTHORIZED": {
+    "code": "UNAUTHORIZED",
+    "http_status": 401,
+    "title": "Unauthorized",
+    "description": "Authentication is required to access this resource"
+  },
+  "FORBIDDEN": {
+    "code": "FORBIDDEN",
+    "http_status": 403,
+    "title": "Forbidden",
+    "description": "You do not have permission to perform this action"
+  },
+  "PRECONDITION_FAILED": {
+    "code": "PRECONDITION_FAILED",
+    "http_status": 412,
+    "title": "Precondition Failed",
+    "description": "The request failed due to a precondition not being met"
+  },
+  "IDEMPOTENCY_ERROR": {
+    "code": "IDEMPOTENCY_ERROR",
+    "http_status": 409,
+    "title": "Idempotency Error",
+    "description": "The idempotency key has already been used"
+  },
+  "INTERNAL_ERROR": {
+    "code": "INTERNAL_ERROR",
+    "http_status": 500,
+    "title": "Internal Server Error",
+    "description": "An unexpected error occurred"
+  },
+  "SHOP_CLOSED": {
+    "code": "SHOP_CLOSED",
+    "http_status": 403,
+    "title": "Shop Closed",
+    "description": "The shop is closed and cannot process requests"
+  },
+  "LEASE_EXPIRED": {
+    "code": "LEASE_EXPIRED",
+    "http_status": 403,
+    "title": "Lease Expired",
+    "description": "The offline lease has expired"
+  },
+  "STAFF_LIMIT_EXCEEDED": {
+    "code": "STAFF_LIMIT_EXCEEDED",
+    "http_status": 400,
+    "title": "Staff Limit Exceeded",
+    "description": "The maximum number of staff members has been reached"
+  },
+  "INSUFFICIENT_STOCK": {
+    "code": "INSUFFICIENT_STOCK",
+    "http_status": 409,
+    "title": "Insufficient Stock",
+    "description": "Not enough stock to complete the operation"
+  },
+  "NEGATIVE_STOCK_CONFLICT": {
+    "code": "NEGATIVE_STOCK_CONFLICT",
+    "http_status": 409,
+    "title": "Negative Stock Conflict",
+    "description": "Operation would result in negative stock"
+  }
+}

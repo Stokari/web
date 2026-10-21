@@ -1,0 +1,12 @@
+{
+  "type": "CreateProduct",
+  "payload": {
+    "name": "Rice 1kg",
+    "name_alt": "በርበሬ 1ኪጎ",
+    "unit": "KG",
+    "price_santim": 15000,
+    "cost_santim": 12000,
+    "low_stock_milli": 5000,
+    "category_id": 1
+  }
+}

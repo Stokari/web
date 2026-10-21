@@ -1,0 +1,58 @@
+[
+  {
+    "name": "empty_object",
+    "type": "TestOperation",
+    "payload": {},
+    "expected_hash": "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e"
+  },
+  {
+    "name": "simple_object",
+    "type": "CreateProduct",
+    "payload": {
+      "name": "Test Product",
+      "price_santim": 10000
+    },
+    "expected_hash": "f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2"
+  },
+  {
+    "name": "nested_object",
+    "type": "ReceiveStock",
+    "payload": {
+      "lines": [
+        {
+          "product_id": 1,
+          "quantity_milli": 1000,
+          "unit_cost_santim": 5000
+        }
+      ],
+      "supplier": "Test Supplier"
+    },
+    "expected_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "array_order_matters",
+    "type": "BatchOperation",
+    "payload": {
+      "items": ["a", "b", "c"]
+    },
+    "expected_hash": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+  },
+  {
+    "name": "key_order_canonical",
+    "type": "TestOperation",
+    "payload": {
+      "z_key": 1,
+      "a_key": 2
+    },
+    "expected_hash": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+  },
+  {
+    "name": "null_values",
+    "type": "TestOperation",
+    "payload": {
+      "present": "value",
+      "missing": null
+    },
+    "expected_hash": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+  }
+]

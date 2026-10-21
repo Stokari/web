@@ -6,7 +6,9 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const FIXTURES_DIR = path.resolve(__dirname, "../../../../contract/fixtures");
+const LOCAL_FIXTURES = path.resolve(__dirname, "../../../contract/fixtures");
+const MONOREPO_FIXTURES = path.resolve(__dirname, "../../../../contract/fixtures");
+const FIXTURES_DIR = fs.existsSync(LOCAL_FIXTURES) ? LOCAL_FIXTURES : MONOREPO_FIXTURES;
 
 interface MoneyVector {
   name: string;
