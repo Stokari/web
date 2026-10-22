@@ -7,19 +7,36 @@ afterEach(() => {
 });
 
 describe("App", () => {
-  it("renders the starter heading", () => {
+  it("renders the Stokari brand navigation", () => {
     render(<App />);
 
-    expect(screen.getByRole("heading", { name: "Get started" }).textContent).toBe("Get started");
+    expect(screen.getByText("Stokari")).toBeTruthy();
+    expect(screen.getByText("POS & Inventory")).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Select Store Workspace" })).toBeTruthy();
   });
 
-  it("increments the counter when clicked", () => {
+  it("switches to active store dashboard when a store is selected", () => {
     render(<App />);
 
-    const button = screen.getByRole("button", { name: "Count is 0" });
+    const selectButtons = screen.getAllByRole("button", {
+      name: /Enter Active Store|Switch to Store/i,
+    });
+    const firstBtn = selectButtons[0];
+    expect(firstBtn).toBeDefined();
+    if (firstBtn) {
+      fireEvent.click(firstBtn);
+    }
 
-    fireEvent.click(button);
+    expect(screen.getByRole("heading", { name: "Mercato Central Wholesale" })).toBeTruthy();
+    expect(screen.getByText(/Tenancy active/i)).toBeTruthy();
+  });
 
-    expect(button.textContent).toBe("Count is 1");
+  it("opens Create Store wizard when clicking Create New Store", () => {
+    render(<App />);
+
+    const createBtn = screen.getByRole("button", { name: "Create New Store" });
+    fireEvent.click(createBtn);
+
+    expect(screen.getByRole("heading", { name: "Set Up New Store" })).toBeTruthy();
   });
 });
