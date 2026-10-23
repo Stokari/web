@@ -1,0 +1,21 @@
+{
+  "type": "ReceiveStock",
+  "payload": {
+    "supplier_id": 1,
+    "lines": [
+      {
+        "product_id": 1,
+        "quantity_milli": 10000,
+        "unit_cost_santim": 11000,
+        "packaging": "PIECE"
+      },
+      {
+        "product_id": 2,
+        "quantity_milli": 5000,
+        "unit_cost_santim": 8000,
+        "packaging": "KG"
+      }
+    ],
+    "received_at": "2024-01-15T10:30:00Z"
+  }
+}

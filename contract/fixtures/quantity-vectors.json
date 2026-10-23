@@ -1,0 +1,86 @@
+[
+  {
+    "name": "zero_milli",
+    "input": 0,
+    "unit": "PIECE",
+    "expected_milli": 0,
+    "expected_formatted": "0"
+  },
+  {
+    "name": "positive_piece",
+    "input": 42,
+    "unit": "PIECE",
+    "expected_milli": 42000,
+    "expected_formatted": "42"
+  },
+  {
+    "name": "kg_to_milli",
+    "input": "1.5",
+    "unit": "KG",
+    "expected_milli": 1500,
+    "expected_formatted": "1.500"
+  },
+  {
+    "name": "liter_to_milli",
+    "input": "0.750",
+    "unit": "LITER",
+    "expected_milli": 750,
+    "expected_formatted": "0.750"
+  },
+  {
+    "name": "meter_to_milli",
+    "input": "2.25",
+    "unit": "METER",
+    "expected_milli": 2250,
+    "expected_formatted": "2.250"
+  },
+  {
+    "name": "parse_milli_from_string",
+    "input": "123456",
+    "unit": "KG",
+    "expected_milli": 123456,
+    "expected_formatted": "123.456"
+  },
+  {
+    "name": "round_half_up_3_decimal",
+    "input": "1.2345",
+    "unit": "KG",
+    "expected_milli": 1235,
+    "expected_formatted": "1.235"
+  },
+  {
+    "name": "round_half_down_3_decimal",
+    "input": "1.2344",
+    "unit": "KG",
+    "expected_milli": 1234,
+    "expected_formatted": "1.234"
+  },
+  {
+    "name": "negative_rejected",
+    "input": -1,
+    "unit": "PIECE",
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  },
+  {
+    "name": "exceeds_max_piece",
+    "input": 1000000001,
+    "unit": "PIECE",
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  },
+  {
+    "name": "exceeds_max_kg",
+    "input": "1000000.001",
+    "unit": "KG",
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  },
+  {
+    "name": "float_rejected_for_piece",
+    "input": 1.5,
+    "unit": "PIECE",
+    "should_fail": true,
+    "error_code": "VALIDATION_ERROR"
+  }
+]

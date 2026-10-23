@@ -1,0 +1,17 @@
+{
+  "type": "Sale",
+  "payload": {
+    "lines": [
+      {
+        "product_id": 1,
+        "quantity_milli": 2000,
+        "unit_price_santim": 15000,
+        "line_total_santim": 30000
+      }
+    ],
+    "payment_method": "CASH",
+    "tendered_santim": 50000,
+    "change_santim": 20000,
+    "sold_at": "2024-01-15T14:22:00Z"
+  }
+}

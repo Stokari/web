@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stokari · Auth & Onboarding Flows</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "monospace"],
+              ethiopic: ['"Noto Sans Ethiopic"', "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#172554",
+              },
+              success: {
+                50: "#ecfdf5",
+                100: "#a7f3d0",
+                600: "#059669",
+                700: "#047857",
+                800: "#065f46",
+                900: "#022c22",
+              },
+              warning: {
+                50: "#fffbeb",
+                100: "#fde68a",
+                600: "#d97706",
+                700: "#b45309",
+                800: "#92400e",
+                900: "#78350f",
+              },
+              danger: {
+                50: "#fef2f2",
+                100: "#fecaca",
+                600: "#dc2626",
+                700: "#b91c1c",
+                800: "#991b1b",
+                900: "#7f1d1d",
+              },
+              neutral: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      .tabular-nums {
+        font-variant-numeric: tabular-nums;
+        font-family: "JetBrains Mono", monospace;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .tap-active:active {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-neutral-50 text-neutral-900 antialiased">
+    <!-- NAVIGATION -->
+    <header
+      class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-neutral-200 z-40 px-4 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-md bg-primary-800 flex items-center justify-center text-white shrink-0"
+        >
+          <span class="material-symbols-outlined" style="font-size: 18px">login</span>
+        </div>
+        <div>
+          <p class="text-sm font-bold tracking-tight text-neutral-900">Stokari</p>
+          <p class="text-[11px] text-neutral-500 font-mono">Auth & Onboarding Flows</p>
+        </div>
+      </div>
+      <a href="index.html" class="text-xs font-semibold text-primary-700 hover:text-primary-800"
+        >← Back to Index</a
+      >
+    </header>
+
+    <main class="pt-14 pb-16 px-4">
+      <div class="max-w-4xl mx-auto space-y-8">
+        <!-- FLOW 1: SIGN IN -->
+        <section aria-labelledby="signin-heading">
+          <div class="bg-white border border-neutral-200 rounded-lg p-6">
+            <h2
+              id="signin-heading"
+              class="text-lg font-bold text-neutral-900 mb-2 flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary-700">1</span>Flow 1: Google
+              Sign-In
+            </h2>
+            <p class="text-sm text-neutral-500 mb-4">
+              First sign-in per device requires internet. Returns shop-scoped session or onboarding
+              session.
+            </p>
+
+            <div class="max-w-md mx-auto">
+              <!-- Step 1: Google Button -->
+              <div class="space-y-4">
+                <div class="text-center">
+                  <div
+                    class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4"
+                  >
+                    <span class="material-symbols-outlined text-primary-700" style="font-size: 32px"
+                      >account_circle</span
+                    >
+                  </div>
+                  <h3 class="text-base font-bold text-neutral-900">Welcome to Stokari</h3>
+                  <p class="text-sm text-neutral-500 mt-1">
+                    Sign in with Google to access your shop
+                  </p>
+                </div>
+
+                <button
+                  class="w-full py-3 px-4 bg-white border border-neutral-200 rounded-lg flex items-center justify-center gap-2 text-neutral-700 font-semibold text-sm hover:bg-neutral-50 transition-colors touch-target"
+                >
+                  <svg class="w-5 h-5" viewBox="0 0 24 24">
+                    <path
+                      fill="#4285F4"
+                      d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                    />
+                    <path
+                      fill="#EA4335"
+                      d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                    />
+                  </svg>
+                  <span>Continue with Google</span>
+                </button>
+
+                <p class="text-xs text-neutral-400 text-center mt-3">
+                  By continuing, you agree to our Terms of Service and Privacy Policy.
+                </p>
+
+                <!-- Step 2: Multi-shop selection (conditional) -->
+                <div
+                  class="hidden mt-6 p-4 bg-neutral-50 border border-neutral-200 rounded-lg"
+                  id="shop-selection"
+                >
+                  <h4 class="text-sm font-bold text-neutral-900 mb-3">Select Your Shop</h4>
+                  <div class="space-y-2">
+                    <button
+                      class="w-full text-left p-3 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors flex items-center justify-between touch-target"
+                    >
+                      <div>
+                        <p class="font-medium text-neutral-900">Central Kiosk</p>
+                        <p class="text-[11px] text-neutral-400">Owner · 2 devices</p>
+                      </div>
+                      <span class="material-symbols-outlined text-neutral-400">chevron_right</span>
+                    </button>
+                    <button
+                      class="w-full text-left p-3 bg-white border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors flex items-center justify-between touch-target"
+                    >
+                      <div>
+                        <p class="font-medium text-neutral-900">Downtown Mini-Mart</p>
+                        <p class="text-[11px] text-neutral-400">Attendant · 1 device</p>
+                      </div>
+                      <span class="material-symbols-outlined text-neutral-400">chevron_right</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow Diagram -->
+            <div class="mt-6 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">
+                Flow Sequence
+              </h4>
+              <div class="space-y-2 text-sm font-mono text-neutral-600">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >1</span
+                  ><span>GET /v1/auth/nonce → {nonce}</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >2</span
+                  ><span>Google Identity Services → ID Token</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >3</span
+                  ><span>POST /v1/auth/google {idToken, nonce, deviceId} → AuthSession</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-success-100 text-success-700 flex items-center justify-center text-xs"
+                    >✓</span
+                  ><span>Access JWT (15m) + Refresh Token (30d) + Lease (7d)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FLOW 2: CREATE SHOP (First-time Owner) -->
+        <section aria-labelledby="createshop-heading">
+          <div class="bg-white border border-neutral-200 rounded-lg p-6">
+            <h2
+              id="createshop-heading"
+              class="text-lg font-bold text-neutral-900 mb-2 flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary-700">2</span>Flow 2: Create Shop
+              (First-time Owner)
+            </h2>
+            <p class="text-sm text-neutral-500 mb-4">
+              Onboarding session (no shop yet) → POST /v1/shops with idempotency key → Owner session
+              + lease
+            </p>
+
+            <div class="max-w-md mx-auto">
+              <div class="text-center mb-6">
+                <div
+                  class="w-16 h-16 rounded-full bg-success-100 flex items-center justify-center mx-auto mb-4"
+                >
+                  <span class="material-symbols-outlined text-success-700" style="font-size: 32px"
+                    >storefront</span
+                  >
+                </div>
+                <h3 class="text-base font-bold text-neutral-900">Create Your Shop</h3>
+                <p class="text-sm text-neutral-500 mt-1">You'll become the owner</p>
+              </div>
+
+              <form class="space-y-4" onsubmit="return false;">
+                <div>
+                  <label for="shop-name" class="block text-xs font-medium text-neutral-600 mb-1"
+                    >Shop Name <span class="text-danger-600">*</span></label
+                  >
+                  <input
+                    id="shop-name"
+                    type="text"
+                    required
+                    maxlength="120"
+                    class="w-full px-3 py-2 text-sm bg-white border border-neutral-200 rounded-lg focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800 transition-all"
+                    placeholder="Central Kiosk"
+                    autocomplete="off"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="w-full py-3 px-4 bg-primary-800 hover:bg-primary-700 text-white font-semibold text-sm rounded-lg shadow-sm touch-target"
+                >
+                  Create Shop
+                </button>
+              </form>
+            </div>
+
+            <div class="mt-6 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">
+                Flow Sequence
+              </h4>
+              <div class="space-y-2 text-sm font-mono text-neutral-600">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >1</span
+                  ><span>Onboarding session (shopId: null)</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >2</span
+                  ><span>POST /v1/shops {name, deviceId} + Idempotency-Key</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-success-100 text-success-700 flex items-center justify-center text-xs"
+                    >✓</span
+                  ><span>201 → AuthSession (shop-scoped OWNER + lease)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FLOW 3: ACCEPT INVITE (Attendant) -->
+        <section aria-labelledby="acceptinvite-heading">
+          <div class="bg-white border border-neutral-200 rounded-lg p-6">
+            <h2
+              id="acceptinvite-heading"
+              class="text-lg font-bold text-neutral-900 mb-2 flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary-700">3</span>Flow 3: Accept Invite
+              (Attendant)
+            </h2>
+            <p class="text-sm text-neutral-500 mb-4">
+              Invite link → Google sign-in → POST /v1/invites/{token}/accept → Attendant session +
+              lease
+            </p>
+
+            <div class="max-w-md mx-auto">
+              <div class="text-center mb-6">
+                <div
+                  class="w-16 h-16 rounded-full bg-warning-100 flex items-center justify-center mx-auto mb-4"
+                >
+                  <span class="material-symbols-outlined text-warning-700" style="font-size: 32px"
+                    >mail</span
+                  >
+                </div>
+                <h3 class="text-base font-bold text-neutral-900">Join Central Kiosk</h3>
+                <p class="text-sm text-neutral-500 mt-1">Invited as Attendant by Abel Mekonen</p>
+              </div>
+
+              <div class="space-y-3">
+                <button
+                  class="w-full py-3 px-4 bg-primary-800 hover:bg-primary-700 text-white font-semibold text-sm rounded-lg shadow-sm touch-target"
+                >
+                  Accept & Join Shop
+                </button>
+                <button
+                  class="w-full py-3 px-4 border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50 font-semibold text-sm rounded-lg touch-target"
+                >
+                  Decline
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">
+                Flow Sequence
+              </h4>
+              <div class="space-y-2 text-sm font-mono text-neutral-600">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >1</span
+                  ><span>GET /v1/invites/{token} → validates invite</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >2</span
+                  ><span>POST /v1/auth/google → onboarding session</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                    >3</span
+                  ><span>POST /v1/invites/{token}/accept {deviceId}</span>
+                </div>
+                <div class="flex items-center gap-2 ml-8">
+                  <span
+                    class="w-6 h-6 rounded-full bg-success-100 text-success-700 flex items-center justify-center text-xs"
+                    >✓</span
+                  ><span>200 → AuthSession (shop-scoped ATTENDANT + lease)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FLOW 4: DEACTIVATION & DRAIN -->
+        <section aria-labelledby="drain-heading">
+          <div class="bg-white border border-neutral-200 rounded-lg p-6">
+            <h2
+              id="drain-heading"
+              class="text-lg font-bold text-neutral-900 mb-2 flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary-700">4</span>Flow 4: Attendant
+              Deactivation & Drain Flow
+            </h2>
+            <p class="text-sm text-neutral-500 mb-4">
+              Owner deactivates → 403 ACCOUNT_DEACTIVATED + drainToken → Device pushes to quarantine
+              → Owner reviews
+            </p>
+
+            <div class="space-y-4">
+              <div class="p-4 bg-danger-50 border border-danger-200 rounded-lg">
+                <h4 class="font-medium text-danger-900 mb-2 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-danger-600" style="font-size: 20px"
+                    >warning</span
+                  >Deactivation Sequence
+                </h4>
+                <div class="space-y-2 text-sm font-mono text-neutral-600">
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="w-6 h-6 rounded-full bg-danger-100 text-danger-700 flex items-center justify-center text-xs"
+                      >1</span
+                    ><span>Owner: POST /v1/shops/me/members/{id}/deactivate</span>
+                  </div>
+                  <div class="flex items-center gap-2 ml-8">
+                    <span
+                      class="w-6 h-6 rounded-full bg-danger-100 text-danger-700 flex items-center justify-center text-xs"
+                      >2</span
+                    ><span>Server: membership=DEACTIVATED, revoke tokens & leases</span>
+                  </div>
+                  <div class="flex items-center gap-2 ml-8">
+                    <span
+                      class="w-6 h-6 rounded-full bg-warning-100 text-warning-700 flex items-center justify-center text-xs"
+                      >3</span
+                    ><span>Attendant device: offline, works until lease expiry (7d max)</span>
+                  </div>
+                  <div class="flex items-center gap-2 ml-8">
+                    <span
+                      class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                      >4</span
+                    ><span>Reconnect: refresh token → 403 + drainToken (10m)</span>
+                  </div>
+                  <div class="flex items-center gap-2 ml-8">
+                    <span
+                      class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                      >5</span
+                    ><span>Device: POST /v1/sync/push with drainToken</span>
+                  </div>
+                  <div class="flex items-center gap-2 ml-8">
+                    <span
+                      class="w-6 h-6 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs"
+                      >6</span
+                    ><span>Server: all ops → QUARANTINED, AUTHORIZATION_REVIEW case</span>
+                  </div>
+                  <div class="flex items-center gap-2 ml-8">
+                    <span
+                      class="w-6 h-6 rounded-full bg-success-100 text-success-700 flex items-center justify-center text-xs"
+                      >7</span
+                    ><span>Owner: Accept/Reject each quarantined operation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-warning-50 border border-warning-200 rounded-lg">
+                <h4 class="font-medium text-warning-900 mb-2 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-warning-600" style="font-size: 20px"
+                    >info</span
+                  >Key Properties
+                </h4>
+                <ul class="space-y-1 text-sm text-neutral-700">
+                  <li>
+                    • Drain token: 10-min JWT, scope
+                    <code class="font-mono bg-neutral-200 px-1 rounded">sync:drain</code>
+                  </li>
+                  <li>
+                    • Only allows
+                    <code class="font-mono bg-neutral-200 px-1 rounded">POST /v1/sync/push</code>
+                    and
+                    <code class="font-mono bg-neutral-200 px-1 rounded"
+                      >POST /v1/sync/ops/status</code
+                    >
+                  </li>
+                  <li>
+                    • Every operation forced to <strong>QUARANTINED</strong> (zero StockLog effect)
+                  </li>
+                  <li>
+                    • Owner sees <strong>Accept</strong> (runs handler as original actor) or
+                    <strong>Reject</strong> (archives with reason)
+                  </li>
+                  <li>• Quarantined ops never deleted — auditable, exportable</li>
+                </ul>
+              </div>
+
+              <div class="p-4 bg-success-50 border border-success-200 rounded-lg">
+                <h4 class="font-medium text-success-900 mb-2 flex items-center gap-2">
+                  <span class="material-symbols-outlined text-success-600" style="font-size: 20px"
+                    >check_circle</span
+                  >Lease Expiry (No Deactivation)
+                </h4>
+                <div class="space-y-1 text-sm text-neutral-700">
+                  <p>
+                    • <strong>EXPIRING</strong> (24h left): Banner "Offline access ends in N days" +
+                    SyncPill warning
+                  </p>
+                  <p>
+                    • <strong>EXPIRED</strong>: Read-only mode, protected ops blocked, export still
+                    works
+                  </p>
+                  <p>• <strong>RENEWAL</strong>: Online sign-in or lease renewal extends 7 days</p>
+                  <p>
+                    • <strong>CLOCK ROLLBACK</strong>: Device clock backwards >5 min → lease treated
+                    as expired
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TOKEN LIFECYCLE REFERENCE -->
+        <section aria-labelledby="tokens-heading">
+          <div class="bg-white border border-neutral-200 rounded-lg p-6">
+            <h2
+              id="tokens-heading"
+              class="text-lg font-bold text-neutral-900 mb-2 flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary-700">5</span>Token Lifecycle
+              Reference
+            </h2>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm" role="table">
+                <thead class="bg-neutral-50 border-b border-neutral-200">
+                  <tr>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Token
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Lifetime
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Storage
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Rotation
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Revocation
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-100">
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-3 font-mono text-primary-700">Access JWT</td>
+                    <td class="px-4 py-3">15 min</td>
+                    <td class="px-4 py-3">Memory only</td>
+                    <td class="px-4 py-3">
+                      Asymmetric,
+                      <code class="font-mono bg-neutral-100 px-1 rounded">kid</code> rotation
+                    </td>
+                    <td class="px-4 py-3">Auto-expiry; 401 → refresh</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-3 font-mono text-success-700">Refresh Token</td>
+                    <td class="px-4 py-3">30 days max</td>
+                    <td class="px-4 py-3">IndexedDB (hashed)</td>
+                    <td class="px-4 py-3">
+                      Rotated every use;
+                      <code class="font-mono bg-neutral-100 px-1 rounded">familyId</code> groups
+                    </td>
+                    <td class="px-4 py-3">Reuse → family revoked; deactivation</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-3 font-mono text-warning-700">Offline Lease</td>
+                    <td class="px-4 py-3">7 days max</td>
+                    <td class="px-4 py-3">
+                      IndexedDB (in
+                      <code class="font-mono bg-neutral-100 px-1 rounded">meta.lease</code>)
+                    </td>
+                    <td class="px-4 py-3">
+                      Renewed online;
+                      <code class="font-mono bg-neutral-100 px-1 rounded">POST /v1/auth/lease</code>
+                    </td>
+                    <td class="px-4 py-3">Expiry, revocation, device mismatch, deactivation</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-3 font-mono text-danger-700">Drain Token</td>
+                    <td class="px-4 py-3">10 minutes</td>
+                    <td class="px-4 py-3">Memory only</td>
+                    <td class="px-4 py-3">Single use</td>
+                    <td class="px-4 py-3">Auto-expiry; only for deactivated users</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-4 p-4 bg-neutral-50 border border-neutral-200 rounded-lg">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">
+                Security Notes
+              </h4>
+              <ul class="space-y-1 text-sm text-neutral-700">
+                <li>• Access token in memory only — never in IndexedDB</li>
+                <li>• Refresh token hashed (SHA-256) in DB; familyId tracks rotations</li>
+                <li>• Reuse of rotated refresh token → entire family revoked</li>
+                <li>
+                  • Lease validated at push time: membership ACTIVE, device matches, op type allowed
+                </li>
+                <li>
+                  •
+                  <code class="font-mono bg-neutral-100 px-1 rounded">clientCreatedAt</code> outside
+                  lease window ±5 min → QUARANTINED (never approves)
+                </li>
+                <li>• CSP: no inline scripts; only Google Identity as third party</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ERROR CODES REFERENCE -->
+        <section aria-labelledby="errors-heading">
+          <div class="bg-white border border-neutral-200 rounded-lg p-6">
+            <h2
+              id="errors-heading"
+              class="text-lg font-bold text-neutral-900 mb-2 flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary-700">6</span>Key Error Codes (RFC
+              9457)
+            </h2>
+            <p class="text-sm text-neutral-500 mb-4">
+              Frontend maps <code class="font-mono bg-neutral-100 px-1 rounded">code</code> to i18n
+              messages — never shows server
+              <code class="font-mono bg-neutral-100 px-1 rounded">detail</code> to users.
+            </p>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm" role="table">
+                <thead class="bg-neutral-50 border-b border-neutral-200">
+                  <tr>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Code
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      HTTP
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Meaning
+                    </th>
+                    <th
+                      class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wider text-neutral-500"
+                    >
+                      Client Reaction
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-100 font-mono text-xs">
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>VALIDATION_FAILED</code></td>
+                    <td class="px-4 py-2">400 / per-op</td>
+                    <td class="px-4 py-2">Schema or business validation failed</td>
+                    <td class="px-4 py-2">Mark Rejected; keep record; show field errors</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>UNAUTHENTICATED</code></td>
+                    <td class="px-4 py-2">401</td>
+                    <td class="px-4 py-2">Token missing or expired</td>
+                    <td class="px-4 py-2">Refresh once, then retry</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>ACCOUNT_DEACTIVATED</code></td>
+                    <td class="px-4 py-2">403</td>
+                    <td class="px-4 py-2">Membership deactivated</td>
+                    <td class="px-4 py-2">Drain flow (Flow 4)</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>FORBIDDEN_ROLE</code></td>
+                    <td class="px-4 py-2">403 / per-op</td>
+                    <td class="px-4 py-2">Role cannot do this</td>
+                    <td class="px-4 py-2">Mark Rejected</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>SHOP_MISMATCH</code></td>
+                    <td class="px-4 py-2">404</td>
+                    <td class="px-4 py-2">Resource not in token's shop</td>
+                    <td class="px-4 py-2">Mark Rejected (404 hides existence)</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>INSUFFICIENT_STOCK</code></td>
+                    <td class="px-4 py-2">per-op</td>
+                    <td class="px-4 py-2">Online sale would go below zero</td>
+                    <td class="px-4 py-2">Show reason; no sale recorded</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>PRODUCT_UNDER_REVIEW</code></td>
+                    <td class="px-4 py-2">per-op</td>
+                    <td class="px-4 py-2">Product has open stock case</td>
+                    <td class="px-4 py-2">Tell user to ask owner</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>IDEMPOTENCY_KEY_REUSE</code></td>
+                    <td class="px-4 py-2">per-op</td>
+                    <td class="px-4 py-2">Same <code>opId</code>, different payload</td>
+                    <td class="px-4 py-2">Mark Rejected; report bug</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>UPGRADE_REQUIRED</code></td>
+                    <td class="px-4 py-2">426</td>
+                    <td class="px-4 py-2">Protocol or schema too old</td>
+                    <td class="px-4 py-2">Stop; prompt app update</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>CURSOR_RESET</code></td>
+                    <td class="px-4 py-2">409</td>
+                    <td class="px-4 py-2">Cursor invalid</td>
+                    <td class="px-4 py-2">Restart pull from 0</td>
+                  </tr>
+                  <tr class="hover:bg-neutral-50">
+                    <td class="px-4 py-2"><code>RATE_LIMITED</code></td>
+                    <td class="px-4 py-2">429</td>
+                    <td class="px-4 py-2">Too many requests</td>
+                    <td class="px-4 py-2">Honor <code>Retry-After</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      // Demo: toggle shop selection visibility
+      function demoMultiShop() {
+        const sel = document.getElementById("shop-selection");
+        sel.classList.toggle("hidden");
+      }
+      // Auto-show after 2s for demo
+      setTimeout(demoMultiShop, 2000);
+    </script>
+  </body>
+</html>

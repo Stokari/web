@@ -1,0 +1,10 @@
+{
+  "type": "AdjustStock",
+  "payload": {
+    "product_id": 1,
+    "delta_milli": -500,
+    "reason": "DAMAGE",
+    "note": "Broken package found during count",
+    "adjusted_at": "2024-01-15T16:00:00Z"
+  }
+}

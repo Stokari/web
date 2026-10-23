@@ -1,2 +1,16 @@
 #!/usr/bin/env sh
-pnpm exec eslint .
+set -e
+
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+
+# 1. Validate branch name pattern (main and dev are exceptions)
+"$ROOT_DIR/scripts/validate-branch-name.sh"
+
+# 2. Run ESLint and React Compiler checks
+if command -v vp >/dev/null 2>&1; then
+  vp exec eslint .
+elif command -v pnpm >/dev/null 2>&1; then
+  pnpm exec eslint .
+else
+  eslint .
+fi

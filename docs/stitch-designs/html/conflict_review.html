@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stokari · Conflict Review</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "monospace"],
+              ethiopic: ['"Noto Sans Ethiopic"', "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#172554",
+              },
+              success: {
+                50: "#ecfdf5",
+                100: "#a7f3d0",
+                600: "#059669",
+                700: "#047857",
+                800: "#065f46",
+                900: "#022c22",
+              },
+              warning: {
+                50: "#fffbeb",
+                100: "#fde68a",
+                600: "#d97706",
+                700: "#b45309",
+                800: "#92400e",
+                900: "#78350f",
+              },
+              danger: {
+                50: "#fef2f2",
+                100: "#fecaca",
+                600: "#dc2626",
+                700: "#b91c1c",
+                800: "#991b1b",
+                900: "#7f1d1d",
+              },
+              neutral: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      .tabular-nums {
+        font-variant-numeric: tabular-nums;
+        font-family: "JetBrains Mono", monospace;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .tap-active:active {
+        transform: scale(0.98);
+      }
+      .sheet-handle {
+        width: 36px;
+        height: 4px;
+        background: #cbd5e1;
+        border-radius: 9999px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-neutral-50 text-neutral-900 antialiased flex">
+    <!-- SIDEBAR -->
+    <aside
+      class="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-neutral-200 z-30 flex-col"
+    >
+      <div class="h-14 border-b border-neutral-200 px-4 flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-md bg-danger-700 flex items-center justify-center text-white shrink-0"
+        >
+          <span class="material-symbols-outlined" style="font-size: 18px">gavel</span>
+        </div>
+        <div>
+          <p class="text-sm font-bold tracking-tight text-neutral-900">Stokari</p>
+          <p class="text-[11px] text-neutral-500 font-mono">Central Kiosk</p>
+        </div>
+      </div>
+      <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+        <a
+          href="pos_till_desktop.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+          ><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >point_of_sale</span
+          ><span>POS Till</span></a
+        >
+        <a
+          href="today_dashboard.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+          ><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >bar_chart</span
+          ><span>Today</span></a
+        >
+        <a
+          href="product_catalog.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+          ><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >inventory_2</span
+          ><span>Products</span></a
+        >
+        <a
+          href="stock.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+          ><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >warehouse</span
+          ><span>Stock</span></a
+        >
+        <a
+          href="#"
+          class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-danger-50 text-danger-800 font-semibold text-xs"
+          aria-current="page"
+          ><div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-danger-700" style="font-size: 18px"
+              >gavel</span
+            ><span>Conflict Review</span>
+          </div>
+          <span class="text-[10px] font-bold bg-danger-600 text-white px-1.5 py-0.5 rounded-full"
+            >3</span
+          ></a
+        >
+        <div class="h-px bg-neutral-100 my-2"></div>
+        <a
+          href="staff_settings.html"
+          class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 font-medium text-xs transition-colors"
+          ><span class="material-symbols-outlined text-neutral-400" style="font-size: 18px"
+            >badge</span
+          ><span>Staff & Lease</span></a
+        >
+      </nav>
+    </aside>
+
+    <!-- MOBILE TOP BAR -->
+    <header
+      class="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-neutral-200 z-40 px-4 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="w-8 h-8 rounded-md bg-danger-700 flex items-center justify-center text-white shrink-0"
+        >
+          <span class="material-symbols-outlined" style="font-size: 18px">gavel</span>
+        </div>
+        <div>
+          <p class="text-sm font-bold tracking-tight text-neutral-900">Review</p>
+          <p class="text-[11px] text-neutral-500 font-mono">Central Kiosk</p>
+        </div>
+      </div>
+      <button
+        onclick="toggleMobileMenu()"
+        class="p-1 text-neutral-500 hover:text-neutral-700"
+        aria-label="Open menu"
+      >
+        <span class="material-symbols-outlined" style="font-size: 24px">menu</span>
+      </button>
+    </header>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav
+      class="lg:hidden fixed bottom-0 left-0 right-0 h-14 bg-white border-t border-neutral-200 z-30 flex items-center justify-around px-2"
+    >
+      <a
+        href="pos_till.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"
+        ><span class="material-symbols-outlined" style="font-size: 22px">point_of_sale</span
+        ><span class="text-[10px] mt-0.5">Sell</span></a
+      >
+      <a
+        href="today_dashboard.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"
+        ><span class="material-symbols-outlined" style="font-size: 22px">bar_chart</span
+        ><span class="text-[10px] mt-0.5">Today</span></a
+      >
+      <a
+        href="product_catalog.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"
+        ><span class="material-symbols-outlined" style="font-size: 22px">inventory_2</span
+        ><span class="text-[10px] mt-0.5">Products</span></a
+      >
+      <a
+        href="stock.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"
+        ><span class="material-symbols-outlined" style="font-size: 22px">warehouse</span
+        ><span class="text-[10px] mt-0.5">Stock</span></a
+      >
+      <a
+        href="staff_settings.html"
+        class="flex flex-col items-center justify-center flex-1 py-1 text-neutral-400 hover:text-neutral-700"
+        ><span class="material-symbols-outlined" style="font-size: 22px">more_horiz</span
+        ><span class="text-[10px] mt-0.5">More</span></a
+      >
+    </nav>
+
+    <!-- MAIN -->
+    <main class="lg:pl-64 pt-14 lg:pt-0 min-h-screen bg-neutral-50 flex flex-col">
+      <!-- HEADER -->
+      <header class="sticky top-0 lg:top-14 bg-white border-b border-neutral-200 z-30">
+        <div class="p-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div>
+              <h1 class="text-lg font-bold text-neutral-900">Conflict Review</h1>
+              <p class="text-sm text-neutral-500">
+                Arbitrate offline conflicts & quarantined operations
+              </p>
+            </div>
+            <button
+              id="sync-pill-btn"
+              onclick="toggleSyncPopover()"
+              class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold font-mono border transition-all bg-danger-50 text-danger-800 border-danger-200 hover:bg-danger-100"
+              style="min-height: 36px"
+            >
+              <span
+                id="sync-pill-dot"
+                class="w-2 h-2 rounded-full bg-danger-500 pulse-dot shrink-0"
+              ></span
+              ><span id="sync-pill-label">Review Required (3)</span
+              ><span class="material-symbols-outlined text-neutral-400" style="font-size: 14px"
+                >expand_more</span
+              >
+            </button>
+          </div>
+
+          <!-- Tab Switcher -->
+          <div class="flex border-b border-neutral-200" role="tablist" aria-label="Review tabs">
+            <button
+              id="tab-conflicts"
+              onclick="switchTab('conflicts')"
+              role="tab"
+              aria-selected="true"
+              class="tab-btn active-tab px-4 py-2 text-sm font-semibold border-b-2 border-danger-600 text-danger-700"
+              aria-controls="panel-conflicts"
+            >
+              Conflicts
+            </button>
+            <button
+              id="tab-quarantine"
+              onclick="switchTab('quarantine')"
+              role="tab"
+              aria-selected="false"
+              class="tab-btn px-4 py-2 text-sm font-semibold border-b-2 border-transparent text-neutral-500 hover:text-neutral-700"
+              aria-controls="panel-quarantine"
+            >
+              Quarantined
+              <span
+                class="ml-1 text-[10px] font-bold bg-warning-600 text-white px-1.5 py-0.5 rounded-full"
+                >5</span
+              >
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- SYNC POPOVER -->
+      <div
+        id="sync-popover"
+        class="hidden fixed top-16 right-4 w-80 bg-white rounded-lg border border-neutral-200 shadow-lg z-50 p-4 space-y-3"
+        role="dialog"
+        aria-label="Connection & Storage Details"
+      >
+        <div class="flex items-center justify-between border-b border-neutral-100 pb-2">
+          <div>
+            <p class="text-xs font-bold text-neutral-900">Connection & Storage</p>
+            <p class="text-[11px] text-neutral-500">Offline-First Engine (Dexie)</p>
+          </div>
+          <button onclick="toggleSyncPopover()" class="text-neutral-400 hover:text-neutral-600 p-1">
+            <span class="material-symbols-outlined" style="font-size: 18px">close</span>
+          </button>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+            <span class="text-neutral-500">Cloud Status</span
+            ><span class="font-semibold text-danger-700 flex items-center gap-1"
+              ><span class="w-1.5 h-1.5 rounded-full bg-danger-500"></span> Review Required</span
+            >
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+            <span class="text-neutral-500">Last Synced</span
+            ><span class="font-mono text-neutral-700">Today at 14:32 EAT</span>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+            <span class="text-neutral-500">Local Outbox</span
+            ><span class="font-mono font-bold text-neutral-800">0 pending</span>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-neutral-50">
+            <span class="text-neutral-500">IndexedDB Storage</span
+            ><span class="font-mono text-neutral-700">14.2 MB / 2.0 GB</span>
+          </div>
+          <div class="flex items-center justify-between py-1">
+            <span class="text-neutral-500">Storage Eviction Safe</span
+            ><span class="text-success-700 font-semibold">Enabled</span>
+          </div>
+        </div>
+        <div class="pt-2">
+          <button
+            onclick="simulateSyncNow()"
+            class="w-full py-2 text-xs font-bold rounded-lg bg-primary-800 text-white hover:bg-primary-700 transition-colors flex items-center justify-center gap-1"
+          >
+            <span class="material-symbols-outlined" style="font-size: 14px">sync</span
+            ><span>Sync Now</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="flex-1 overflow-auto">
+        <!-- DESKTOP: Split Pane -->
+        <div class="hidden lg:flex lg:flex-1" style="min-height: calc(100vh - 72px)">
+          <!-- LEFT PANE: Case List -->
+          <aside
+            class="lg:w-96 border-r border-neutral-200 bg-white flex flex-col h-screen"
+            style="min-height: calc(100vh - 72px)"
+          >
+            <div class="p-4 border-b border-neutral-200 sticky top-0 bg-white z-10">
+              <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
+                Open Cases
+              </h2>
+              <div class="space-y-2" id="case-list-desktop">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </aside>
+
+          <!-- RIGHT PANE: Case Detail -->
+          <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <div id="case-detail-desktop" class="flex-1 overflow-y-auto p-6">
+              <!-- Empty State -->
+              <div
+                id="detail-empty"
+                class="flex flex-col items-center justify-center h-full text-center text-neutral-400"
+              >
+                <div
+                  class="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400 mb-4"
+                >
+                  <span class="material-symbols-outlined" style="font-size: 32px">gavel</span>
+                </div>
+                <p class="text-sm font-semibold text-neutral-700">Select a case</p>
+                <p class="text-[11px] text-neutral-400 mt-1 max-w-xs">
+                  Choose a case from the list to review and resolve
+                </p>
+              </div>
+
+              <!-- Case Detail Content -->
+              <div id="detail-content" class="hidden max-w-3xl mx-auto w-full space-y-6">
+                <!-- Case Header -->
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-1" id="detail-type-badge"></div>
+                    <h2 id="detail-case-id" class="text-sm font-medium text-neutral-500">Case #</h2>
+                    <h3
+                      id="detail-product-name"
+                      class="text-lg font-bold text-neutral-900 truncate"
+                    ></h3>
+                    <p
+                      class="text-[11px] text-neutral-400 font-ethiopic"
+                      id="detail-product-amharic"
+                    ></p>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <div class="text-right">
+                      <span class="text-[10px] text-neutral-400 block leading-none"
+                        >Current Balance</span
+                      >
+                      <span
+                        id="detail-balance"
+                        class="text-lg font-black font-mono text-neutral-900 tabular-nums"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Discrepancy Alert -->
+                <div
+                  id="discrepancy-alert"
+                  class="bg-danger-50 border border-danger-200 rounded-lg p-4"
+                >
+                  <div class="flex items-start gap-3">
+                    <div
+                      class="w-8 h-8 rounded-full bg-danger-100 flex items-center justify-center shrink-0"
+                    >
+                      <span
+                        class="material-symbols-outlined text-danger-600"
+                        style="font-size: 20px"
+                        >warning</span
+                      >
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="font-medium text-danger-900">
+                        Discrepancy: Confirmed balance is
+                        <strong id="discrepancy-text" class="tabular-nums"></strong>
+                      </p>
+                      <p class="text-sm text-neutral-600 mt-1">
+                        Both sales occurred offline. Customers paid cash and received physical
+                        merchandise.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Timeline -->
+                <section>
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">
+                    Concurrent Timeline
+                  </h4>
+                  <div class="space-y-3" id="timeline-list">
+                    <!-- Populated by JS -->
+                  </div>
+                </section>
+
+                <!-- Resolution Actions -->
+                <section>
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">
+                    Owner Resolution Actions
+                  </h4>
+                  <div class="space-y-3" id="resolution-actions">
+                    <!-- Populated by JS -->
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE: Card List -->
+        <div class="lg:hidden p-4 space-y-3" id="case-list-mobile">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- MOBILE: Case Detail Sheet -->
+        <div
+          id="case-detail-sheet"
+          class="lg:hidden hidden fixed inset-0 z-50"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div class="fixed inset-0 bg-neutral-900/50" onclick="closeDetailSheet()"></div>
+          <div
+            class="fixed left-0 right-0 bottom-0 bg-white rounded-t-2xl shadow-xl flex flex-col max-h-[85vh]"
+            style="max-height: 85vh"
+          >
+            <div
+              class="sticky top-0 bg-white border-b border-neutral-200 px-4 py-3 flex items-center justify-between"
+            >
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1" id="sheet-type-badge"></div>
+                <h2 id="sheet-case-id" class="text-sm font-medium text-neutral-500">Case #</h2>
+                <h3
+                  id="sheet-product-name"
+                  class="text-base font-bold text-neutral-900 truncate"
+                ></h3>
+              </div>
+              <button
+                onclick="closeDetailSheet()"
+                class="text-neutral-400 hover:text-neutral-600 p-1 shrink-0"
+              >
+                <span class="material-symbols-outlined" style="font-size: 24px">close</span>
+              </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 space-y-4" id="sheet-content">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RESOLUTION MODALS -->
+    <!-- Restock Modal -->
+    <div
+      id="restock-modal"
+      class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="bg-white w-full max-w-md rounded-xl p-5 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between border-b border-neutral-100 pb-2">
+          <h2 class="text-base font-bold text-neutral-900">Record Restock</h2>
+          <button onclick="closeRestockModal()" class="text-neutral-400 hover:text-neutral-600 p-1">
+            <span class="material-symbols-outlined" style="font-size: 24px">close</span>
+          </button>
+        </div>
+        <form id="restock-form" class="space-y-4" onsubmit="submitRestock(event)">
+          <input type="hidden" id="restock-case-id" />
+          <div>
+            <label class="block text-xs font-medium text-neutral-600 mb-1">Product</label
+            ><span id="restock-product" class="block text-sm font-medium text-neutral-900"></span>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-neutral-600 mb-1"
+              >Quantity to Add <span class="text-danger-600">*</span></label
+            ><input
+              id="restock-qty"
+              type="number"
+              step="0.001"
+              min="0.001"
+              max="999999.999"
+              required
+              class="w-full px-3 py-2 text-sm bg-white border border-neutral-200 rounded-lg focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800 tabular-nums"
+              placeholder="0"
+            />
+          </div>
+          <div>
+            <label for="restock-note" class="block text-xs font-medium text-neutral-600 mb-1"
+              >Note <span class="text-danger-600">*</span></label
+            ><textarea
+              id="restock-note"
+              rows="2"
+              required
+              class="w-full px-3 py-2 text-sm bg-white border border-neutral-200 rounded-lg focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800"
+              placeholder="e.g., Found 3 kg in storage"
+            ></textarea>
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button
+              type="button"
+              onclick="closeRestockModal()"
+              class="flex-1 py-2.5 px-3 rounded-lg border border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-semibold text-xs"
+            >
+              Cancel</button
+            ><button
+              type="submit"
+              class="flex-1 py-2.5 px-3 rounded-lg bg-primary-800 hover:bg-primary-700 text-white font-semibold text-xs shadow-sm"
+            >
+              Record Restock
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Cancel Sale Modal -->
+    <div
+      id="cancel-modal"
+      class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="bg-white w-full max-w-md rounded-xl p-5 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between border-b border-neutral-100 pb-2">
+          <h2 class="text-base font-bold text-neutral-900">Cancel Sale</h2>
+          <button onclick="closeCancelModal()" class="text-neutral-400 hover:text-neutral-600 p-1">
+            <span class="material-symbols-outlined" style="font-size: 24px">close</span>
+          </button>
+        </div>
+        <form id="cancel-form" class="space-y-4" onsubmit="submitCancel(event)">
+          <input type="hidden" id="cancel-case-id" />
+          <div>
+            <label class="block text-xs font-medium text-neutral-600 mb-1">Product</label
+            ><span id="cancel-product" class="block text-sm font-medium text-neutral-900"></span>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-neutral-600 mb-1"
+              >Select Sale to Cancel <span class="text-danger-600">*</span></label
+            ><select
+              id="cancel-sale"
+              required
+              class="w-full px-3 py-2 text-sm bg-white border border-neutral-200 rounded-lg focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800"
+            >
+              <option value="">Select sale</option>
+            </select>
+          </div>
+          <div>
+            <label for="cancel-reason" class="block text-xs font-medium text-neutral-600 mb-1"
+              >Reason <span class="text-danger-600">*</span></label
+            ><textarea
+              id="cancel-reason"
+              rows="2"
+              required
+              class="w-full px-3 py-2 text-sm bg-white border border-neutral-200 rounded-lg focus:outline-none focus:border-primary-800 focus:ring-1 focus:ring-primary-800"
+              placeholder="Mandatory reason for cancellation"
+            ></textarea>
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button
+              type="button"
+              onclick="closeCancelModal()"
+              class="flex-1 py-2.5 px-3 rounded-lg border border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-semibold text-xs"
+            >
+              Cancel</button
+            ><button
+              type="submit"
+              class="flex-1 py-2.5 px-3 rounded-lg bg-danger-600 hover:bg-danger-700 text-white font-semibold text-xs shadow-sm"
+            >
+              Cancel Sale
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Acknowledge Modal -->
+    <div
+      id="acknowledge-modal"
+      class="hidden fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="bg-white w-full max-w-md rounded-xl p-5 shadow-xl space-y-4 max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex items-center justify-between border-b border-neutral-100 pb-2">
+          <h2 class="text-base font-bold text-neutral-900">Acknowledge Deficit</h2>
+          <button
+            onclick="closeAcknowledgeModal()"
+            class="text-neutral-400 hover:text-neutral-600 p-1"
+          >
+            <span class="material-symbols-outlined" style="font-size: 24px">close</span>
+          </button>
+        </div>
+        <div class="bg-danger-50 border border-danger-200 rounded-lg p-3 text-sm text-danger-900">
+          <p class="font-medium">
+            This will close the case and accept the negative balance for end-of-month audit.
+          </p>
+          <p class="mt-1">Both sales are preserved. No stock movements are created.</p>
+        </div>
+        <form id="acknowledge-form" class="space-y-4" onsubmit="submitAcknowledge(event)">
+          <input type="hidden" id="acknowledge-case-id" />
+          <div>
+            <label class="block text-xs font-medium text-neutral-600 mb-1">Confirmation</label
+            ><label class="flex items-center gap-2 cursor-pointer"
+              ><input
+                type="checkbox"
+                id="acknowledge-confirm"
+                required
+                class="w-4 h-4 rounded border-neutral-300 text-primary-600 focus:ring-primary-500"
+              /><span class="text-sm text-neutral-700"
+                >I understand this accepts the deficit and closes the case</span
+              ></label
+            >
+          </div>
+          <div class="flex gap-2 pt-2">
+            <button
+              type="button"
+              onclick="closeAcknowledgeModal()"
+              class="flex-1 py-2.5 px-3 rounded-lg border border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-semibold text-xs"
+            >
+              Cancel</button
+            ><button
+              type="submit"
+              class="flex-1 py-2.5 px-3 rounded-lg bg-danger-600 hover:bg-danger-700 text-white font-semibold text-xs shadow-sm"
+            >
+              Acknowledge & Close Case
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Quarantine Accept/Reject are inline in sheet -->
+
+    <script>
+      // Data
+      const CONFLICT_CASES = [
+        {
+          id: "0191-B7",
+          type: "OFFLINE_OVERSELL",
+          productId: "sugar",
+          productName: "White Sugar",
+          productAmharic: "ነጭ ስኳር",
+          unit: "KG",
+          balance: -3000,
+          threshold: 12000,
+          status: "OPEN",
+          version: 2,
+          timeline: [
+            { time: "10:00", type: "OPENING", delta: 10000, actor: "Owner", device: "Main Register", note: "Initial stock" },
+            { time: "14:02", type: "SALE", delta: -7000, actor: "Hana", device: "Register 1", note: "Receipt #1041" },
+            { time: "14:05", type: "SALE", delta: -6000, actor: "Dawit", device: "Register 2", note: "Receipt #1042" },
+          ],
+          sales: [
+            { id: "sale-1", time: "14:02", qty: 7000, actor: "Hana", device: "Register 1", total: 87500 },
+            { id: "sale-2", time: "14:05", qty: 6000, actor: "Dawit", device: "Register 2", total: 75000 },
+          ]
+        },
+        {
+          id: "0191-C3",
+          type: "AUTHORIZATION_REVIEW",
+          productId: "oil",
+          productName: "Sunflower Oil",
+          productAmharic: "የሱፍ ዘይት",
+          unit: "LITRE",
+          balance: 2000,
+          threshold: 5000,
+          status: "OPEN",
+          version: 1,
+          timeline: [
+            { time: "09:15", type: "OPENING", delta: 10000, actor: "Owner", device: "Main Register", note: "Initial stock" },
+            { time: "11:30", type: "SALE", delta: -8000, actor: "Deactivated Attendant", device: "Old Phone", note: "Submitted via drain token" },
+          ],
+          quarantinedOps: [
+            { id: "op-001", type: "RecordSale", actor: "Deactivated Attendant", device: "Old Phone", time: "11:30", summary: { saleTotal: 152000, lineCount: 1, productId: "oil", delta: -8000 } },
+            { id: "op-002", type: "AdjustStock", actor: "Deactivated Attendant", device: "Old Phone", time: "11:35", summary: { productId: "oil", delta: -2000 } },
+          ]
+        },
+        {
+          id: "0191-D9",
+          type: "CANCELLATION_CONFLICT",
+          productId: "rice",
+          productName: "Imported Rice",
+          productAmharic: "የውጭ ሩዝ",
+          unit: "PIECE",
+          balance: 18000,
+          threshold: 10000,
+          status: "OPEN",
+          version: 1,
+          timeline: [
+            { time: "10:00", type: "OPENING", delta: 20000, actor: "Owner", device: "Main Register", note: "Initial stock" },
+            { time: "12:00", type: "SALE", delta: -2000, actor: "Hana", device: "Register 1", note: "Receipt #1045" },
+            { time: "13:00", type: "COUNT_CORRECTION", delta: -5000, actor: "Owner", device: "Main Register", note: "Physical count" },
+            { time: "14:00", type: "SALE_CANCELLATION", delta: 2000, actor: "Owner", device: "Main Register", note: "Cancelled Receipt #1045" },
+          ],
+          sales: [
+            { id: "sale-3", time: "12:00", qty: 2000, actor: "Hana", device: "Register 1", total: 42000 },
+          ]
+        }
+      ];
+
+      const QUARANTINED_OPS = [
+        { id: "op-001", type: "RecordSale", actor: "Deactivated Attendant", device: "Old Phone", time: "11:30", caseId: "0191-C3", summary: { saleTotal: 152000, lineCount: 1, productId: "oil", delta: -8000 } },
+        { id: "op-002", type: "AdjustStock", actor: "Deactivated Attendant", device: "Old Phone", time: "11:35", caseId: "0191-C3", summary: { productId: "oil", delta: -2000 } },
+        { id: "op-003", type: "RecordSale", actor: "Deactivated Attendant", device: "Old Phone", time: "10:45", caseId: null, summary: { saleTotal: 45000, lineCount: 1, productId: "sugar", delta: -3000 } },
+        { id: "op-004", type: "RecordSale", actor: "Deactivated Attendant", device: "Old Phone", time: "10:50", caseId: null, summary: { saleTotal: 68000, lineCount: 2, productId: "rice", delta: -4000 } },
+        { id: "op-005", type: "ReceiveStock", actor: "Deactivated Attendant", device: "Old Phone", time: "09:00", caseId: null, summary: { productId: "tea", delta: 5000 } },
+      ];
+
+      const PRODUCTS = [
+        { id: "sugar", name: "White Sugar", nameAlt: "ነጭ ስኳር", unit: "KG" },
+        { id: "oil", name: "Sunflower Oil", nameAlt: "የሱፍ ዘይት", unit: "LITRE" },
+        { id: "rice", name: "Imported Rice", nameAlt: "የውጭ ሩዝ", unit: "PIECE" },
+      ];
+
+      const UNIT_LABELS = { PIECE: "Piece (pcs)", PACK: "Pack (pk)", KG: "Kilogram (kg)", GRAM: "Gram (g)", LITRE: "Litre (L)", MILLILITRE: "Millilitre (mL)" };
+      const UNIT_SYMBOLS = { PIECE: "pcs", PACK: "pk", KG: "kg", GRAM: "g", LITRE: "L", MILLILITRE: "mL" };
+      const UNIT_KINDS = { PIECE: "COUNT", PACK: "COUNT", KG: "MEASURE", GRAM: "MEASURE", LITRE: "MEASURE", MILLILITRE: "MEASURE" };
+
+      function formatCurrency(santim) { const sign = santim < 0 ? "−" : ""; const abs = Math.abs(santim); const birr = (abs / 100).toFixed(2); return sign + "ETB " + birr; }
+      function formatQty(qty, unit) { const kind = UNIT_KINDS[unit] || "MEASURE"; if (kind === "COUNT") return Math.round(qty) + " " + (UNIT_SYMBOLS[unit] || unit); return Number(qty).toFixed(3) + " " + (UNIT_SYMBOLS[unit] || unit); }
+      function getTypeBadge(type) { const config = { OFFLINE_OVERSELL: { label: "Offline Oversell", bg: "bg-danger-50", text: "text-danger-800", border: "border-danger-200", icon: "gavel" }, PRODUCT_INACTIVE: { label: "Product Inactive", bg: "bg-neutral-50", text: "text-neutral-800", border: "border-neutral-200", icon: "pause_circle" }, AUTHORIZATION_REVIEW: { label: "Authorization Review", bg: "bg-warning-50", text: "text-warning-800", border: "border-warning-200", icon: "shield" }, INVALID_STOCK_OPERATION: { label: "Invalid Stock Operation", bg: "bg-danger-50", text: "text-danger-800", border: "border-danger-200", icon: "block" }, CANCELLATION_CONFLICT: { label: "Cancellation Conflict", bg: "bg-warning-50", text: "text-warning-800", border: "border-warning-200", icon: "warning" } }; const c = config[type] || config.OFFLINE_OVERSELL; return `<span class="state-badge ${c.bg} ${c.text} ${c.border}"><span class="material-symbols-outlined text-[10px]">${c.icon}</span>${c.label}</span>`; }
+
+      let activeTab = "conflicts";
+      let selectedCaseId = null;
+
+      // Render Desktop Case List
+      function renderCaseListDesktop() {
+        const container = document.getElementById("case-list-desktop");
+        const cases = CONFLICT_CASES.filter(c => activeTab === "conflicts" ? !c.quarantinedOps : !!c.quarantinedOps);
+        container.innerHTML = cases.map(c => {
+          const p = PRODUCTS.find(x => x.id === c.productId);
+          const isSelected = selectedCaseId === c.id;
+          return `
+          <button onclick="selectCase('${c.id}')" class="w-full ${isSelected ? "bg-danger-50 border-danger-200" : "hover:bg-neutral-50"} border border-neutral-200 rounded-lg p-3 text-left transition-all">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              ${getTypeBadge(c.type)}
+              <span class="text-[10px] font-bold text-neutral-400">#${c.id}</span>
+            </div>
+            <h3 class="font-medium text-neutral-900 truncate">${c.productName}</h3>
+            <p class="text-[11px] text-neutral-400 font-ethiopic">${c.productAmharic || ''}</p>
+            <div class="flex items-center justify-between mt-2">
+              <span class="${c.balance < 0 ? "text-danger-700" : "text-success-700"} font-mono font-bold text-sm tabular-nums">${formatQty(c.balance, c.unit)}</span>
+              <span class="text-[10px] text-neutral-400">v${c.version}</span>
+            </div>
+          </button>`;
+        }).join("");
+      }
+
+      // Render Mobile Case List
+      function renderCaseListMobile() {
+        const container = document.getElementById("case-list-mobile");
+        const cases = CONFLICT_CASES.filter(c => activeTab === "conflicts" ? !c.quarantinedOps : !!c.quarantinedOps);
+        container.innerHTML = cases.map(c => `
+          <button onclick="openDetailSheet('${c.id}')" class="w-full border border-neutral-200 rounded-lg p-3 text-left transition-all hover:bg-neutral-50">
+            <div class="flex items-center justify-between gap-2 mb-1">${getTypeBadge(c.type)}<span class="text-[10px] font-bold text-neutral-400">#${c.id}</span></div>
+            <h3 class="font-medium text-neutral-900 truncate">${c.productName}</h3>
+            <p class="text-[11px] text-neutral-400 font-ethiopic">${c.productAmharic || ''}</p>
+            <div class="flex items-center justify-between mt-2"><span class="${c.balance < 0 ? "text-danger-700" : "text-success-700"} font-mono font-bold text-sm tabular-nums">${formatQty(c.balance, c.unit)}</span><span class="text-[10px] text-neutral-400">v${c.version}</span></div>
+          </button>`;
+        }).join("");
+      }
+
+      function switchTab(tab) {
+        activeTab = tab;
+        document.getElementById("tab-conflicts").className = "tab-btn px-4 py-2 text-sm font-semibold border-b-2 " + (tab === "conflicts" ? "border-danger-600 text-danger-700" : "border-transparent text-neutral-500");
+        document.getElementById("tab-quarantine").className = "tab-btn px-4 py-2 text-sm font-semibold border-b-2 " + (tab === "quarantine" ? "border-danger-600 text-danger-700" : "border-transparent text-neutral-500");
+        document.getElementById("tab-conflicts").setAttribute("aria-selected", tab === "conflicts");
+        document.getElementById("tab-quarantine").setAttribute("aria-selected", tab === "quarantine");
+        renderCaseListDesktop();
+        renderCaseListMobile();
+        if (selectedCaseId && !CONFLICT_CASES.find(c => c.id === selectedCaseId)) { selectedCaseId = null; clearDetail(); }
+      }
+
+      function selectCase(caseId) {
+        selectedCaseId = caseId;
+        renderCaseListDesktop();
+        renderDetail(caseId);
+      }
+
+      function openDetailSheet(caseId) {
+        selectedCaseId = caseId;
+        renderDetailSheet(caseId);
+        document.getElementById("case-detail-sheet").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeDetailSheet() {
+        document.getElementById("case-detail-sheet").classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+
+      function clearDetail() {
+        document.getElementById("detail-empty").classList.remove("hidden");
+        document.getElementById("detail-content").classList.add("hidden");
+      }
+
+      function renderDetail(caseId) {
+        const c = CONFLICT_CASES.find(x => x.id === caseId);
+        if (!c) return;
+        document.getElementById("detail-empty").classList.add("hidden");
+        document.getElementById("detail-content").classList.remove("hidden");
+        document.getElementById("detail-type-badge").innerHTML = getTypeBadge(c.type);
+        document.getElementById("detail-case-id").textContent = `Case #${c.id}`;
+        document.getElementById("detail-product-name").textContent = c.productName;
+        document.getElementById("detail-product-amharic").textContent = c.productAmharic || "";
+        document.getElementById("detail-balance").textContent = formatQty(c.balance, c.unit);
+
+        // Discrepancy
+        document.getElementById("discrepancy-text").textContent = formatQty(c.balance, c.unit);
+
+        // Timeline
+        const timelineContainer = document.getElementById("timeline-list");
+        timelineContainer.innerHTML = c.timeline.map(t => `
+          <div class="flex items-start gap-3 p-3 bg-neutral-50 border border-neutral-200 rounded-lg">
+            <div class="shrink-0 w-14 tabular-nums text-neutral-400 text-xs">${t.time}</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-baseline gap-1"><span class="font-mono font-medium ${t.delta > 0 ? "text-success-700" : t.delta < 0 ? "text-danger-700" : "text-neutral-700"}">${t.delta > 0 ? "+" : ""}${formatQty(Math.abs(t.delta), c.unit)}</span><span class="text-neutral-500">${t.type}</span>${t.note ? `<span class="text-neutral-400">(${t.note})</span>` : ""}</div>
+              <div class="flex items-center gap-1 text-[11px] text-neutral-400"><span>${t.actor}</span><span>·</span><span>${t.device}</span></div>
+            </div>
+            <div class="shrink-0 tabular-nums font-mono font-medium text-neutral-900">${formatQty(t.delta > 0 ? t.delta : 0, c.unit)}</div>
+          </div>
+        `).join("");
+
+        // Resolution Actions
+        const actionsContainer = document.getElementById("resolution-actions");
+        if (c.type === "OFFLINE_OVERSELL") {
+          actionsContainer.innerHTML = `
+            <button onclick="openRestockModal('${c.id}')" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50 transition-colors">
+              <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary-600" style="font-size: 20px">add_box</span></div><div><p class="font-medium text-neutral-900">Record Restock / Found Stock</p><p class="text-[11px] text-neutral-500">Add stock to reconcile shelf inventory</p></div></div>
+            </button>
+            <button onclick="openCancelModal('${c.id}')" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50 transition-colors">
+              <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-warning-100 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-warning-600" style="font-size: 20px">undo</span></div><div><p class="font-medium text-neutral-900">Cancel One Sale</p><p class="text-[11px] text-neutral-500">Requires mandatory reason; reverses stock movement</p></div></div>
+            </button>
+            <button onclick="openAcknowledgeModal('${c.id}')" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50 transition-colors">
+              <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-neutral-600" style="font-size: 20px">visibility</span></div><div><p class="font-medium text-neutral-900">Acknowledge & Keep Deficit</p><p class="text-[11px] text-neutral-500">Closes case, accepts deficit for end-of-month audit</p></div></div>
+            </button>
+          `;
+        } else if (c.type === "AUTHORIZATION_REVIEW" && c.quarantinedOps) {
+          actionsContainer.innerHTML = `
+            <div class="space-y-2">
+              ${c.quarantinedOps.map(op => `
+                <div class="p-3 bg-white border border-neutral-200 rounded-lg">
+                  <div class="flex items-center justify-between mb-2"><span class="font-medium text-neutral-900">${op.type}</span><span class="text-[11px] text-neutral-400">${op.time}</span></div>
+                  <div class="text-sm text-neutral-500 mb-2">${op.summary.saleTotal ? `Sale: ${formatCurrency(op.summary.saleTotal)}` : `Adjustment: ${formatQty(Math.abs(op.summary.delta), "LITRE")}`}</div>
+                  <div class="flex gap-2"><button onclick="acceptQuarantined('${op.id}')" class="flex-1 py-2 px-3 rounded-lg bg-primary-800 text-white font-semibold text-xs">Accept</button><button onclick="rejectQuarantined('${op.id}')" class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-semibold text-xs">Reject</button></div>
+                </div>
+              `).join("")}
+            </div>
+          `;
+        } else if (c.type === "CANCELLATION_CONFLICT") {
+          actionsContainer.innerHTML = `
+            <button onclick="openCancelModal('${c.id}')" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50 transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-warning-100 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-warning-600" style="font-size: 20px">undo</span></div><div><p class="font-medium text-neutral-900">Cancel Sale</p><p class="text-[11px] text-neutral-500">Requires mandatory reason; reverses stock movement</p></div></div></button>
+            <button onclick="openAcknowledgeModal('${c.id}')" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50 transition-colors"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-neutral-600" style="font-size: 20px">visibility</span></div><div><p class="font-medium text-neutral-900">Acknowledge & Keep</p><p class="text-[11px] text-neutral-500">Accept current state, close case</p></div></div></button>
+          `;
+        }
+      }
+
+      // Sheet rendering
+      function renderDetailSheet(caseId) {
+        const c = CONFLICT_CASES.find(x => x.id === caseId);
+        if (!c) return;
+        document.getElementById("sheet-type-badge").innerHTML = getTypeBadge(c.type);
+        document.getElementById("sheet-case-id").textContent = `Case #${c.id}`;
+        document.getElementById("sheet-product-name").textContent = c.productName;
+        const content = document.getElementById("sheet-content");
+        content.innerHTML = `
+          <div class="bg-danger-50 border border-danger-200 rounded-lg p-4"><div class="flex items-start gap-3"><div class="w-8 h-8 rounded-full bg-danger-100 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-danger-600" style="font-size: 20px">warning</span></div><div class="flex-1 min-w-0"><p class="font-medium text-danger-900">Discrepancy: Confirmed balance is <strong id="sheet-discrepancy" class="tabular-nums"></strong></p><p class="text-sm text-neutral-600 mt-1">Both sales occurred offline. Customers paid cash and received physical merchandise.</p></div></div></div>
+          <section><h4 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">Concurrent Timeline</h4><div class="space-y-2" id="sheet-timeline"></div></section>
+          <section><h4 class="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-3">Resolution Actions</h4><div class="space-y-2" id="sheet-actions"></div></section>
+        `;
+        document.getElementById("sheet-discrepancy").textContent = formatQty(c.balance, c.unit);
+        document.getElementById("sheet-timeline").innerHTML = c.timeline.map(t => `<div class="p-2 bg-neutral-50 rounded-lg"><div class="flex items-baseline gap-1"><span class="font-mono font-medium ${t.delta > 0 ? "text-success-700" : "text-danger-700"}">${t.delta > 0 ? "+" : ""}${formatQty(Math.abs(t.delta), c.unit)}</span><span class="text-neutral-500">${t.type}</span>${t.note ? `<span class="text-neutral-400">(${t.note})</span>` : ""}</div><div class="flex items-center gap-1 text-[11px] text-neutral-400"><span>${t.actor}</span><span>·</span><span>${t.device}</span></div></div>`).join("");
+        if (c.type === "OFFLINE_OVERSELL") {
+          document.getElementById("sheet-actions").innerHTML = `
+            <button onclick="openRestockModal('${c.id}'); closeDetailSheet();" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center"><span class="material-symbols-outlined text-primary-600" style="font-size: 20px">add_box</span></div><div><p class="font-medium text-neutral-900">Record Restock</p><p class="text-[11px] text-neutral-500">Add stock to reconcile shelf inventory</p></div></div></button>
+            <button onclick="openCancelModal('${c.id}'); closeDetailSheet();" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-warning-100 flex items-center justify-center"><span class="material-symbols-outlined text-warning-600" style="font-size: 20px">undo</span></div><div><p class="font-medium text-neutral-900">Cancel Sale</p><p class="text-[11px] text-neutral-500">Requires mandatory reason</p></div></div></button>
+            <button onclick="openAcknowledgeModal('${c.id}'); closeDetailSheet();" class="w-full p-3 bg-white border border-neutral-200 rounded-lg text-left hover:bg-neutral-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center"><span class="material-symbols-outlined text-neutral-600" style="font-size: 20px">visibility</span></div><div><p class="font-medium text-neutral-900">Acknowledge Deficit</p><p class="text-[11px] text-neutral-500">Accept negative balance for audit</p></div></div></button>
+          `;
+        } else if (c.type === "AUTHORIZATION_REVIEW") {
+          document.getElementById("sheet-actions").innerHTML = c.quarantinedOps.map(op => `
+            <div class="p-3 bg-white border border-neutral-200 rounded-lg">
+              <div class="flex items-center justify-between mb-2"><span class="font-medium text-neutral-900">${op.type}</span><span class="text-[11px] text-neutral-400">${op.time}</span></div>
+              <div class="text-sm text-neutral-500 mb-2">${op.summary.saleTotal ? `Sale: ${formatCurrency(op.summary.saleTotal)}` : `Adjustment: ${formatQty(Math.abs(op.summary.delta), "LITRE")}`}</div>
+              <div class="flex gap-2"><button onclick="acceptQuarantined('${op.id}')" class="flex-1 py-2 px-3 rounded-lg bg-primary-800 text-white font-semibold text-xs">Accept</button><button onclick="rejectQuarantined('${op.id}')" class="flex-1 py-2 px-3 rounded-lg border border-neutral-200 text-neutral-700 hover:bg-neutral-50 font-semibold text-xs">Reject</button></div>
+            </div>
+          `).join("");
+        }
+      }
+
+      // Modal handlers
+      function openRestockModal(caseId) { const c = CONFLICT_CASES.find(x => x.id === caseId); document.getElementById("restock-case-id").value = caseId; document.getElementById("restock-product").textContent = c.productName; document.getElementById("restock-modal").classList.remove("hidden"); document.body.style.overflow = "hidden"; }
+      function closeRestockModal() { document.getElementById("restock-modal").classList.add("hidden"); document.body.style.overflow = ""; }
+      function openCancelModal(caseId) { const c = CONFLICT_CASES.find(x => x.id === caseId); document.getElementById("cancel-case-id").value = caseId; document.getElementById("cancel-product").textContent = c.productName; document.getElementById("cancel-sale").innerHTML = '<option value="">Select sale</option>' + c.sales.map(s => `<option value="${s.id}">${s.time} · ${formatQty(s.qty, c.unit)} · ${s.actor} (${s.device}) · ${formatCurrency(s.total)}</option>`).join(""); document.getElementById("cancel-modal").classList.remove("hidden"); document.body.style.overflow = "hidden"; }
+      function closeCancelModal() { document.getElementById("cancel-modal").classList.add("hidden"); document.body.style.overflow = ""; }
+      function openAcknowledgeModal(caseId) { document.getElementById("acknowledge-case-id").value = caseId; document.getElementById("acknowledge-confirm").checked = false; document.getElementById("acknowledge-modal").classList.remove("hidden"); document.body.style.overflow = "hidden"; }
+      function closeAcknowledgeModal() { document.getElementById("acknowledge-modal").classList.add("hidden"); document.body.style.overflow = ""; }
+
+      function submitRestock(e) { e.preventDefault(); alert(`Restock recorded for case ${document.getElementById("restock-case-id").value}`); closeRestockModal(); }
+      function submitCancel(e) { e.preventDefault(); alert(`Sale cancelled for case ${document.getElementById("cancel-case-id").value}`); closeCancelModal(); }
+      function submitAcknowledge(e) { e.preventDefault(); alert(`Deficit acknowledged for case ${document.getElementById("acknowledge-case-id").value}`); closeAcknowledgeModal(); }
+      function acceptQuarantined(opId) { alert(`Accepted quarantined operation ${opId}`); }
+      function rejectQuarantined(opId) { alert(`Rejected quarantined operation ${opId}`); }
+
+      // Mobile Menu
+      function toggleMobileMenu() { document.getElementById("mobile-menu").classList.toggle("hidden"); }
+
+      // Sync Popover
+      function toggleSyncPopover() { const popover = document.getElementById("sync-popover"); const btn = document.getElementById("sync-pill-btn"); const isHidden = popover.classList.toggle("hidden"); btn.setAttribute("aria-expanded", !isHidden); }
+      function simulateSyncNow() { /* demo */ }
+      function toggleOfflineModeDemo() { /* demo */ }
+
+      // Init
+      function init() {
+        renderCaseListDesktop();
+        renderCaseListMobile();
+        if (CONFLICT_CASES.length > 0) selectCase(CONFLICT_CASES[0].id);
+      }
+      init();
+    </script>
+  </body>
+</html>

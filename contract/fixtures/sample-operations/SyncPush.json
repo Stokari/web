@@ -1,0 +1,38 @@
+{
+  "type": "SyncPush",
+  "payload": {
+    "operations": [
+      {
+        "op_id": "op-001",
+        "type": "Sale",
+        "payload": {
+          "lines": [
+            {
+              "product_id": 1,
+              "quantity_milli": 1000,
+              "unit_price_santim": 15000,
+              "line_total_santim": 15000
+            }
+          ],
+          "payment_method": "CASH",
+          "tendered_santim": 20000,
+          "change_santim": 5000,
+          "sold_at": "2024-01-15T14:22:00Z"
+        }
+      },
+      {
+        "op_id": "op-002",
+        "type": "AdjustStock",
+        "payload": {
+          "product_id": 2,
+          "delta_milli": -100,
+          "reason": "LOSS",
+          "note": "Spilled",
+          "adjusted_at": "2024-01-15T15:00:00Z"
+        }
+      }
+    ],
+    "client_cursor": "abc123",
+    "device_id": "device-001"
+  }
+}
