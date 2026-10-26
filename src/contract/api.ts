@@ -3,10 +3,222 @@
  * Do not make direct changes to the file.
  */
 
-export type paths = Record<string, never>;
+export interface paths {
+  "/v1/auth/google": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Exchange Google ID token for Stokari session
+     * @description Validates Google ID token and nonce, retrieves or provisions User, and returns an AuthSession with access token, refresh token, and offline lease.
+     */
+    post: operations["v1_auth_google_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/lease": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Renew offline authorization lease
+     * @description Issues a renewed 7-day offline lease for the caller's active shop membership.
+     */
+    post: operations["v1_auth_lease_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/logout": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Logout and revoke refresh token
+     * @description Revokes the presented refresh token. Always succeeds with 204.
+     */
+    post: operations["v1_auth_logout_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/nonce": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get one-time sign-in nonce
+     * @description Returns a cryptographically random single-use nonce valid for 5 minutes.
+     */
+    get: operations["v1_auth_nonce_retrieve"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/auth/refresh": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Rotate refresh token
+     * @description Rotates refresh token. Detects token reuse (revoking entire token family) and checks for account deactivation (issuing a drain token if deactivated).
+     */
+    post: operations["v1_auth_refresh_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+}
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: never;
+  schemas: {
+    AuthSession: {
+      accessToken: string;
+      /** Format: date-time */
+      accessTokenExpiresAt: string;
+      refreshToken: string;
+      /** Format: date-time */
+      refreshTokenExpiresAt: string;
+      session: components["schemas"]["SessionInfo"];
+      lease: components["schemas"]["LeaseInfo"] | null;
+      /** Format: date-time */
+      serverTime: string;
+    };
+    GoogleSignInRequest: {
+      /** @description Google ID token (JWT) */
+      idToken: string;
+      /** @description Nonce previously returned by E-02 */
+      nonce: string;
+      /**
+       * Format: uuid
+       * @description Client device ID (UUIDv7)
+       */
+      deviceId: string;
+      /**
+       * Format: uuid
+       * @description Optional target membership ID when multiple shops exist
+       */
+      membershipId?: string | null;
+    };
+    LeaseInfo: {
+      /** Format: uuid */
+      leaseId: string;
+      token: string;
+      /** Format: date-time */
+      issuedAt: string;
+      /** Format: date-time */
+      expiresAt: string;
+      allowedOps: string[];
+    };
+    LeaseRenewRequest: {
+      /**
+       * Format: uuid
+       * @description Client device ID
+       */
+      deviceId: string;
+    };
+    LeaseRenewResponse: {
+      lease: components["schemas"]["LeaseInfo"];
+      /** Format: date-time */
+      serverTime: string;
+    };
+    LogoutRequest: {
+      /** @description Refresh token to revoke */
+      refreshToken: string;
+    };
+    MembershipChoice: {
+      /** Format: uuid */
+      membershipId: string;
+      /** Format: uuid */
+      shopId: string;
+      shopName: string;
+      role: string;
+    };
+    NonceResponse: {
+      /** @description One-time nonce for Google sign-in */
+      nonce: string;
+      /**
+       * Format: date-time
+       * @description Expiration timestamp (ISO-8601)
+       */
+      expiresAt: string;
+    };
+    ProblemDetail: {
+      /** @description URI identifying the error type */
+      type: string;
+      /** @description Short summary of the error */
+      title: string;
+      /** @description HTTP status code */
+      status: number;
+      /** @description Detailed error description */
+      detail: string;
+      /** @description Machine-readable error code */
+      code?: string;
+      /** @description Temporary token for drain flow */
+      drainToken?: string;
+      /** Format: date-time */
+      drainTokenExpiresAt?: string;
+      /** @description List of available memberships */
+      memberships?: components["schemas"]["MembershipChoice"][];
+    };
+    RefreshRequest: {
+      /** @description Opaque refresh token */
+      refreshToken: string;
+      /**
+       * Format: uuid
+       * @description Client device ID
+       */
+      deviceId: string;
+    };
+    SessionInfo: {
+      /** Format: uuid */
+      userId: string;
+      /** Format: email */
+      email: string;
+      name: string;
+      /** Format: uuid */
+      shopId: string | null;
+      /** Format: uuid */
+      membershipId: string | null;
+      role: string | null;
+    };
+  };
   responses: never;
   parameters: never;
   requestBodies: never;
@@ -14,4 +226,179 @@ export interface components {
   pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+  v1_auth_google_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["GoogleSignInRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["GoogleSignInRequest"];
+        "multipart/form-data": components["schemas"]["GoogleSignInRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["AuthSession"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+    };
+  };
+  v1_auth_lease_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LeaseRenewRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["LeaseRenewRequest"];
+        "multipart/form-data": components["schemas"]["LeaseRenewRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["LeaseRenewResponse"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+    };
+  };
+  v1_auth_logout_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["LogoutRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["LogoutRequest"];
+        "multipart/form-data": components["schemas"]["LogoutRequest"];
+      };
+    };
+    responses: {
+      /** @description No response body */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  v1_auth_nonce_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["NonceResponse"];
+        };
+      };
+    };
+  };
+  v1_auth_refresh_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RefreshRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["RefreshRequest"];
+        "multipart/form-data": components["schemas"]["RefreshRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["AuthSession"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+    };
+  };
+}
