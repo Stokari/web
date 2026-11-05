@@ -1,9 +1,16 @@
 #!/usr/bin/env sh
 set -e
 
-ROOT_DIR="$(git rev-parse --show-toplevel)"
-if command -v bash >/dev/null 2>&1; then
-  bash "$ROOT_DIR/scripts/sync-dependencies.sh"
+ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+if command -v cygpath >/dev/null 2>&1; then
+  POSIX_ROOT="$(cygpath -u "$ROOT_DIR")"
 else
-  sh "$ROOT_DIR/scripts/sync-dependencies.sh"
+  POSIX_ROOT="$ROOT_DIR"
+fi
+
+if [ -f "$POSIX_ROOT/scripts/sync-dependencies.sh" ]; then
+  sh "$POSIX_ROOT/scripts/sync-dependencies.sh"
+elif [ -f "./scripts/sync-dependencies.sh" ]; then
+  sh "./scripts/sync-dependencies.sh"
 fi
