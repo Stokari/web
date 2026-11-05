@@ -2,6 +2,9 @@ import { describe, it, expect, beforeAll } from "vite-plus/test";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
+import { parseMoney, formatMoney } from "../../core/domain/money";
+import { parseQuantity, formatQuantity } from "../../core/domain/quantity";
+import type { Unit } from "../../core/domain/units";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -242,7 +245,7 @@ describe("Contract Validation", () => {
       ];
 
       for (const perm of ownerOnly) {
-        expect(permissions.ATTENDANT).not.toContain(perm);
+        expect(permissions.ATTENDANT?.includes(perm)).toBe(false);
       }
     });
   });
@@ -275,15 +278,36 @@ describe("Contract Validation", () => {
   });
 });
 
-describe("Cross-Language Vector Parity (Conceptual)", () => {
-  it("money vectors can be loaded by both Python and TypeScript", () => {
+describe("Cross-Language Vector Parity", () => {
+  it("passes all money test vectors", () => {
     const vectors = loadFixture<MoneyVector[]>("money-vectors.json");
-    expect(vectors.length).toBeGreaterThan(0);
+    for (const vector of vectors) {
+      if (vector.should_fail) {
+        expect(() => parseMoney(vector.input)).toThrow();
+      } else {
+        const parsed = parseMoney(vector.input);
+        expect(parsed).toBe(vector.expected_santim);
+        if (vector.expected_formatted !== undefined) {
+          expect(formatMoney(parsed)).toBe(vector.expected_formatted);
+        }
+      }
+    }
   });
 
-  it("quantity vectors can be loaded by both Python and TypeScript", () => {
+  it("passes all quantity test vectors", () => {
     const vectors = loadFixture<QuantityVector[]>("quantity-vectors.json");
-    expect(vectors.length).toBeGreaterThan(0);
+    for (const vector of vectors) {
+      const unit = vector.unit as Unit;
+      if (vector.should_fail) {
+        expect(() => parseQuantity(vector.input, unit)).toThrow();
+      } else {
+        const parsed = parseQuantity(vector.input, unit);
+        expect(parsed).toBe(vector.expected_milli);
+        if (vector.expected_formatted !== undefined) {
+          expect(formatQuantity(parsed, unit)).toBe(vector.expected_formatted);
+        }
+      }
+    }
   });
 
   it("payload hash vectors can be loaded by both Python and TypeScript", () => {

@@ -1,7 +1,16 @@
 import { useState } from "react";
+import { AuthProvider } from "./features/auth/AuthContext";
+import { RequireAuth } from "./features/auth/RequireAuth";
+import { LeaseStatusBanner } from "./features/auth/LeaseStatusBanner";
+import { useAuth } from "./features/auth/useAuth";
 import { ShopSelectorScreen } from "./features/shops/ShopSelectorScreen";
 import { CreateShopWizard, type CreateShopInput } from "./features/onboarding/CreateShopWizard";
+import { AcceptInviteScreen, type InviteDetails } from "./features/onboarding/AcceptInviteScreen";
+import { StaffScreen } from "./features/staff/StaffScreen";
+import { StorageGauge } from "./features/settings/StorageGauge";
 import type { ShopMembership } from "./features/shops/types";
+import type { StaffMember } from "./features/staff/types";
+import type { AuthUser, OfflineLease } from "./session/types";
 import "./App.css";
 
 const INITIAL_SHOPS: ShopMembership[] = [
@@ -12,7 +21,7 @@ const INITIAL_SHOPS: ShopMembership[] = [
     role: "OWNER",
     status: "ACTIVE",
     currency: "ETB",
-    attendantCount: 4,
+    attendantCount: 2,
     maxAttendants: 5,
   },
   {
@@ -22,25 +31,56 @@ const INITIAL_SHOPS: ShopMembership[] = [
     role: "ATTENDANT",
     status: "ACTIVE",
     currency: "ETB",
-    attendantCount: 2,
-    maxAttendants: 5,
-  },
-  {
-    id: "shop-piassa-03",
-    name: "Piassa Hardware Depot",
-    slug: "piassa-hardware",
-    role: "OWNER",
-    status: "ACTIVE",
-    currency: "ETB",
     attendantCount: 1,
     maxAttendants: 5,
   },
 ];
 
-function App() {
+const INITIAL_STAFF: StaffMember[] = [
+  {
+    id: "mem_owner",
+    name: "Amanuel",
+    email: "owner@stokari.com",
+    role: "OWNER",
+    status: "ACTIVE",
+    joinedAt: "2026-10-01T00:00:00Z",
+  },
+  {
+    id: "mem_attendant_1",
+    name: "Dawit Tadesse",
+    email: "dawit@stokari.com",
+    role: "ATTENDANT",
+    status: "ACTIVE",
+    activeLeaseRemainingDays: 6,
+    joinedAt: "2026-10-05T00:00:00Z",
+  },
+  {
+    id: "mem_attendant_2",
+    name: "Hana Kebede",
+    email: "hana@stokari.com",
+    role: "ATTENDANT",
+    status: "ACTIVE",
+    activeLeaseRemainingDays: 3,
+    joinedAt: "2026-10-10T00:00:00Z",
+  },
+];
+
+const MOCK_INVITE: InviteDetails = {
+  token: "inv_mercato_demo",
+  shopName: "Mercato Central Wholesale",
+  inviterName: "Amanuel",
+  currentAttendants: 2,
+  maxAttendants: 5,
+  expiresInHours: 48,
+};
+
+function MainAppShell() {
+  const { user, lease, logout } = useAuth();
   const [shops, setShops] = useState<ShopMembership[]>(INITIAL_SHOPS);
   const [currentShopId, setCurrentShopId] = useState<string>("shop-mercato-01");
-  const [activeView, setActiveView] = useState<"selector" | "create" | "store">("selector");
+  const [activeView, setActiveView] = useState<
+    "store" | "selector" | "create" | "staff" | "invite" | "settings"
+  >("selector");
 
   const currentShop = shops.find((s) => s.id === currentShopId);
 
@@ -65,13 +105,20 @@ function App() {
     setActiveView("store");
   };
 
+  const handleAcceptInvite = (token: string, attendantName: string) => {
+    alert(`Accepted invite ${token} for ${attendantName}! Joined ${MOCK_INVITE.shopName}.`);
+    setActiveView("store");
+  };
+
   return (
     <div className="stokari-app">
+      <LeaseStatusBanner lease={lease} />
+
       <nav className="stokari-top-nav">
         <div className="nav-brand">
           <span className="brand-dot" />
           <span className="brand-name">Stokari</span>
-          <span className="brand-badge">POS & Inventory</span>
+          <span className="brand-badge">POS &amp; Inventory</span>
         </div>
 
         <div className="nav-actions">
@@ -87,12 +134,46 @@ function App() {
             </div>
           )}
 
+          <div className="nav-tabs">
+            <button
+              type="button"
+              className={`nav-tab-btn ${activeView === "store" ? "active" : ""}`}
+              onClick={() => setActiveView("store")}
+            >
+              Dashboard
+            </button>
+            <button
+              type="button"
+              className={`nav-tab-btn ${activeView === "selector" ? "active" : ""}`}
+              onClick={() => setActiveView("selector")}
+            >
+              Stores
+            </button>
+            {currentShop?.role === "OWNER" && (
+              <button
+                type="button"
+                className={`nav-tab-btn ${activeView === "staff" ? "active" : ""}`}
+                onClick={() => setActiveView("staff")}
+              >
+                Staff
+              </button>
+            )}
+            <button
+              type="button"
+              className={`nav-tab-btn ${activeView === "settings" ? "active" : ""}`}
+              onClick={() => setActiveView("settings")}
+            >
+              Storage
+            </button>
+          </div>
+
           <button
             type="button"
             className="btn-nav-switch"
-            onClick={() => setActiveView(activeView === "selector" ? "store" : "selector")}
+            onClick={() => void logout()}
+            title={`Signed in as ${user?.email}`}
           >
-            {activeView === "selector" && currentShop ? "Return to Store" : "Switch Store"}
+            Sign Out
           </button>
         </div>
       </nav>
@@ -105,14 +186,37 @@ function App() {
           />
         )}
 
+        {activeView === "invite" && (
+          <AcceptInviteScreen
+            invite={MOCK_INVITE}
+            onAccept={handleAcceptInvite}
+            onDecline={() => setActiveView("selector")}
+            defaultUserName={user?.name}
+          />
+        )}
+
         {activeView === "selector" && (
           <ShopSelectorScreen
             shops={shops}
             currentShopId={currentShopId}
             onSelectShop={handleSelectShop}
             onCreateNewShop={() => setActiveView("create")}
-            userDisplayName="Amanuel"
+            userDisplayName={user?.name ?? "Merchant"}
           />
+        )}
+
+        {activeView === "staff" && currentShop && (
+          <StaffScreen
+            shopName={currentShop.name}
+            initialMembers={INITIAL_STAFF}
+            maxAttendants={5}
+          />
+        )}
+
+        {activeView === "settings" && (
+          <div style={{ maxWidth: "720px", margin: "40px auto", padding: "0 24px" }}>
+            <StorageGauge />
+          </div>
         )}
 
         {activeView === "store" && currentShop && (
@@ -142,9 +246,13 @@ function App() {
                 <div className="stat-card">
                   <span className="stat-label">Offline Lease</span>
                   <span className="stat-val" style={{ color: "#22c55e" }}>
-                    Active (29 days)
+                    Active (7 days)
                   </span>
                 </div>
+              </div>
+
+              <div style={{ marginTop: "24px" }}>
+                <StorageGauge />
               </div>
 
               <div className="dashboard-actions">
@@ -155,12 +263,59 @@ function App() {
                 >
                   Change Store
                 </button>
+                {currentShop.role === "OWNER" && (
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => setActiveView("staff")}
+                  >
+                    Manage Staff
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => setActiveView("invite")}
+                >
+                  Simulate Redeem Invite
+                </button>
               </div>
             </div>
           </div>
         )}
       </main>
     </div>
+  );
+}
+
+const DEFAULT_TEST_USER: AuthUser = {
+  id: "usr_amanuel_01",
+  email: "amanuel@stokari.com",
+  name: "Amanuel",
+  role: "OWNER",
+  shopId: "shop-mercato-01",
+  membershipId: "mem_01",
+  deviceId: "dev_01",
+};
+
+const DEFAULT_TEST_LEASE: OfflineLease = {
+  leaseId: "lease_active_01",
+  membershipId: "mem_01",
+  shopId: "shop-mercato-01",
+  role: "OWNER",
+  deviceId: "dev_01",
+  allowedOps: ["*"],
+  issuedAt: new Date().toISOString(),
+  expiresAt: new Date(Date.now() + 7 * 86400 * 1000).toISOString(),
+};
+
+export function App() {
+  return (
+    <AuthProvider initialUser={DEFAULT_TEST_USER} initialLease={DEFAULT_TEST_LEASE}>
+      <RequireAuth>
+        <MainAppShell />
+      </RequireAuth>
+    </AuthProvider>
   );
 }
 

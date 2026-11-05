@@ -1,0 +1,12 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Explicitly enforce LF line endings on scripts and git hooks
+*.sh text eol=lf
+*.cjs text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.json text eol=lf
+.vite-hooks/* text eol=lf
+.vite-hooks/_/* text eol=lf
+

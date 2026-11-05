@@ -1,5 +1,9 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -e
 
 ROOT_DIR="$(git rev-parse --show-toplevel)"
-"$ROOT_DIR/scripts/sync-dependencies.sh"
+if command -v bash >/dev/null 2>&1; then
+  bash "$ROOT_DIR/scripts/sync-dependencies.sh"
+else
+  sh "$ROOT_DIR/scripts/sync-dependencies.sh"
+fi
