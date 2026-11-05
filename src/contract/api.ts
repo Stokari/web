@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  "/v1/auth/google": {
+  "/api/auth/exchange": {
     parameters: {
       query?: never;
       header?: never;
@@ -14,10 +14,30 @@ export interface paths {
     get?: never;
     put?: never;
     /**
-     * Exchange Google ID token for Stokari session
-     * @description Validates Google ID token and nonce, retrieves or provisions User, and returns an AuthSession with access token, refresh token, and offline lease.
+     * Exchange OAuth handoff code for Stokari session
+     * @description Redeems a single-use authorization code from the OAuth callback, provisions or matches the Stokari user, and returns an AuthSession with access JWT, refresh token, and offline lease.
      */
-    post: operations["v1_auth_google_create"];
+    post: operations["api_auth_exchange_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/me": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get current user and session
+     * @description Returns identity and active tenant context for the authenticated caller.
+     */
+    get: operations["api_me_retrieve"];
+    put?: never;
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -64,26 +84,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/v1/auth/nonce": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get one-time sign-in nonce
-     * @description Returns a cryptographically random single-use nonce valid for 5 minutes.
-     */
-    get: operations["v1_auth_nonce_retrieve"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   "/v1/auth/refresh": {
     parameters: {
       query?: never;
@@ -120,19 +120,17 @@ export interface components {
       /** Format: date-time */
       serverTime: string;
     };
-    GoogleSignInRequest: {
-      /** @description Google ID token (JWT) */
-      idToken: string;
-      /** @description Nonce previously returned by E-02 */
-      nonce: string;
+    ExchangeAuthCodeRequest: {
+      /** @description One-time handoff code from OAuth callback */
+      code: string;
       /**
        * Format: uuid
-       * @description Client device ID (UUIDv7)
+       * @description Client device ID
        */
       deviceId: string;
       /**
        * Format: uuid
-       * @description Optional target membership ID when multiple shops exist
+       * @description Optional shop membership selection
        */
       membershipId?: string | null;
     };
@@ -169,15 +167,6 @@ export interface components {
       shopId: string;
       shopName: string;
       role: string;
-    };
-    NonceResponse: {
-      /** @description One-time nonce for Google sign-in */
-      nonce: string;
-      /**
-       * Format: date-time
-       * @description Expiration timestamp (ISO-8601)
-       */
-      expiresAt: string;
     };
     ProblemDetail: {
       /** @description URI identifying the error type */
@@ -227,7 +216,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  v1_auth_google_create: {
+  api_auth_exchange_create: {
     parameters: {
       query?: never;
       header?: never;
@@ -236,9 +225,9 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["GoogleSignInRequest"];
-        "application/x-www-form-urlencoded": components["schemas"]["GoogleSignInRequest"];
-        "multipart/form-data": components["schemas"]["GoogleSignInRequest"];
+        "application/json": components["schemas"]["ExchangeAuthCodeRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["ExchangeAuthCodeRequest"];
+        "multipart/form-data": components["schemas"]["ExchangeAuthCodeRequest"];
       };
     };
     responses: {
@@ -248,6 +237,14 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["AuthSession"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
         };
       };
       401: {
@@ -267,6 +264,50 @@ export interface operations {
         };
       };
       409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+    };
+  };
+  api_me_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            /** @example 200 */
+            status?: number;
+            data?: {
+              user?: {
+                /** Format: uuid */
+                id?: string;
+                email?: string;
+                name?: string;
+              };
+              session?: {
+                shopId?: string | null;
+                membershipId?: string | null;
+                role?: string | null;
+                deviceId?: string | null;
+              };
+            };
+          };
+        };
+      };
+      401: {
         headers: {
           [name: string]: unknown;
         };
@@ -338,25 +379,6 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
-      };
-    };
-  };
-  v1_auth_nonce_retrieve: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["NonceResponse"];
-        };
       };
     };
   };
