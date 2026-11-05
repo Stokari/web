@@ -39,4 +39,14 @@ describe("App", () => {
 
     expect(screen.getByRole("heading", { name: "Set Up New Store" })).toBeTruthy();
   });
+
+  it("navigates to Product Catalog when clicking Products tab", () => {
+    render(<App />);
+
+    const productsTab = screen.getByRole("button", { name: "Products" });
+    fireEvent.click(productsTab);
+
+    expect(screen.getByRole("heading", { name: "Product Catalog" })).toBeTruthy();
+    expect(screen.getAllByText("White Sugar").length).toBeGreaterThan(0);
+  });
 });

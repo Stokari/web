@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const { execSync } = require("child_process");
-const fs = require("fs");
 
 const VALID_PATTERN =
   /^(main|dev)$|^((feature|feat|fix|bugfix|chore|refactor|docs|test|style|perf|ci|hotfix)\/[a-z0-9]+(-[a-z0-9]+)*)$/;

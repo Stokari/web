@@ -8,6 +8,8 @@ import { CreateShopWizard, type CreateShopInput } from "./features/onboarding/Cr
 import { AcceptInviteScreen, type InviteDetails } from "./features/onboarding/AcceptInviteScreen";
 import { StaffScreen } from "./features/staff/StaffScreen";
 import { StorageGauge } from "./features/settings/StorageGauge";
+import { ProductCatalogView } from "./features/catalog/ProductCatalogView";
+import { DEFAULT_CATEGORIES, type Product } from "./features/catalog/types";
 import type { ShopMembership } from "./features/shops/types";
 import type { StaffMember } from "./features/staff/types";
 import type { AuthUser, OfflineLease } from "./session/types";
@@ -74,12 +76,84 @@ const MOCK_INVITE: InviteDetails = {
   expiresInHours: 48,
 };
 
+const INITIAL_PRODUCTS: Product[] = [
+  {
+    id: "prod_sugar",
+    shopId: "shop-mercato-01",
+    name: "White Sugar",
+    nameAlt: "ነጭ ስኳር",
+    sku: "SUG-01",
+    unit: "KG",
+    category: "grains",
+    priceSantim: 12500,
+    costSantim: 9500,
+    stockMilli: 85000,
+    lowStockMilli: 20000,
+    status: "ACTIVE",
+    packagings: [{ id: "pkg_sugar_sack", name: "Sack (25 kg)", multiplierMilli: 25000 }],
+    createdAt: "2026-10-01T00:00:00Z",
+    updatedAt: "2026-10-01T00:00:00Z",
+  },
+  {
+    id: "prod_oil",
+    shopId: "shop-mercato-01",
+    name: "Sunflower Cooking Oil",
+    nameAlt: "የሱፍ ዘይት",
+    sku: "OIL-02",
+    unit: "LITER",
+    category: "oils",
+    priceSantim: 18000,
+    costSantim: 14500,
+    stockMilli: 12000,
+    lowStockMilli: 15000,
+    status: "ACTIVE",
+    packagings: [{ id: "pkg_oil_jerrycan", name: "Jerrycan (20 L)", multiplierMilli: 20000 }],
+    createdAt: "2026-10-01T00:00:00Z",
+    updatedAt: "2026-10-01T00:00:00Z",
+  },
+  {
+    id: "prod_coffee",
+    shopId: "shop-mercato-01",
+    name: "Yirgacheffe Coffee",
+    nameAlt: "ይርጋጨፌ ቡና",
+    sku: "COF-03",
+    unit: "PIECE",
+    category: "beverages",
+    priceSantim: 32000,
+    costSantim: 28000,
+    stockMilli: 40000,
+    lowStockMilli: 10000,
+    status: "ACTIVE",
+    packagings: [{ id: "pkg_coffee_carton", name: "Carton of 12", multiplierMilli: 12000 }],
+    createdAt: "2026-10-01T00:00:00Z",
+    updatedAt: "2026-10-01T00:00:00Z",
+  },
+  {
+    id: "prod_salt",
+    shopId: "shop-mercato-01",
+    name: "Table Salt",
+    nameAlt: "የገበታ ጨው",
+    sku: "SLT-04",
+    unit: "PIECE",
+    category: "spices",
+    priceSantim: 2500,
+    costSantim: 1800,
+    stockMilli: 25000,
+    lowStockMilli: 5000,
+    status: "ACTIVE",
+    packagings: [],
+    createdAt: "2026-10-01T00:00:00Z",
+    updatedAt: "2026-10-01T00:00:00Z",
+  },
+];
+
 function MainAppShell() {
   const { user, lease, logout } = useAuth();
   const [shops, setShops] = useState<ShopMembership[]>(INITIAL_SHOPS);
   const [currentShopId, setCurrentShopId] = useState<string>("shop-mercato-01");
+  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [activeView, setActiveView] = useState<
-    "store" | "selector" | "create" | "staff" | "invite" | "settings"
+    "store" | "selector" | "create" | "staff" | "invite" | "settings" | "products"
   >("selector");
 
   const currentShop = shops.find((s) => s.id === currentShopId);
@@ -141,6 +215,13 @@ function MainAppShell() {
               onClick={() => setActiveView("store")}
             >
               Dashboard
+            </button>
+            <button
+              type="button"
+              className={`nav-tab-btn ${activeView === "products" ? "active" : ""}`}
+              onClick={() => setActiveView("products")}
+            >
+              Products
             </button>
             <button
               type="button"
@@ -213,6 +294,16 @@ function MainAppShell() {
           />
         )}
 
+        {activeView === "products" && currentShop && (
+          <ProductCatalogView
+            shopId={currentShop.id}
+            userRole={currentShop.role}
+            initialProducts={products}
+            initialCategories={DEFAULT_CATEGORIES}
+            onProductChange={setProducts}
+          />
+        )}
+
         {activeView === "settings" && (
           <div style={{ maxWidth: "720px", margin: "40px auto", padding: "0 24px" }}>
             <StorageGauge />
@@ -259,6 +350,13 @@ function MainAppShell() {
                 <button
                   type="button"
                   className="btn-primary"
+                  onClick={() => setActiveView("products")}
+                >
+                  Products Catalog ({products.length})
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondary"
                   onClick={() => setActiveView("selector")}
                 >
                   Change Store
