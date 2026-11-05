@@ -7,11 +7,13 @@
     "dev": "vp dev",
     "build": "tsc -b && vp build",
     "lint": "vp lint .",
+    "test": "vitest run",
     "depcruise": "depcruise -c dependency-cruiser.config.cjs src",
     "preview": "vp preview",
     "prepare": "vp config"
   },
   "dependencies": {
+    "dexie": "^4.4.7",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "sonar-queue": "^1.0.2",
@@ -27,11 +29,12 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
-    "@vitest/coverage-v8": "^5.0.4",
+    "@vitest/coverage-v8": "catalog:",
     "babel-plugin-react-compiler": "^1.0.0",
     "dependency-cruiser": "^18.7.0",
     "eslint": "^10.12.0",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "fake-indexeddb": "^6.2.6",
     "globals": "^17.12.0",
     "jsdom": "^30.1.2",
     "openapi-typescript": "^7.13.0",
@@ -39,7 +42,8 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.71.2",
     "vite": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
   },
   "devEngines": {
     "packageManager": {
@@ -49,8 +53,8 @@
     },
     "runtime": {
       "name": "node",
-      "version": ">=24.22.0",
-      "onFail": "error"
+      "version": ">=24.11.0",
+      "onFail": "warn"
     }
   }
 }

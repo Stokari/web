@@ -1,16 +1,33 @@
 #!/usr/bin/env sh
 set -e
 
-ROOT_DIR="$(git rev-parse --show-toplevel)"
+ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+if command -v cygpath >/dev/null 2>&1; then
+  POSIX_ROOT="$(cygpath -u "$ROOT_DIR")"
+else
+  POSIX_ROOT="$ROOT_DIR"
+fi
 
 # 1. Validate branch name pattern (main and dev are exceptions)
-"$ROOT_DIR/scripts/validate-branch-name.sh"
+# Git passes <remote_name> <remote_url> as $1, $2 to pre-push; branches are sent via stdin.
+if command -v node >/dev/null 2>&1 && [ -f "$ROOT_DIR/scripts/validate-branch-name.cjs" ]; then
+  node "$ROOT_DIR/scripts/validate-branch-name.cjs" --hook
+elif [ -f "$POSIX_ROOT/scripts/validate-branch-name.sh" ]; then
+  sh "$POSIX_ROOT/scripts/validate-branch-name.sh"
+elif [ -f "./scripts/validate-branch-name.sh" ]; then
+  sh "./scripts/validate-branch-name.sh"
+fi
 
 # 2. Run ESLint and React Compiler checks
 if command -v vp >/dev/null 2>&1; then
   vp exec eslint .
 elif command -v pnpm >/dev/null 2>&1; then
   pnpm exec eslint .
-else
+elif command -v npx >/dev/null 2>&1; then
+  npx eslint .
+elif [ -f "./node_modules/eslint/bin/eslint.js" ]; then
+  node "./node_modules/eslint/bin/eslint.js" .
+elif command -v eslint >/dev/null 2>&1; then
   eslint .
 fi

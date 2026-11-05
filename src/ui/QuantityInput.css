@@ -1,0 +1,171 @@
+.quantity-input-root {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  font-family: inherit;
+}
+
+.quantity-input-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  text-align: left;
+}
+
+.quantity-stepper-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-step-btn {
+  min-width: 48px;
+  min-height: 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.quantity-step-btn:hover:not(:disabled) {
+  background: rgba(30, 64, 175, 0.08);
+  border-color: #1e40af;
+  color: #1e40af;
+}
+
+.quantity-step-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.quantity-step-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.quantity-field-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.quantity-text-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 54px 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "JetBrains Mono", monospace;
+  text-align: right;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-h);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.quantity-text-input:focus {
+  border-color: #1e40af;
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+}
+
+.quantity-text-input.input-error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.quantity-unit-badge {
+  position: absolute;
+  right: 12px;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--code-bg);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.quantity-unit-toggle-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.unit-toggle-btn {
+  flex: 1;
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.unit-toggle-btn.active {
+  background: #1e40af;
+  color: #ffffff;
+  border-color: #1e40af;
+}
+
+.quantity-chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.quantity-chip {
+  min-height: 40px;
+  min-width: 44px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "JetBrains Mono", monospace;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text-h);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-chip:hover:not(:disabled) {
+  background: rgba(30, 64, 175, 0.1);
+  border-color: #1e40af;
+  color: #1e40af;
+}
+
+.quantity-chip:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.quantity-error-msg {
+  font-size: 12px;
+  color: #dc2626;
+  margin: 2px 0 0;
+  text-align: left;
+}

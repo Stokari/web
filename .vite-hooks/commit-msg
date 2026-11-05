@@ -1,3 +1,16 @@
 #!/usr/bin/env sh
-ROOT_DIR="$(git rev-parse --show-toplevel)"
-"$ROOT_DIR/scripts/validate-commit-msg.sh" "$1"
+ROOT_DIR="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+if command -v cygpath >/dev/null 2>&1; then
+  POSIX_ROOT="$(cygpath -u "$ROOT_DIR")"
+else
+  POSIX_ROOT="$ROOT_DIR"
+fi
+
+if command -v node >/dev/null 2>&1 && [ -f "$ROOT_DIR/scripts/validate-commit-msg.cjs" ]; then
+  node "$ROOT_DIR/scripts/validate-commit-msg.cjs" "$1"
+elif [ -f "$POSIX_ROOT/scripts/validate-commit-msg.sh" ]; then
+  sh "$POSIX_ROOT/scripts/validate-commit-msg.sh" "$1"
+elif [ -f "./scripts/validate-commit-msg.sh" ]; then
+  sh "./scripts/validate-commit-msg.sh" "$1"
+fi

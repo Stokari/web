@@ -1,0 +1,78 @@
+.lease-banner {
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid transparent;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.lease-banner.warning {
+  background: rgba(234, 179, 8, 0.12);
+  color: #a16207;
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  .lease-banner.warning {
+    color: #facc15;
+  }
+}
+
+.lease-banner.expired {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  .lease-banner.expired {
+    color: #f87171;
+  }
+}
+
+.lease-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lease-banner-icon {
+  font-size: 16px;
+}
+
+.lease-banner-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-banner-action {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  transition: all 0.15s ease;
+}
+
+.btn-banner-action:hover {
+  background: currentColor;
+  color: #fff;
+}
