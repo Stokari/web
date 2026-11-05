@@ -104,6 +104,66 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/v1/shops/": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Register a shop
+     * @description E-07: Registers a new shop with the caller as OWNER. Requires Idempotency-Key header. Returns shop-scoped AuthSession and offline lease.
+     */
+    post: operations["v1_shops_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/shops/me": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get shop profile
+     * @description E-08: Returns the profile, membership role, and server time for current shop session.
+     */
+    get: operations["v1_shops_me_retrieve"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/v1/shops/me/close": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Close shop
+     * @description E-09: Initiates controlled store closure with confirmation flags. Requires OWNER role. Revokes active offline leases and schedules 5-year retention.
+     */
+    post: operations["v1_shops_me_close_create"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -119,6 +179,43 @@ export interface components {
       lease: components["schemas"]["LeaseInfo"] | null;
       /** Format: date-time */
       serverTime: string;
+    };
+    /** @description Payload for E-09 POST /v1/shops/me/close. */
+    CloseShopRequest: {
+      /** @description Explicit confirmation flag for store closure */
+      confirm: boolean;
+      /** @description Acknowledges potential loss of unsynchronized device records */
+      acknowledgePendingRecords: boolean;
+      /** @description Acknowledges any open conflict cases or quarantined operations */
+      acknowledgeOpenCases: boolean;
+    };
+    /** @description Response for E-09 POST /v1/shops/me/close. */
+    CloseShopResponse: {
+      shop: components["schemas"]["Shop"];
+    };
+    /** @description Payload for E-07 POST /v1/shops. */
+    CreateShopRequest: {
+      /** @description Name of the shop (1-120 chars) */
+      name: string;
+      /**
+       * Format: uuid
+       * @description Unique device ID of the registering client
+       */
+      deviceId: string;
+    };
+    /** @description Response for E-07 POST /v1/shops extending AuthSession. */
+    CreateShopResponse: {
+      accessToken: string;
+      /** Format: date-time */
+      accessTokenExpiresAt: string;
+      refreshToken: string;
+      /** Format: date-time */
+      refreshTokenExpiresAt: string;
+      session: components["schemas"]["SessionInfo"];
+      lease: components["schemas"]["LeaseInfo"] | null;
+      /** Format: date-time */
+      serverTime: string;
+      shop: components["schemas"]["Shop"];
     };
     ExchangeAuthCodeRequest: {
       /** @description One-time handoff code from OAuth callback */
@@ -207,6 +304,35 @@ export interface components {
       membershipId: string | null;
       role: string | null;
     };
+    /** @description Wire representation of Shop entity. */
+    Shop: {
+      /** Format: uuid */
+      id: string;
+      name: string;
+      status?: components["schemas"]["StatusEnum"];
+      attendantLimit: number;
+      /** Format: date-time */
+      closedAt: string | null;
+      /** Format: date-time */
+      retainUntil: string | null;
+      /** Format: date-time */
+      createdAt: string;
+    };
+    /** @description Response for E-08 GET /v1/shops/me. */
+    ShopMeResponse: {
+      shop: components["schemas"]["Shop"];
+      role: string;
+      /** Format: uuid */
+      membershipId: string;
+      /** Format: date-time */
+      serverTime: string;
+    };
+    /**
+     * @description * `ACTIVE` - Active
+     *     * `CLOSED` - Closed
+     * @enum {string}
+     */
+    StatusEnum: "ACTIVE" | "CLOSED";
   };
   responses: never;
   parameters: never;
@@ -414,6 +540,142 @@ export interface operations {
         };
       };
       403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+    };
+  };
+  v1_shops_create: {
+    parameters: {
+      query?: never;
+      header: {
+        /** @description UUID idempotency key for safe client retries */
+        "Idempotency-Key": string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CreateShopRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["CreateShopRequest"];
+        "multipart/form-data": components["schemas"]["CreateShopRequest"];
+      };
+    };
+    responses: {
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CreateShopResponse"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+    };
+  };
+  v1_shops_me_retrieve: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ShopMeResponse"];
+        };
+      };
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+    };
+  };
+  v1_shops_me_close_create: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CloseShopRequest"];
+        "application/x-www-form-urlencoded": components["schemas"]["CloseShopRequest"];
+        "multipart/form-data": components["schemas"]["CloseShopRequest"];
+      };
+    };
+    responses: {
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CloseShopResponse"];
+        };
+      };
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ProblemDetail"];
+        };
+      };
+      409: {
         headers: {
           [name: string]: unknown;
         };
