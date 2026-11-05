@@ -10,12 +10,13 @@ else
 fi
 
 # 1. Validate branch name pattern (main and dev are exceptions)
+# Git passes <remote_name> <remote_url> as $1, $2 to pre-push; branches are sent via stdin.
 if command -v node >/dev/null 2>&1 && [ -f "$ROOT_DIR/scripts/validate-branch-name.cjs" ]; then
-  node "$ROOT_DIR/scripts/validate-branch-name.cjs" --hook "$@"
+  node "$ROOT_DIR/scripts/validate-branch-name.cjs" --hook
 elif [ -f "$POSIX_ROOT/scripts/validate-branch-name.sh" ]; then
-  sh "$POSIX_ROOT/scripts/validate-branch-name.sh" "$@"
+  sh "$POSIX_ROOT/scripts/validate-branch-name.sh"
 elif [ -f "./scripts/validate-branch-name.sh" ]; then
-  sh "./scripts/validate-branch-name.sh" "$@"
+  sh "./scripts/validate-branch-name.sh"
 fi
 
 # 2. Run ESLint and React Compiler checks

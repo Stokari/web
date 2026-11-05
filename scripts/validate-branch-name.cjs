@@ -48,34 +48,58 @@ Please rename your branch using:
 }
 
 function readStdin() {
-  // If not a TTY, read all available input synchronously from fd 0
-  // Git pre-push closes stdin immediately after sending refs, so readFileSync(0) is fast & non-blocking during git push
-  try {
-    if (!process.stdin.isTTY) {
-      return fs.readFileSync(0, "utf-8");
-    }
-  } catch {
-    // Ignore error if stdin not readable
+  if (process.stdin.isTTY) {
+    return Promise.resolve("");
   }
-  return "";
+
+  return new Promise((resolve) => {
+    let buffer = "";
+    let timer = null;
+
+    const cleanup = () => {
+      if (timer) clearTimeout(timer);
+      process.stdin.removeListener("data", onData);
+      process.stdin.removeListener("end", onEnd);
+      process.stdin.removeListener("error", onError);
+      process.stdin.pause();
+    };
+
+    const onData = (chunk) => {
+      buffer += chunk;
+    };
+
+    const onEnd = () => {
+      cleanup();
+      resolve(buffer);
+    };
+
+    const onError = () => {
+      cleanup();
+      resolve(buffer);
+    };
+
+    process.stdin.setEncoding("utf-8");
+    process.stdin.on("data", onData);
+    process.stdin.on("end", onEnd);
+    process.stdin.on("error", onError);
+    process.stdin.resume();
+
+    // If no EOF or data arrives within 200ms, resolve what we have (or empty)
+    timer = setTimeout(() => {
+      cleanup();
+      resolve(buffer);
+    }, 200);
+  });
 }
 
-function main() {
+async function main() {
   const isHookMode = process.argv.includes("--hook");
-  const nonFlagArgs = process.argv.slice(2).filter((arg) => !arg.startsWith("--"));
 
-  // 1. If explicit branch argument passed (e.g. from CI or manual command line):
-  if (nonFlagArgs.length >= 1) {
-    const branchToValidate = nonFlagArgs[0];
-    if (!validateBranch(branchToValidate)) {
-      process.exit(1);
-    }
-    process.exit(0);
-  }
-
-  // 2. If in hook mode (invoked by git pre-push):
+  // 1. If in hook mode (invoked by git pre-push):
+  // NOTE: Git passes <remote_name> and <remote_url> as $1, $2. These are NOT branch names!
+  // The branches being pushed are sent on stdin, or we inspect the checked-out branch.
   if (isHookMode) {
-    const stdinData = readStdin();
+    const stdinData = await readStdin();
     if (stdinData && stdinData.trim()) {
       const lines = stdinData.split(/\r?\n/).filter(Boolean);
       let checkedAny = false;
@@ -109,6 +133,32 @@ function main() {
         process.exit(0);
       }
     }
+
+    // If stdin had no branches or was empty, check currently checked-out branch:
+    try {
+      const currentBranch = execSync("git symbolic-ref --quiet --short HEAD", {
+        encoding: "utf-8",
+        stdio: ["pipe", "pipe", "ignore"],
+      }).trim();
+
+      if (currentBranch && !validateBranch(currentBranch)) {
+        process.exit(1);
+      }
+    } catch {
+      // Detached head or git error
+    }
+
+    process.exit(0);
+  }
+
+  // 2. If NOT in hook mode, check explicit branch argument (e.g. from CI or manual execution):
+  const nonFlagArgs = process.argv.slice(2).filter((arg) => !arg.startsWith("--"));
+  if (nonFlagArgs.length >= 1) {
+    const branchToValidate = nonFlagArgs[0];
+    if (!validateBranch(branchToValidate)) {
+      process.exit(1);
+    }
+    process.exit(0);
   }
 
   // 3. Fallback / Default: Check currently checked-out branch
@@ -128,4 +178,7 @@ function main() {
   process.exit(0);
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
