@@ -10,8 +10,11 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-ethiopic: "Noto Sans Ethiopic", "Nyala", "Abyssinica SIL", "Kefa", system-ui, sans-serif;
+  --sans:
+    "Noto Sans Ethiopic", "Nyala", "Abyssinica SIL", system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading:
+    "Noto Sans Ethiopic", "Nyala", "Abyssinica SIL", system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -106,4 +109,13 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* Amharic typography ensuring no baseline shift or vertical glyph clipping */
+.font-ethiopic {
+  font-family: var(--font-ethiopic);
+  font-feature-settings: "kern" 1;
+  line-height: 1.35;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }

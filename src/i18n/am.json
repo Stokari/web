@@ -1,0 +1,58 @@
+{
+  "common": {
+    "save": "አስቀምጥ",
+    "cancel": "ይቅር",
+    "edit": "አስተካክል",
+    "delete": "አጥፋ",
+    "search": "ፈልግ...",
+    "loading": "በመጫን ላይ...",
+    "error": "ስህተት",
+    "active": "ንቁ",
+    "archived": "የተቀመጠ",
+    "all": "ሁሉም",
+    "language": "ቋንቋ"
+  },
+  "nav": {
+    "dashboard": "ዋና ገጽ",
+    "products": "እቃዎች",
+    "sell": "ሽያጭ (ካሳ)",
+    "staff": "ሰራተኞች",
+    "settings": "ማስተካከያ",
+    "changeStore": "ሱቅ ቀይር"
+  },
+  "catalog": {
+    "title": "የእቃዎች ዝርዝር",
+    "addProduct": "+ አዲስ እቃ መዝግብ",
+    "wizard": "የእቃ ምዝገባ አጋዥ",
+    "categories": "ምድቦች",
+    "totalProducts": "ጠቅላላ እቃዎች",
+    "lowStock": "ያለቀበት",
+    "outOfStock": "ያለቀ",
+    "price": "ዋጋ",
+    "cost": "የግዢ ዋጋ",
+    "margin": "ትርፍ",
+    "stock": "ክምችት",
+    "unit": "መለኪያ",
+    "actions": "ተግባራት"
+  },
+  "pos": {
+    "title": "የሽያጭ ካሳ",
+    "quickStaples": "ተደጋጋሚ እቃዎች",
+    "cart": "የተመረጡ እቃዎች",
+    "cartEmpty": "ምንም እቃ አልተመረጠም",
+    "tapToAdd": "እቃውን በመጫን ይምረጡ",
+    "quantity": "መጠን",
+    "item": "እቃ",
+    "items": "እቃዎች",
+    "subtotal": "ድምር",
+    "total": "ጠቅላላ ድምር",
+    "charge": "ክፈል",
+    "tenderCash": "ጥሬ ገንዘብ",
+    "tenderTelebirr": "ቴሌብር",
+    "tenderCbeBirr": "ሲቢኢ ብር",
+    "completeSale": "ሽያጩን አጠናቅቅ",
+    "clearCart": "ቅርጫቱን አጽዳ",
+    "sellAnyway": "ቢሆንም ሽጥ",
+    "insufficientStock": "ማስጠንቀቂያ፡ ከተመዘገበው ክምችት ይበልጣል"
+  }
+}

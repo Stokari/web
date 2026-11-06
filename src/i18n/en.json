@@ -1,0 +1,58 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search...",
+    "loading": "Loading...",
+    "error": "Error",
+    "active": "Active",
+    "archived": "Archived",
+    "all": "All",
+    "language": "Language"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "sell": "Sell (POS)",
+    "staff": "Staff",
+    "settings": "Settings",
+    "changeStore": "Change Store"
+  },
+  "catalog": {
+    "title": "Product Catalog",
+    "addProduct": "+ Add Product",
+    "wizard": "Product Wizard",
+    "categories": "Categories",
+    "totalProducts": "Total Products",
+    "lowStock": "Low Stock",
+    "outOfStock": "Out of Stock",
+    "price": "Price",
+    "cost": "Cost",
+    "margin": "Margin",
+    "stock": "Stock",
+    "unit": "Unit",
+    "actions": "Actions"
+  },
+  "pos": {
+    "title": "Cashier Till",
+    "quickStaples": "Quick Staples",
+    "cart": "Cart",
+    "cartEmpty": "Your cart is empty",
+    "tapToAdd": "Tap a product to add to cart",
+    "quantity": "Quantity",
+    "item": "item",
+    "items": "items",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "charge": "Charge",
+    "tenderCash": "Cash",
+    "tenderTelebirr": "Telebirr",
+    "tenderCbeBirr": "CBE Birr",
+    "completeSale": "Complete Sale",
+    "clearCart": "Clear Cart",
+    "sellAnyway": "Sell Anyway",
+    "insufficientStock": "Warning: Exceeds current stock"
+  }
+}

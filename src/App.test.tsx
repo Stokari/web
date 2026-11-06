@@ -49,4 +49,14 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "Product Catalog" })).toBeTruthy();
     expect(screen.getAllByText("White Sugar").length).toBeGreaterThan(0);
   });
+
+  it("navigates to Sell (POS) when clicking Sell (POS) tab", () => {
+    render(<App />);
+
+    const posTab = screen.getByRole("button", { name: "Sell (POS)" });
+    fireEvent.click(posTab);
+
+    expect(screen.getByRole("heading", { name: "Mercato Central Wholesale" })).toBeTruthy();
+    expect(screen.getByText(/● Offline Ready/i)).toBeTruthy();
+  });
 });

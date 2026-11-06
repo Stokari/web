@@ -10,6 +10,9 @@ import { StaffScreen } from "./features/staff/StaffScreen";
 import { StorageGauge } from "./features/settings/StorageGauge";
 import { ProductCatalogView } from "./features/catalog/ProductCatalogView";
 import { DEFAULT_CATEGORIES, type Product } from "./features/catalog/types";
+import { SellScreen } from "./features/pos/SellScreen";
+import { I18nProvider } from "./i18n";
+import { LanguageSelector } from "./i18n/LanguageSelector";
 import type { ShopMembership } from "./features/shops/types";
 import type { StaffMember } from "./features/staff/types";
 import type { AuthUser, OfflineLease } from "./session/types";
@@ -153,7 +156,7 @@ function MainAppShell() {
   const [currentShopId, setCurrentShopId] = useState<string>("shop-mercato-01");
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [activeView, setActiveView] = useState<
-    "store" | "selector" | "create" | "staff" | "invite" | "settings" | "products"
+    "store" | "selector" | "create" | "staff" | "invite" | "settings" | "products" | "pos"
   >("selector");
 
   const currentShop = shops.find((s) => s.id === currentShopId);
@@ -218,6 +221,13 @@ function MainAppShell() {
             </button>
             <button
               type="button"
+              className={`nav-tab-btn ${activeView === "pos" ? "active" : ""}`}
+              onClick={() => setActiveView("pos")}
+            >
+              Sell (POS)
+            </button>
+            <button
+              type="button"
               className={`nav-tab-btn ${activeView === "products" ? "active" : ""}`}
               onClick={() => setActiveView("products")}
             >
@@ -247,6 +257,8 @@ function MainAppShell() {
               Storage
             </button>
           </div>
+
+          <LanguageSelector />
 
           <button
             type="button"
@@ -291,6 +303,15 @@ function MainAppShell() {
             shopName={currentShop.name}
             initialMembers={INITIAL_STAFF}
             maxAttendants={5}
+          />
+        )}
+
+        {activeView === "pos" && currentShop && (
+          <SellScreen
+            shopId={currentShop.id}
+            shopName={currentShop.name}
+            products={products}
+            userRole={currentShop.role}
           />
         )}
 
@@ -409,11 +430,13 @@ const DEFAULT_TEST_LEASE: OfflineLease = {
 
 export function App() {
   return (
-    <AuthProvider initialUser={DEFAULT_TEST_USER} initialLease={DEFAULT_TEST_LEASE}>
-      <RequireAuth>
-        <MainAppShell />
-      </RequireAuth>
-    </AuthProvider>
+    <I18nProvider>
+      <AuthProvider initialUser={DEFAULT_TEST_USER} initialLease={DEFAULT_TEST_LEASE}>
+        <RequireAuth>
+          <MainAppShell />
+        </RequireAuth>
+      </AuthProvider>
+    </I18nProvider>
   );
 }
 
